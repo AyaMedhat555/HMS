@@ -1,0 +1,56 @@
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+D:\BackEnd\mohab2\Domain\bin\Debug\net6.0\Domain.deps.json
+D:\BackEnd\mohab2\Domain\bin\Debug\net6.0\Domain.runtimeconfig.json
+D:\BackEnd\mohab2\Domain\bin\Debug\net6.0\Domain.dll
+D:\BackEnd\mohab2\Domain\bin\Debug\net6.0\ref\Domain.dll
+D:\BackEnd\mohab2\Domain\bin\Debug\net6.0\Domain.pdb
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\Domain.dll
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\ref\Domain.dll
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\Domain.pdb
+D:\BackEnd\mohab2\Domain\obj\Debug\net6.0\Domain.genruntimeconfig.cache
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\bin\Debug\net6.0\Domain.deps.json
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\bin\Debug\net6.0\Domain.runtimeconfig.json
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\bin\Debug\net6.0\Domain.dll
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\bin\Debug\net6.0\ref\Domain.dll
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\bin\Debug\net6.0\Domain.pdb
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\Domain.dll
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\ref\Domain.dll
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\Domain.pdb
+D:\SCHOOL\4TH YEAR\smart_hospital\27_4_hos\Domain\obj\Debug\net6.0\Domain.genruntimeconfig.cache
+D:\BackEnd\28_4_hos\Domain\bin\Debug\net6.0\Domain.deps.json
+D:\BackEnd\28_4_hos\Domain\bin\Debug\net6.0\Domain.runtimeconfig.json
+D:\BackEnd\28_4_hos\Domain\bin\Debug\net6.0\Domain.dll
+D:\BackEnd\28_4_hos\Domain\bin\Debug\net6.0\ref\Domain.dll
+D:\BackEnd\28_4_hos\Domain\bin\Debug\net6.0\Domain.pdb
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\Domain.dll
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\ref\Domain.dll
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\Domain.pdb
+D:\BackEnd\28_4_hos\Domain\obj\Debug\net6.0\Domain.genruntimeconfig.cache
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\bin\Debug\net6.0\Domain.deps.json
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\bin\Debug\net6.0\Domain.runtimeconfig.json
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\bin\Debug\net6.0\Domain.dll
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\bin\Debug\net6.0\ref\Domain.dll
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\bin\Debug\net6.0\Domain.pdb
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\Domain.dll
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\ref\Domain.dll
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\Domain.pdb
+D:\SCHOOL\4TH YEAR\second_term\graduation_project\Domain\obj\Debug\net6.0\Domain.genruntimeconfig.cache

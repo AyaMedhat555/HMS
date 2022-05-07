@@ -1,0 +1,31 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "f90198f6-949e-4594-b310-bee1f5257239": {
+      "ProjectGuid": "f90198f6-949e-4594-b310-bee1f5257239",
+      "DisplayName": "SmartHospital",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "63c3c468-c7c6-47cc-9353-9e981dc7a8ba": {
+      "ProjectGuid": "63c3c468-c7c6-47cc-9353-9e981dc7a8ba",
+      "DisplayName": "Repository",
+      "ColorIndex": 1
+    },
+    "8031c475-bcb0-4e32-89d7-6f875ca95bc3": {
+      "ProjectGuid": "8031c475-bcb0-4e32-89d7-6f875ca95bc3",
+      "DisplayName": "Domain",
+      "ColorIndex": 2
+    },
+    "78302c0b-4cbc-4e25-90fa-b4480053a257": {
+      "ProjectGuid": "78302c0b-4cbc-4e25-90fa-b4480053a257",
+      "DisplayName": "Service",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}
