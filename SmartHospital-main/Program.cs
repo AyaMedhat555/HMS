@@ -46,6 +46,9 @@ builder.Services.AddScoped<IVitalSignesService, VitalSignsService>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 
+builder.Services.AddScoped<IPrescriptionItemRepository, PrescriptionItemRepository>();
+builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+
 builder.Services.AddScoped<INurseRepository, NurseRepository>();
 builder.Services.AddScoped<INurseService, NurseService>();
 

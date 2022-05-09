@@ -2506,23 +2506,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Personal\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\AYA\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\Service.csproj",
+      "projectUniqueName": "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\Service.csproj",
       "projectName": "Service",
-      "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\Service.csproj",
-      "packagesPath": "C:\\Users\\Personal\\.nuget\\packages\\",
-      "outputPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\obj\\",
+      "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\Service.csproj",
+      "packagesPath": "C:\\Users\\AYA\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Personal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\AYA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2536,8 +2537,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj": {
-              "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj"
+            "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj": {
+              "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj"
             }
           }
         }
@@ -2572,7 +2573,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

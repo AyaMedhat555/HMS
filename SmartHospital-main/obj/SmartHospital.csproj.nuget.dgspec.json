@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\SmartHospital-main\\SmartHospital.csproj": {}
+    "C:\\Users\\AYA\\source\\repos\\HMS\\SmartHospital-main\\SmartHospital.csproj": {}
   },
   "projects": {
-    "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Domain\\Domain.csproj": {
+    "C:\\Users\\AYA\\source\\repos\\HMS\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\AYA\\source\\repos\\HMS\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\Personal\\.nuget\\packages\\",
-        "outputPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Domain\\obj\\",
+        "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\AYA\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Personal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AYA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,24 +74,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj": {
+    "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\Personal\\.nuget\\packages\\",
-        "outputPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\obj\\",
+        "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\AYA\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Personal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AYA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -104,8 +106,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Domain\\Domain.csproj": {
-                "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Domain\\Domain.csproj"
+              "C:\\Users\\AYA\\source\\repos\\HMS\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Domain\\Domain.csproj"
               }
             }
           }
@@ -144,24 +146,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\Service.csproj": {
+    "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\Service.csproj",
+        "projectUniqueName": "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\Service.csproj",
-        "packagesPath": "C:\\Users\\Personal\\.nuget\\packages\\",
-        "outputPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\obj\\",
+        "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\Service.csproj",
+        "packagesPath": "C:\\Users\\AYA\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Personal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AYA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -175,8 +178,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj": {
-                "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj"
+              "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj"
               }
             }
           }
@@ -211,24 +214,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\SmartHospital-main\\SmartHospital.csproj": {
+    "C:\\Users\\AYA\\source\\repos\\HMS\\SmartHospital-main\\SmartHospital.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\SmartHospital-main\\SmartHospital.csproj",
+        "projectUniqueName": "C:\\Users\\AYA\\source\\repos\\HMS\\SmartHospital-main\\SmartHospital.csproj",
         "projectName": "SmartHospital",
-        "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\SmartHospital-main\\SmartHospital.csproj",
-        "packagesPath": "C:\\Users\\Personal\\.nuget\\packages\\",
-        "outputPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\SmartHospital-main\\obj\\",
+        "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\SmartHospital-main\\SmartHospital.csproj",
+        "packagesPath": "C:\\Users\\AYA\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AYA\\source\\repos\\HMS\\SmartHospital-main\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Personal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AYA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -242,14 +246,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Domain\\Domain.csproj": {
-                "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Domain\\Domain.csproj"
+              "C:\\Users\\AYA\\source\\repos\\HMS\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Domain\\Domain.csproj"
               },
-              "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj": {
-                "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Repository\\Repository.csproj"
+              "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Repository\\Repository.csproj"
               },
-              "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\Service.csproj": {
-                "projectPath": "D:\\SCHOOL\\4TH YEAR\\second_term\\graduation_project\\Service\\Service.csproj"
+              "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\Service.csproj": {
+                "projectPath": "C:\\Users\\AYA\\source\\repos\\HMS\\Service\\Service.csproj"
               }
             }
           }
@@ -321,7 +325,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -124,6 +124,77 @@ namespace Domain.Migrations
                     b.ToTable("Department");
                 });
 
+            modelBuilder.Entity("Domain.Models.Prescription", b =>
+                {
+                    b.Property<int>("PrescriptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrescriptionId"), 1L, 1);
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Prescription_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("re_appointement_date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PrescriptionId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Prescriptions");
+                });
+
+            modelBuilder.Entity("Domain.Models.PrescriptionItem", b =>
+                {
+                    b.Property<int>("PrescriptionItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrescriptionItemId"), 1L, 1);
+
+                    b.Property<string>("Dose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Durarion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instructions")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MedicineType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Medicine_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Medicine_concentration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PrescriptionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PrescriptionItemId");
+
+                    b.HasIndex("PrescriptionId");
+
+                    b.ToTable("PrescriptionItems");
+                });
+
             modelBuilder.Entity("Domain.Models.Schedule", b =>
                 {
                     b.Property<int>("Id")
@@ -381,6 +452,32 @@ namespace Domain.Migrations
                     b.Navigation("Doctor");
                 });
 
+            modelBuilder.Entity("Domain.Models.Prescription", b =>
+                {
+                    b.HasOne("Domain.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Patient", "patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("patient");
+                });
+
+            modelBuilder.Entity("Domain.Models.PrescriptionItem", b =>
+                {
+                    b.HasOne("Domain.Models.Prescription", null)
+                        .WithMany("PrescriptionItems")
+                        .HasForeignKey("PrescriptionId");
+                });
+
             modelBuilder.Entity("Domain.Models.Schedule", b =>
                 {
                     b.HasOne("Domain.Models.Doctor", "Doctor")
@@ -410,6 +507,11 @@ namespace Domain.Migrations
                         .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("Domain.Models.Prescription", b =>
+                {
+                    b.Navigation("PrescriptionItems");
                 });
 
             modelBuilder.Entity("Domain.Models.Patient", b =>

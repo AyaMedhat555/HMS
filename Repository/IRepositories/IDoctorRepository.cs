@@ -10,5 +10,6 @@ namespace Repository.IRepositories
     public interface IDoctorRepository: IGenericRepository<Doctor>
     {
         Task<Doctor> FindByName(String username);
+        
     }
 }

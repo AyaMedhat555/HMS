@@ -80,7 +80,9 @@ namespace Domain.Context
 
         //public DbSet<Bill> Bills { get; set; }
 
-        //public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<PrescriptionItem> PrescriptionItems { get; set; }
+
         //public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         //public DbSet<Room> Rooms { get; set; }

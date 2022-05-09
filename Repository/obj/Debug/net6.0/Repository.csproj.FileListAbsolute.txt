@@ -58,3 +58,18 @@ D:\SCHOOL\4TH YEAR\second_term\graduation_project\Repository\obj\Debug\net6.0\Re
 D:\SCHOOL\4TH YEAR\second_term\graduation_project\Repository\obj\Debug\net6.0\Repository.dll
 D:\SCHOOL\4TH YEAR\second_term\graduation_project\Repository\obj\Debug\net6.0\ref\Repository.dll
 D:\SCHOOL\4TH YEAR\second_term\graduation_project\Repository\obj\Debug\net6.0\Repository.pdb
+C:\Users\AYA\source\repos\HMS\Repository\bin\Debug\net6.0\Repository.deps.json
+C:\Users\AYA\source\repos\HMS\Repository\bin\Debug\net6.0\Repository.dll
+C:\Users\AYA\source\repos\HMS\Repository\bin\Debug\net6.0\ref\Repository.dll
+C:\Users\AYA\source\repos\HMS\Repository\bin\Debug\net6.0\Repository.pdb
+C:\Users\AYA\source\repos\HMS\Repository\bin\Debug\net6.0\Domain.dll
+C:\Users\AYA\source\repos\HMS\Repository\bin\Debug\net6.0\Domain.pdb
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\Repository.csproj.AssemblyReference.cache
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\Repository.AssemblyInfoInputs.cache
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\Repository.AssemblyInfo.cs
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\Repository.csproj.CoreCompileInputs.cache
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\Repository.csproj.CopyComplete
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\Repository.dll
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\ref\Repository.dll
+C:\Users\AYA\source\repos\HMS\Repository\obj\Debug\net6.0\Repository.pdb

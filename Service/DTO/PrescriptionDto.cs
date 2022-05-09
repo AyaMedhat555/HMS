@@ -7,17 +7,18 @@ namespace Service.IServices
 {
     public class PrescriptionDto
     {
-        public string Medicine_Name { get; set; }
-        public string Medicine_concentration { get; set; } // medicine Strength
-        public string Instructions { get; set; }
-        public string MedicineType { get; set; }
-        public string Dose { get; set; }
+       
+        public virtual ICollection<PrescriptionItem> PrescriptionItems { get; set; } = new HashSet<PrescriptionItem>();
 
-        public string Durarion { get; set; }
         public DateTime Prescription_Date { get; set; }
         public DateTime re_appointement_date { get; set; }
-        public int  Doctor_Id { get; set; }
-        
+
+        //public virtual Patient patient { get; set; } //Navigational Property
+        public int PatientId { get; set; }
+       // public virtual Doctor Doctor { get; set; } //Navigational Property
+
+        public int DoctorId { get; set; }
+
     }
 
    

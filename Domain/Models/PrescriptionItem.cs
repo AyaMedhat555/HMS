@@ -18,6 +18,5 @@
 }
 
 
-//- patient: Patient
-//- doctor_id: int
+
 

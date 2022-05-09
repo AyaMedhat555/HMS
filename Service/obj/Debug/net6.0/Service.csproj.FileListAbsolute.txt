@@ -66,3 +66,20 @@ D:\SCHOOL\4TH YEAR\second_term\graduation_project\Service\obj\Debug\net6.0\Servi
 D:\SCHOOL\4TH YEAR\second_term\graduation_project\Service\obj\Debug\net6.0\Service.dll
 D:\SCHOOL\4TH YEAR\second_term\graduation_project\Service\obj\Debug\net6.0\ref\Service.dll
 D:\SCHOOL\4TH YEAR\second_term\graduation_project\Service\obj\Debug\net6.0\Service.pdb
+C:\Users\AYA\source\repos\HMS\Service\bin\Debug\net6.0\Service.deps.json
+C:\Users\AYA\source\repos\HMS\Service\bin\Debug\net6.0\Service.dll
+C:\Users\AYA\source\repos\HMS\Service\bin\Debug\net6.0\ref\Service.dll
+C:\Users\AYA\source\repos\HMS\Service\bin\Debug\net6.0\Service.pdb
+C:\Users\AYA\source\repos\HMS\Service\bin\Debug\net6.0\Domain.dll
+C:\Users\AYA\source\repos\HMS\Service\bin\Debug\net6.0\Repository.dll
+C:\Users\AYA\source\repos\HMS\Service\bin\Debug\net6.0\Repository.pdb
+C:\Users\AYA\source\repos\HMS\Service\bin\Debug\net6.0\Domain.pdb
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\Service.csproj.AssemblyReference.cache
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\Service.AssemblyInfoInputs.cache
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\Service.AssemblyInfo.cs
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\Service.csproj.CoreCompileInputs.cache
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\Service.csproj.CopyComplete
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\Service.dll
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\ref\Service.dll
+C:\Users\AYA\source\repos\HMS\Service\obj\Debug\net6.0\Service.pdb
