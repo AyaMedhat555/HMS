@@ -67,6 +67,9 @@ builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
 builder.Services.AddScoped<IGenericRepository<Test>, GenericRepository<Test>>();
+builder.Services.AddScoped<IPatientTestRepository, PatientTestRepository>();
+builder.Services.AddScoped<ILabRequestRepository, LabRequestRepository>();
+
 //builder.Services.AddScoped<IGenericRepository<TestParameter>, GenericRepository<TestParameter>>();
 
 builder.Services.AddScoped<IMedicalTestService, MedicalTestService>();

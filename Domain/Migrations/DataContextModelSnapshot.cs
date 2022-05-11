@@ -124,6 +124,36 @@ namespace Domain.Migrations
                     b.ToTable("Department");
                 });
 
+            modelBuilder.Entity("Domain.Models.Labs.LabRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDtm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LabName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("LabRequests");
+                });
+
             modelBuilder.Entity("Domain.Models.Prescription", b =>
                 {
                     b.Property<int>("PrescriptionId")
@@ -331,6 +361,37 @@ namespace Domain.Migrations
                     b.HasDiscriminator<string>("Role").HasValue("User");
                 });
 
+            modelBuilder.Entity("SmartHospital.Models.Labs.PatientTest", b =>
+                {
+                    b.Property<int>("PatientTestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientTestId"), 1L, 1);
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PatientTestId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("PatientTest");
+                });
+
             modelBuilder.Entity("SmartHospital.Models.Labs.Test", b =>
                 {
                     b.Property<int>("Id")
@@ -349,6 +410,64 @@ namespace Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tests");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("TestParameterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestParameterId");
+
+                    b.ToTable("TestDetails", (string)null);
+
+                    b.HasDiscriminator<string>("Type").HasValue("TestDetails");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestParameter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("FieldType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InputPattern")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TestParameterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TestParameters", (string)null);
+
+                    b.HasDiscriminator<string>("Type").HasValue("TestParameter");
                 });
 
             modelBuilder.Entity("Domain.Models.Admin", b =>
@@ -402,6 +521,74 @@ namespace Domain.Migrations
                     b.HasDiscriminator().HasValue("Receptionist");
                 });
 
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestDetailsCategorical", b =>
+                {
+                    b.HasBaseType("SmartHospital.Models.Labs.TestDetails");
+
+                    b.Property<string>("MeasuredValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PatientTestId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("PatientTestId");
+
+                    b.HasDiscriminator().HasValue("Categorical");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestDetailsNumerical", b =>
+                {
+                    b.HasBaseType("SmartHospital.Models.Labs.TestDetails");
+
+                    b.Property<float>("MeasuredValue")
+                        .HasColumnType("real")
+                        .HasColumnName("TestDetailsNumerical_MeasuredValue");
+
+                    b.Property<int>("PatientTestId")
+                        .HasColumnType("int")
+                        .HasColumnName("TestDetailsNumerical_PatientTestId");
+
+                    b.HasIndex("PatientTestId");
+
+                    b.HasDiscriminator().HasValue("Numerical");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestParameterCategorical", b =>
+                {
+                    b.HasBaseType("SmartHospital.Models.Labs.TestParameter");
+
+                    b.Property<string>("Normalvalue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TestId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("TestId");
+
+                    b.HasDiscriminator().HasValue("Categorical");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestParameterNumerical", b =>
+                {
+                    b.HasBaseType("SmartHospital.Models.Labs.TestParameter");
+
+                    b.Property<float>("Max_Range")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Min_Range")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("TestId")
+                        .HasColumnType("int")
+                        .HasColumnName("TestParameterNumerical_TestId");
+
+                    b.HasIndex("TestId");
+
+                    b.HasDiscriminator().HasValue("Numerical");
+                });
+
             modelBuilder.Entity("Domain.Models.Appointment", b =>
                 {
                     b.HasOne("Domain.Models.Doctor", "Doctor")
@@ -450,6 +637,25 @@ namespace Domain.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("Domain.Models.Labs.LabRequest", b =>
+                {
+                    b.HasOne("Domain.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("Domain.Models.Prescription", b =>
@@ -509,9 +715,101 @@ namespace Domain.Migrations
                     b.Navigation("Department");
                 });
 
+            modelBuilder.Entity("SmartHospital.Models.Labs.PatientTest", b =>
+                {
+                    b.HasOne("Domain.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartHospital.Models.Labs.Test", "Test")
+                        .WithMany()
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Test");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestDetails", b =>
+                {
+                    b.HasOne("SmartHospital.Models.Labs.TestParameter", "TestParameter")
+                        .WithMany()
+                        .HasForeignKey("TestParameterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestParameter");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestDetailsCategorical", b =>
+                {
+                    b.HasOne("SmartHospital.Models.Labs.PatientTest", "PatientTest")
+                        .WithMany("CategoricalDetails")
+                        .HasForeignKey("PatientTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PatientTest");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestDetailsNumerical", b =>
+                {
+                    b.HasOne("SmartHospital.Models.Labs.PatientTest", "PatientTest")
+                        .WithMany("NumericalDetails")
+                        .HasForeignKey("PatientTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PatientTest");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestParameterCategorical", b =>
+                {
+                    b.HasOne("SmartHospital.Models.Labs.Test", "Test")
+                        .WithMany("CategoricalParamters")
+                        .HasForeignKey("TestId");
+
+                    b.Navigation("Test");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.TestParameterNumerical", b =>
+                {
+                    b.HasOne("SmartHospital.Models.Labs.Test", "Test")
+                        .WithMany("NumericalParamters")
+                        .HasForeignKey("TestId");
+
+                    b.Navigation("Test");
+                });
+
             modelBuilder.Entity("Domain.Models.Prescription", b =>
                 {
                     b.Navigation("PrescriptionItems");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.PatientTest", b =>
+                {
+                    b.Navigation("CategoricalDetails");
+
+                    b.Navigation("NumericalDetails");
+                });
+
+            modelBuilder.Entity("SmartHospital.Models.Labs.Test", b =>
+                {
+                    b.Navigation("CategoricalParamters");
+
+                    b.Navigation("NumericalParamters");
                 });
 
             modelBuilder.Entity("Domain.Models.Patient", b =>

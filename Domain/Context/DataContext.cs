@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Models;
 using Domain.Models;
 using SmartHospital.Models.Labs;
+using Domain.Models.Labs;
 
 namespace Domain.Context
 {
@@ -29,17 +30,17 @@ namespace Domain.Context
                 .HasValue<Admin>("Admin")
                 .HasValue<Doctor>("Doctor");
 
-            //builder.Entity<TestParameter>()
-            //     .ToTable("TestParameters")
-            //     .HasDiscriminator<string>("Type")
-            //     .HasValue<TestParameterCategorical>("Categorical")
-            //     .HasValue<TestParameterNumerical>("Numerical");
+            builder.Entity<TestParameter>()
+                 .ToTable("TestParameters")
+                 .HasDiscriminator<string>("Type")
+                 .HasValue<TestParameterCategorical>("Categorical")
+                 .HasValue<TestParameterNumerical>("Numerical");
 
-            //builder.Entity<TestDetails>()
-            //    .ToTable("TestDetails")
-            //    .HasDiscriminator<string>("Type")
-            //    .HasValue<TestDetailsCategorical>("Categorical")
-            //    .HasValue<TestDetailsNumerical>("Numerical");
+            builder.Entity<TestDetails>()
+                .ToTable("TestDetails")
+                .HasDiscriminator<string>("Type")
+                .HasValue<TestDetailsCategorical>("Categorical")
+                .HasValue<TestDetailsNumerical>("Numerical");
 
 
 
@@ -70,13 +71,15 @@ namespace Domain.Context
         public DbSet<Receptionist> Receptionists { get; set; }
         public DbSet<Test> Tests { get; set; }
 
-        //public DbSet<Test> Tests { get; set; }
-        //public DbSet<TestDetails> TestDetails { get; set; }
+        public DbSet<PatientTest> patientTests { get; set; }
+        public DbSet<TestDetailsCategorical> TestDetailsCategoricals { get; set; }
+        public DbSet<TestDetailsNumerical> TestDetailsNumericals { get; set; }
 
-        //public DbSet<TestParameter> TestParameters { get; set; }
+        public DbSet<TestParameterCategorical> TestParametersCategoricals { get; set; }
+        public DbSet<TestParameterNumerical> TestParameterNumericals { get; set; }
+        public DbSet<LabRequest> LabRequests { get; set; }
+        public DbSet<PatientTest> PatientTests { get; set; }
 
-        //public DbSet<PatientTest> patientTests { get; set; }
-        //public DbSet<Scan> Scans { get; set; }
 
         //public DbSet<Bill> Bills { get; set; }
 
