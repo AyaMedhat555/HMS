@@ -79,6 +79,10 @@ namespace Domain.Context
         public DbSet<TestParameterNumerical> TestParameterNumericals { get; set; }
         public DbSet<LabRequest> LabRequests { get; set; }
         public DbSet<PatientTest> PatientTests { get; set; }
+        public DbSet<ScanRequest> ScanRequests { get; set; }
+        public DbSet<PatientScan> PatientScans { get; set; }
+
+
 
 
         //public DbSet<Bill> Bills { get; set; }
