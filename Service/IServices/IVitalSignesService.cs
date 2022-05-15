@@ -10,13 +10,9 @@ namespace Service.IServices
 {
     public interface IVitalSignesService
     {
-        Task<IEnumerable<VitalSigns>> GetAllVitalSigns();
-
-        Task<VitalSigns> AddVitalSignes(VitalSignesDto VitalSignesDto);
-
-        Task<VitalSigns> GetById(int id);
-
-        Task<VitalSigns> DeleteVitalSigns(int id);
-        Task<VitalSigns> UpdateVitalSigns(VitalSigns VitalSigns);
+        Task<IEnumerable<VitalSign>> GetAllVitalSigns();
+        Task<VitalSign> GetById(int id);
+        Task<VitalSign> DeleteVitalSigns(int id);
+        Task<VitalSign> UpdateVitalSigns(VitalSign VitalSign);
     }
 }

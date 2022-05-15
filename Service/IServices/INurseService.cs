@@ -1,5 +1,7 @@
 ﻿using Domain.Models;
+using Repository.Repositories;
 using Service.DTO;
+using Service.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +18,7 @@ namespace Service.IServices
         Task<NurseDto> GetNurseById(int Nurse_id);
         Task<Nurse> DeleteNurse(int Nurse_id);
         Task<NurseDto> GetNurseByName(String Nursename);
+        Task<VitalSign> AddVitalSignes(VitalSigneDto VitalSignesDto);
+        Task<IEnumerable<VitalResponce>> GetVitalSignesByRangeOfDate(int PatientId, DateTime StartDate, DateTime EndDate);
     }
 }

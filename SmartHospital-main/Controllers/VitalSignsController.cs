@@ -18,12 +18,6 @@ namespace SmartHospital.Controllers
            
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddVitalSignes([FromBody] VitalSignesDto VitalSigns)
-        {
-
-
-            return Ok(await VitalSignsService.AddVitalSignes(VitalSigns));
-        }
+        
     }
 }

@@ -28,10 +28,10 @@ namespace Service.Services
             
 
         }
-        public async Task<VitalSigns> AddVitalSignes(VitalSignesDto VitalSignesDto)
+        public async Task<VitalSign> AddVitalSignes(VitalSigneDto VitalSignesDto)
 
         {
-            var vitalsigns = new VitalSigns
+            var vitalsigns = new VitalSign
             {
                 Pressure = VitalSignesDto.Pressure,
                 PulseRate = VitalSignesDto.PulseRate,
@@ -55,22 +55,22 @@ namespace Service.Services
         public Nurse Nurse { get; set; }
         public int NurseId { get; set; }
 
-        public async Task<VitalSigns> UpdateVitalSigns(VitalSigns VitalSigns)
+        public async Task<VitalSign> UpdateVitalSigns(VitalSign VitalSigns)
         {
             return await VitalSignsRepository.Update(VitalSigns);
         }
 
-        public async Task<VitalSigns> DeleteVitalSigns(int id)
+        public async Task<VitalSign> DeleteVitalSigns(int id)
         {
             return await VitalSignsRepository.Delete(id);
         }
 
-        public async Task<IEnumerable<VitalSigns>> GetAllVitalSigns()
+        public async Task<IEnumerable<VitalSign>> GetAllVitalSigns()
         {
             return await VitalSignsRepository.GetAll().ToListAsync();
         }
 
-        public async Task<VitalSigns> GetById(int id)
+        public async Task<VitalSign> GetById(int id)
         {
             return await VitalSignsRepository.GetById(id);
         }
