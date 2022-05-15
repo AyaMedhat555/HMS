@@ -102,6 +102,32 @@ namespace SmartHospital.Controllers
         {
             return Ok(await DoctorService.UpdatePrescription(PrescriptionDto));
         }
+
+        [HttpGet("GetSchedulesByDepartment_Id/{Department_ID}")]
+        public async Task<IActionResult> GetSchedulesByDepartment_Id([FromRoute] int Department_ID)
+        {
+            return Ok(await DoctorService.GetSchedulesByDepartment_Id(Department_ID));
+        }
+
+        [HttpGet("GetDoctorsByDepartment_Id/{Department_ID}")]
+        public async Task<IActionResult> GetDoctorsByDepartment_Id([FromRoute] int Department_ID)
+        {
+            return Ok(await DoctorService.GetDoctorsByDepartment_Id(Department_ID));
+        }
+       
+
+
+        [HttpGet(" GetSchedulesByDoctor_Id/{Doctor_ID}")]
+        public async Task<IActionResult> GetSchedulesByDoctor_Id([FromRoute] int Doctor_ID)
+        {
+            return Ok(await DoctorService.GetSchedulesByDoctor_Id(Doctor_ID));
+        }
+
+        [HttpPut("updateSchedule")]
+        public async Task<IActionResult> Update(scheduleDto ScheduleDto)
+        {
+            return Ok(await DoctorService.UpdateSchedule(ScheduleDto));
+        }
     }
       }
 

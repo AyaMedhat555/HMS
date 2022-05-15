@@ -33,5 +33,8 @@ namespace SmartHospital.Controllers
             }
             return Ok(schedules);
         }
+
+
+        
     }
 }

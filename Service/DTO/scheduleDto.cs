@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Service.DTO
@@ -10,7 +11,7 @@ namespace Service.DTO
     {
         public int DoctorId { get; set; }
 
-
+        
         public DayOfWeek DayOfWork { get; set; }
 
         public string StartTime { get; set; }

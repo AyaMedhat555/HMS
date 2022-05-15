@@ -28,5 +28,10 @@ namespace Repository.Repositories
             }
             return user;
         }
+
+        public IQueryable<IndoorPatient> GetAllInDoorPatients(int Department_Id)
+        {
+          return  _unitOfWork.Context.IndoorPatients.Where(I=> (I.In==true) && (I.DepartmentId== Department_Id));
+        }
     }
 }

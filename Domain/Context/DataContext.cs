@@ -90,7 +90,7 @@ namespace Domain.Context
         //public DbSet<Donner> Donners { get; set; }
         //public DbSet<BloodBank> BloodBanks { get; set; }
         //public DbSet<Note> Notes { get; set; }
-        //public DbSet<IndoorPatient> IndoorPatients { get; set; }
+        public DbSet<IndoorPatient> IndoorPatients { get; set; }
        // public DbSet<ClinicPatient> ClinicPatients { get; set; }
        // public DbSet<VitalSigns> VitalSigns { get; set; }
         public DbSet<TimeSlot> TimeSlots { get; set; }

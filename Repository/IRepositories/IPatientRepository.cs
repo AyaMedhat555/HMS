@@ -10,5 +10,6 @@ namespace Repository.IRepositories
     public interface IPatientRepository : IGenericRepository<Patient>
     {
         Task<Patient> FindByName(String username);
+        IQueryable<IndoorPatient> GetAllInDoorPatients(bool In);
     }
 }

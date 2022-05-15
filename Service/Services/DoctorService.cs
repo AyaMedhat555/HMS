@@ -16,11 +16,13 @@ namespace Service.Services
     {
         private IDoctorRepository DoctorRepository { get; }
         private IPrescriptionRepository PrescriptionRepository { get; }
-       
-        public DoctorService(IDoctorRepository _DoctorRepository, IPrescriptionRepository _PrescriptionRepository)
+        private IScheduleRepository ScheduleRepository { get; }
+
+        public DoctorService(IDoctorRepository _DoctorRepository, IPrescriptionRepository _PrescriptionRepository, IScheduleRepository _ScheduleRepository)
         {
             DoctorRepository = _DoctorRepository;
             PrescriptionRepository = _PrescriptionRepository;
+            ScheduleRepository = _ScheduleRepository;
         }
 
         public async Task<Doctor> AddDoctor(DoctorDto dto)
@@ -32,7 +34,7 @@ namespace Service.Services
                 Age = dto.Age,
                 NationalId = dto.NationalId,
                 BloodType = dto.BloodType,
-                PhoneNumber = dto.PhoneNumber,
+                PhoneNumber = dto.PhoneNumber, 
                 Gender = dto.Gender,
                 
                 Address = dto.Address,
@@ -137,5 +139,80 @@ namespace Service.Services
 
             return await PrescriptionRepository.Update(Prescription);
         }
+
+        public async Task<IEnumerable<ScheduleResponce>> GetSchedulesByDepartment_Id(int Department_ID)
+        {
+            List<Doctor> Doctors = await ScheduleRepository.GetDoctorsByDepartment_Id(Department_ID).ToListAsync();
+
+            List<Schedule> schedules;
+            List<ScheduleResponce> ScheduleResponces = new List<ScheduleResponce>();
+
+
+           
+
+            for (int i = 0; i < Doctors.Count; i++)
+            {
+
+                schedules = await ScheduleRepository.GetScheduleByDoctor_Id(Doctors[i].Id).ToListAsync();
+                ScheduleResponces.Add(new ScheduleResponce()
+                {
+                    DoctorId=Doctors[i].Id,
+                    DoctorName=Doctors[i].FirstName+ Doctors[i].LastName,
+                    ScheduleObjects =schedules.Select(S => new ScheduleObject()
+                {
+                    DayOfWork=S.DayOfWork,
+                    StartTime=S.StartTime.ToString(),
+                    EndTime=S.EndTime.ToString(),
+                    TimePerPatient=S.TimePerPatient.ToString()
+
+                    }).ToList()
+
+
+
+            });
+
+                 
+
+            }
+            return ScheduleResponces;
+        }
+
+        public async Task<IEnumerable<Doctor>> GetDoctorsByDepartment_Id(int Department_ID)
+        {
+           return await  ScheduleRepository.GetDoctorsByDepartment_Id(Department_ID).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Schedule>> GetSchedulesByDoctor_Id(int Doctor_Id)
+        {
+            return await ScheduleRepository.GetScheduleByDoctor_Id(Doctor_Id).ToListAsync();
+        }
+
+        public async Task<Schedule> UpdateSchedule(scheduleDto ScheduleDto)
+        {
+
+            var Schedule = new Schedule()
+            {
+                DoctorId=ScheduleDto.DoctorId,
+                StartTime= TimeSpan.Parse(ScheduleDto.StartTime),
+                EndTime= TimeSpan.Parse(ScheduleDto.EndTime),
+                TimePerPatient= TimeSpan.Parse(ScheduleDto.TimePerPatient),
+                DayOfWork=ScheduleDto.DayOfWork
+            };
+            return await ScheduleRepository.Update(Schedule);
+        }
+
+        //public async Task<IEnumerable<scheduleDto>> GetSchedulesByDoctorId(int Department_ID)
+        //{
+        //   return await ScheduleRepository.GetSchedulesByDoctorId(Department_ID).Select(S=>new scheduleDto()
+        //   {
+        //       DoctorId =S.DoctorId,
+        //       DoctorName=S.Doctor.FirstName+S.Doctor.LastName,
+        //       StartTime = S.StartTime.ToString(),
+        //       EndTime =S.EndTime.ToString(),
+        //       TimePerPatient=S.TimePerPatient.ToString(),
+        //       DayOfWork=S.DayOfWork
+
+        //   }).ToListAsync();
+        //}
     }
 }

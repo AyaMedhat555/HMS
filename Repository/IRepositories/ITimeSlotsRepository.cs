@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Repository.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,10 @@ namespace Repository.IRepositories
         ////IEnumerable<TimeSlot> GetAllDoctorTimeSlotsById(int doctorid);
 
          IQueryable<TimeSlot> GetAllTimeSlots(int doctor_id);
+
+        //IQueryable<FullSlots> GetFreeTimeSlots(int doctor_id);
+        IQueryable<Appointment> GetReservedAppointments(int doctor_id);
+
+        IQueryable<TimeSlot> GetFreeSlots(int doctor_id,TimeSpan ReservedTime);
     }
 }
