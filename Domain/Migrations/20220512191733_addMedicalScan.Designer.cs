@@ -4,6 +4,7 @@ using Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220512191733_addMedicalScan")]
+    partial class addMedicalScan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,32 +155,8 @@ namespace Domain.Migrations
 
                     b.ToTable("LabRequests");
                 });
-            
-	    modelBuilder.Entity("Domain.Models.Note", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Note");
-                });
-            
-	    modelBuilder.Entity("Domain.Models.Labs.PatientScan", b =>
+            modelBuilder.Entity("Domain.Models.Labs.PatientScan", b =>
                 {
                     b.Property<int>("PatientScanId")
                         .ValueGeneratedOnAdd()
@@ -266,9 +244,7 @@ namespace Domain.Migrations
                     b.ToTable("ScanRequests");
                 });
 
-
-
-	    modelBuilder.Entity("Domain.Models.Prescription", b =>
+            modelBuilder.Entity("Domain.Models.Prescription", b =>
                 {
                     b.Property<int>("PrescriptionId")
                         .ValueGeneratedOnAdd()
@@ -473,53 +449,6 @@ namespace Domain.Migrations
                     b.ToTable("Users", (string)null);
 
                     b.HasDiscriminator<string>("Role").HasValue("User");
-                });
-
-            modelBuilder.Entity("Domain.Models.VitalSign", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<byte[]>("ECG")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<int>("NoteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NurseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Patientid")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Pressure")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PulseRate")
-                        .HasColumnType("int");
-
-                    b.Property<float>("RespirationRate")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Temperature")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("vitals_date")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NoteId");
-
-                    b.HasIndex("NurseId");
-
-                    b.HasIndex("Patientid");
-
-                    b.ToTable("VitalSigns");
                 });
 
             modelBuilder.Entity("SmartHospital.Models.Labs.PatientTest", b =>
@@ -920,33 +849,6 @@ namespace Domain.Migrations
                         .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("Domain.Models.VitalSign", b =>
-                {
-                    b.HasOne("Domain.Models.Note", "Note")
-                        .WithMany()
-                        .HasForeignKey("NoteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.Nurse", "Nurse")
-                        .WithMany()
-                        .HasForeignKey("NurseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("Patientid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Note");
-
-                    b.Navigation("Nurse");
-
-                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("SmartHospital.Models.Labs.PatientTest", b =>

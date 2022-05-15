@@ -1,5 +1,6 @@
 
 using Domain.Context;
+using Domain.Models.Labs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -70,9 +71,13 @@ builder.Services.AddScoped<IGenericRepository<Test>, GenericRepository<Test>>();
 builder.Services.AddScoped<IPatientTestRepository, PatientTestRepository>();
 builder.Services.AddScoped<ILabRequestRepository, LabRequestRepository>();
 
-//builder.Services.AddScoped<IGenericRepository<TestParameter>, GenericRepository<TestParameter>>();
+builder.Services.AddScoped<IGenericRepository<Scan>, GenericRepository<Scan>>();
+builder.Services.AddScoped<IPatientScanRepository, PatientScanRepository>();
+builder.Services.AddScoped<IScanRequestRepository, ScanRequestRepository>();
 
 builder.Services.AddScoped<IMedicalTestService, MedicalTestService>();
+builder.Services.AddScoped<IMedicalScanService, MedicalScanService>();
+
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
