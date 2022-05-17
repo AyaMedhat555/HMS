@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Labs;
+using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
 using System;
@@ -22,7 +23,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientScans.Where(
 
-               P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id)).OrderByDescending(P => P.ScanDate);
+               P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id)).Include(P => P.Scan).OrderByDescending(P => P.ScanDate);
 
         }
 
@@ -30,13 +31,13 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientScans.Where(
 
-                P => P.DoctorId == doctor_id).OrderByDescending(P => P.ScanDate); ;
+                P => P.DoctorId == doctor_id).Include(P => P.Scan).OrderByDescending(P => P.ScanDate); ;
         }
 
         public IQueryable<PatientScan> GetAllPatientScansForAll()
         {
 
-            return _unitOfWork.Context.PatientScans.OrderByDescending(P => P.ScanDate);
+            return _unitOfWork.Context.PatientScans.Include(P => P.Scan).OrderByDescending(P => P.ScanDate);
 
         }
 
@@ -44,7 +45,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientScans.Where(
 
-                P => P.PatientId== Patient_id).OrderByDescending(P => P.ScanDate);
+                P => P.PatientId== Patient_id).Include(P => P.Scan).OrderByDescending(P => P.ScanDate);
 
         }
 
@@ -52,7 +53,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientScans.Where(
 
-               P => (P.DoctorId == doctor_id) && (P.ScanDate == PatientScanDate));
+               P => (P.DoctorId == doctor_id) && (P.ScanDate == PatientScanDate)).Include(P => P.Scan);
 
         }
 
@@ -60,7 +61,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientScans.Where(
 
-               P => (P.PatientId == Patient_id) && (P.ScanDate == PatientScanDate));
+               P => (P.PatientId == Patient_id) && (P.ScanDate == PatientScanDate)).Include(P => P.Scan);
 
 
         }

@@ -23,7 +23,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientTests.Where(
 
-               P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).OrderByDescending(P => P.TestDate);
+               P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).OrderByDescending(P => P.TestDate);
 
         }
 
@@ -31,13 +31,13 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientTests.Where(
 
-                P => P.DoctorId == doctor_id).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).OrderByDescending(P => P.TestDate); ;
+                P => P.DoctorId == doctor_id).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).OrderByDescending(P => P.TestDate); ;
         }
 
         public IQueryable<PatientTest> GetAllPatientTestsForAll()
         {
 
-            return _unitOfWork.Context.PatientTests.Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).OrderByDescending(P => P.TestDate);
+            return _unitOfWork.Context.PatientTests.Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).OrderByDescending(P => P.TestDate);
 
         }
 
@@ -45,7 +45,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientTests.Where(
 
-                P => P.PatientId== Patient_id).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).OrderByDescending(P => P.TestDate);
+                P => P.PatientId== Patient_id).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).OrderByDescending(P => P.TestDate);
 
         }
 
@@ -53,7 +53,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientTests.Where(
 
-               P => (P.DoctorId == doctor_id) && (P.TestDate == PatientTestDate)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails);
+               P => (P.DoctorId == doctor_id) && (P.TestDate == PatientTestDate)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test);
 
         }
 
@@ -61,7 +61,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientTests.Where(
 
-               P => (P.PatientId == Patient_id) && (P.TestDate == PatientTestDate)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails);
+               P => (P.PatientId == Patient_id) && (P.TestDate == PatientTestDate)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test);
 
 
         }

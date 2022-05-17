@@ -14,6 +14,6 @@ namespace Service.IServices
         Task<IEnumerable<Department>> GetAllDepartments();
         Task<Department> UpdateDepartment(Department department);
         Task<Department> DeleteDepartment(int id);
-        Task<IEnumerable<DepartmentsEmps>> GetAllDepartmentsEmps();
+        Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsEmps();
     }
 }

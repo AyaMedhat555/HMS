@@ -64,9 +64,10 @@ namespace Service.Services
 
         public async Task<ScanRequest> AddScanRequest(ScanRequestDto ScanRequest)
         {
+            int scanId = await ScanRepository.GetAll().Where(S => S.ScanName == ScanRequest.ScanName).Select(T => T.Id).SingleOrDefaultAsync();
             ScanRequest newScanRequest = new ScanRequest()
             {
-                ScanName = ScanRequest.ScanName,
+                ScanId = scanId,
                 CreatedDtm = DateTime.Now,
                 DoctorId = ScanRequest.DoctorId,
                 PatientId = ScanRequest.PatientId
@@ -81,10 +82,10 @@ namespace Service.Services
 
         public async Task<ScanRequest> UpdateScanRequest(ScanRequestDto ScanRequest)
         {
+            int scanId = await ScanRepository.GetAll().Where(S => S.ScanName == ScanRequest.ScanName).Select(T => T.Id).SingleOrDefaultAsync();
             ScanRequest newScanRequest = new ScanRequest()
             {
-                Id = ScanRequest.Id,
-                ScanName = ScanRequest.ScanName,
+                ScanId = scanId,
                 CreatedDtm = DateTime.Now,
                 DoctorId = ScanRequest.DoctorId,
                 PatientId = ScanRequest.PatientId
@@ -92,34 +93,131 @@ namespace Service.Services
             return await ScanRequestRepository.Update(newScanRequest);
         }
 
-        public async Task<ScanRequest> GetScanRequestById(int Scan_id)
+        public async Task<ScanRequestResponse> GetScanRequestById(int Scan_id)
         {
-            return await ScanRequestRepository.GetById(Scan_id);
+            ScanRequest scanRequest = await ScanRequestRepository.GetById(Scan_id);
+            ScanRequestResponse scanRequestResponse = new ScanRequestResponse()
+            {
+                Id = scanRequest.Id,
+                ScanName = scanRequest.Scan.ScanName,
+                ScanId = scanRequest.Scan.Id,
+                CreatedDtm = scanRequest.CreatedDtm,
+                DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName,
+                PatientName = scanRequest.Patient.FirstName+" "+scanRequest.Patient.LastName,
+                DoctorId = scanRequest.DoctorId,
+                PatientId = scanRequest.PatientId
+            };
+            return scanRequestResponse;
         }
 
-        public async Task<IEnumerable<ScanRequest>> GetScanRequestsByPatientId(int Patinet_id)
+        public async Task<IEnumerable<ScanRequestResponse>> GetScanRequestsByPatientId(int Patinet_id)
         {
-            return await ScanRequestRepository.GetAllScanRequestsForPatient(Patinet_id).ToListAsync();
+            List<ScanRequest> requests = await ScanRequestRepository.GetAllScanRequestsForPatient(Patinet_id).ToListAsync();
+            List<ScanRequestResponse> requestsResponse = new List<ScanRequestResponse>();
+            foreach (ScanRequest scanRequest in requests)
+            {
+                ScanRequestResponse response = new ScanRequestResponse()
+                {
+                    Id = scanRequest.Id,
+                    ScanName = scanRequest.Scan.ScanName,
+                    ScanId = scanRequest.Scan.Id,
+                    CreatedDtm = scanRequest.CreatedDtm,
+                    DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName,
+                    PatientName = scanRequest.Patient.FirstName+" "+scanRequest.Patient.LastName,
+                    DoctorId = scanRequest.DoctorId,
+                    PatientId = scanRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
-        public async Task<IEnumerable<ScanRequest>> GetScanRequestsByDoctorId(int Doctor_id)
+        public async Task<IEnumerable<ScanRequestResponse>> GetScanRequestsByDoctorId(int Doctor_id)
         {
-            return await ScanRequestRepository.GetAllScanRequestsByDocId(Doctor_id).ToListAsync();
+            List<ScanRequest> requests = await ScanRequestRepository.GetAllScanRequestsByDocId(Doctor_id).ToListAsync();
+            List<ScanRequestResponse> requestsResponse = new List<ScanRequestResponse>();
+            foreach (ScanRequest scanRequest in requests)
+            {
+                ScanRequestResponse response = new ScanRequestResponse()
+                {
+                    Id = scanRequest.Id,
+                    ScanName = scanRequest.Scan.ScanName,
+                    ScanId = scanRequest.Scan.Id,
+                    CreatedDtm = scanRequest.CreatedDtm,
+                    DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName,
+                    PatientName = scanRequest.Patient.FirstName+" "+scanRequest.Patient.LastName,
+                    DoctorId = scanRequest.DoctorId,
+                    PatientId = scanRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
-        public async Task<IEnumerable<ScanRequest>> GetDoctorScanRequestsByDate(int Doctor_id, DateTime date)
+        public async Task<IEnumerable<ScanRequestResponse>> GetDoctorScanRequestsByDate(int Doctor_id, DateTime date)
         {
-            return await ScanRequestRepository.GetDoctorScanRequestsByDate(Doctor_id, date).ToListAsync();
+            List<ScanRequest> requests = await ScanRequestRepository.GetDoctorScanRequestsByDate(Doctor_id, date).ToListAsync();
+            List<ScanRequestResponse> requestsResponse = new List<ScanRequestResponse>();
+            foreach (ScanRequest scanRequest in requests)
+            {
+                ScanRequestResponse response = new ScanRequestResponse()
+                {
+                    Id = scanRequest.Id,
+                    ScanName = scanRequest.Scan.ScanName,
+                    ScanId = scanRequest.Scan.Id,
+                    CreatedDtm = scanRequest.CreatedDtm,
+                    DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName,
+                    PatientName = scanRequest.Patient.FirstName+" "+scanRequest.Patient.LastName,
+                    DoctorId = scanRequest.DoctorId,
+                    PatientId = scanRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
-        public async Task<IEnumerable<ScanRequest>> GetPatientScanRequestsByDate(int Patient_id, DateTime date)
+        public async Task<IEnumerable<ScanRequestResponse>> GetPatientScanRequestsByDate(int Patient_id, DateTime date)
         {
-            return await ScanRequestRepository.GetPatientScanRequestByDate(Patient_id, date).ToListAsync();
+            List<ScanRequest> requests = await ScanRequestRepository.GetPatientScanRequestByDate(Patient_id, date).ToListAsync();
+            List<ScanRequestResponse> requestsResponse = new List<ScanRequestResponse>();
+            foreach (ScanRequest scanRequest in requests)
+            {
+                ScanRequestResponse response = new ScanRequestResponse()
+                {
+                    Id = scanRequest.Id,
+                    ScanName = scanRequest.Scan.ScanName,
+                    ScanId = scanRequest.Scan.Id,
+                    CreatedDtm = scanRequest.CreatedDtm,
+                    DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName,
+                    PatientName = scanRequest.Patient.FirstName+" "+scanRequest.Patient.LastName,
+                    DoctorId = scanRequest.DoctorId,
+                    PatientId = scanRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
-        public async Task<IEnumerable<ScanRequest>> GetAllScanRequests()
+        public async Task<IEnumerable<ScanRequestResponse>> GetAllScanRequests()
         {
-            return await ScanRequestRepository.GetAll().ToListAsync();
+            List<ScanRequest> requests = await ScanRequestRepository.GetAll().ToListAsync();
+            List<ScanRequestResponse> requestsResponse = new List<ScanRequestResponse>();
+            foreach (ScanRequest scanRequest in requests)
+            {
+                ScanRequestResponse response = new ScanRequestResponse()
+                {
+                    Id = scanRequest.Id,
+                    ScanName = scanRequest.Scan.ScanName,
+                    ScanId = scanRequest.Scan.Id,
+                    CreatedDtm = scanRequest.CreatedDtm,
+                    DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName,
+                    PatientName = scanRequest.Patient.FirstName+" "+scanRequest.Patient.LastName,
+                    DoctorId = scanRequest.DoctorId,
+                    PatientId = scanRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
 
@@ -130,19 +228,17 @@ namespace Service.Services
         public async Task<PatientScan> AddPatientScan(PatientScanDto Scan)
         {
             int ReqId = Scan.ScanRequestId;
-            ScanRequest scanRequest = GetScanRequestById(ReqId).Result;
-
-            int ScanId = await ScanRepository.GetAll().Where(T => T.ScanName == scanRequest.ScanName).Select(T => T.Id).SingleOrDefaultAsync();
+            ScanRequest scanRequest = await ScanRequestRepository.GetById(ReqId);
             PatientScan newScan = new PatientScan()
             {
                 Image = Scan.Image,
                 WrittenReport = Scan.WrittenReport,
-                ScanDate = Scan.ScanDate,
+                ScanDate = DateTime.Now,
                 DoctorId = scanRequest.DoctorId,
                 PatientId = scanRequest.PatientId,
-                ScanId = ScanId
+                ScanId = scanRequest.ScanId
             };
-            DeleteScanRequest(ReqId);
+            await DeleteScanRequest(ReqId);
             return await PatientScanRepository.Add(newScan);
         }
 
@@ -154,9 +250,7 @@ namespace Service.Services
         public async Task<PatientScan> UpdatePatientScan(PatientScanDto Scan)
         {
             int ReqId = Scan.ScanRequestId;
-            ScanRequest scanRequest = GetScanRequestById(ReqId).Result;
-
-            int ScanId = await ScanRepository.GetAll().Where(T => T.ScanName == scanRequest.ScanName).Select(T => T.Id).SingleOrDefaultAsync();
+            ScanRequest scanRequest = await ScanRequestRepository.GetById(ReqId);
             PatientScan newScan = new PatientScan()
             {
                 Image = Scan.Image,
@@ -164,51 +258,130 @@ namespace Service.Services
                 ScanDate = Scan.ScanDate,
                 DoctorId = scanRequest.DoctorId,
                 PatientId = scanRequest.PatientId,
-                ScanId = ScanId
+                ScanId = scanRequest.ScanId
             };
             return await PatientScanRepository.Update(newScan);
         }
 
-        public async Task<PateintScanResponse> GetPatientScanById(int Scan_id)
+        public async Task<PatientScanResponse> GetPatientScanById(int Scan_id)
         {
             PatientScan patientScan = await PatientScanRepository.GetById(Scan_id);
-            string ScanName = ScanRepository.GetAll().Where(T => T.Id == patientScan.ScanId).Select(T => T.ScanName).SingleOrDefault();
-            PateintScanResponse pateintScanResponse = new PateintScanResponse()
+            PatientScanResponse pateintScanResponse = new PatientScanResponse()
             {
                 Image = patientScan.Image,
                 WrittenReport = patientScan.WrittenReport,
                 DoctorId = patientScan.DoctorId,
                 PatientId = patientScan.PatientId,
-                ScanName = ScanName,
+                ScanName = patientScan.Scan.ScanName,
                 PatientScanId = patientScan.PatientScanId,
                 ScanDate = patientScan.ScanDate
             };
             return pateintScanResponse;
         }
 
-        public async Task<IEnumerable<PatientScan>> GetPatientScansByPatientId(int Patient_id)
+        public async Task<IEnumerable<PatientScanResponse>> GetPatientScansByPatientId(int Patient_id)
         {
-            return await PatientScanRepository.GetAllPatientScansForPatient(Patient_id).ToListAsync();
+            List<PatientScan> patientScans =  await PatientScanRepository.GetAllPatientScansForPatient(Patient_id).ToListAsync();
+            List<PatientScanResponse> patientScansResponses = new List<PatientScanResponse>();
+            foreach(var patientScan in patientScans)
+            {
+                PatientScanResponse pateintScanResponse = new PatientScanResponse()
+                {
+                    Image = patientScan.Image,
+                    WrittenReport = patientScan.WrittenReport,
+                    DoctorId = patientScan.DoctorId,
+                    PatientId = patientScan.PatientId,
+                    ScanName = patientScan.Scan.ScanName,
+                    PatientScanId = patientScan.PatientScanId,
+                    ScanDate = patientScan.ScanDate
+                };
+                patientScansResponses.Add(pateintScanResponse);
+            }
+            return patientScansResponses;
         }
 
-        public async Task<IEnumerable<PatientScan>> GetPatientScansByDoctorId(int Doctor_id)
+        public async Task<IEnumerable<PatientScanResponse>> GetPatientScansByDoctorId(int Doctor_id)
         {
-            return await PatientScanRepository.GetAllPatientScansByDocId(Doctor_id).ToListAsync();
+            List<PatientScan> patientScans = await PatientScanRepository.GetAllPatientScansByDocId(Doctor_id).ToListAsync();
+            List<PatientScanResponse> patientScansResponses = new List<PatientScanResponse>();
+            foreach (var patientScan in patientScans)
+            {
+                PatientScanResponse pateintScanResponse = new PatientScanResponse()
+                {
+                    Image = patientScan.Image,
+                    WrittenReport = patientScan.WrittenReport,
+                    DoctorId = patientScan.DoctorId,
+                    PatientId = patientScan.PatientId,
+                    ScanName = patientScan.Scan.ScanName,
+                    PatientScanId = patientScan.PatientScanId,
+                    ScanDate = patientScan.ScanDate
+                };
+                patientScansResponses.Add(pateintScanResponse);
+            }
+            return patientScansResponses;
         }
 
-        public async Task<IEnumerable<PatientScan>> GetPatientScansByDate(int Patient_id, DateTime date)
+        public async Task<IEnumerable<PatientScanResponse>> GetPatientScansByDate(int Patient_id, DateTime date)
         {
-            return await PatientScanRepository.GetPatientScanByDate(Patient_id, date).ToListAsync();
+            List<PatientScan> patientScans = await PatientScanRepository.GetPatientScanByDate(Patient_id, date).ToListAsync();
+            List<PatientScanResponse> patientScansResponses = new List<PatientScanResponse>();
+            foreach (var patientScan in patientScans)
+            {
+                PatientScanResponse pateintScanResponse = new PatientScanResponse()
+                {
+                    Image = patientScan.Image,
+                    WrittenReport = patientScan.WrittenReport,
+                    DoctorId = patientScan.DoctorId,
+                    PatientId = patientScan.PatientId,
+                    ScanName = patientScan.Scan.ScanName,
+                    PatientScanId = patientScan.PatientScanId,
+                    ScanDate = patientScan.ScanDate
+                };
+                patientScansResponses.Add(pateintScanResponse);
+            }
+            return patientScansResponses;
         }
 
-        public async Task<IEnumerable<PatientScan>> GetDoctorScansByDate(int Doctor_id, DateTime date)
+        public async Task<IEnumerable<PatientScanResponse>> GetDoctorScansByDate(int Doctor_id, DateTime date)
         {
-            return await PatientScanRepository.GetDoctorScansByDate(Doctor_id, date).ToListAsync();
+            List<PatientScan> patientScans = await PatientScanRepository.GetDoctorScansByDate(Doctor_id, date).ToListAsync();
+            List<PatientScanResponse> patientScansResponses = new List<PatientScanResponse>();
+            foreach (var patientScan in patientScans)
+            {
+                PatientScanResponse pateintScanResponse = new PatientScanResponse()
+                {
+                    Image = patientScan.Image,
+                    WrittenReport = patientScan.WrittenReport,
+                    DoctorId = patientScan.DoctorId,
+                    PatientId = patientScan.PatientId,
+                    ScanName = patientScan.Scan.ScanName,
+                    PatientScanId = patientScan.PatientScanId,
+                    ScanDate = patientScan.ScanDate
+                };
+                patientScansResponses.Add(pateintScanResponse);
+            }
+            return patientScansResponses;
         }
 
-        public async Task<IEnumerable<PatientScan>> GetallPatientScans()
+        public async Task<IEnumerable<PatientScanResponse>> GetallPatientScans()
         {
-            return await PatientScanRepository.GetAll().ToListAsync();
+            List<PatientScan> patientScans = await PatientScanRepository.GetAll().ToListAsync();
+            List<PatientScanResponse> patientScansResponses = new List<PatientScanResponse>();
+            foreach (var patientScan in patientScans)
+            {
+                PatientScanResponse pateintScanResponse = new PatientScanResponse()
+                {
+                    Image = patientScan.Image,
+                    WrittenReport = patientScan.WrittenReport,
+                    DoctorId = patientScan.DoctorId,
+                    PatientId = patientScan.PatientId,
+                    ScanName = patientScan.Scan.ScanName,
+                    PatientScanId = patientScan.PatientScanId,
+                    ScanDate = patientScan.ScanDate
+                };
+                patientScansResponses.Add(pateintScanResponse);
+            }
+            return patientScansResponses;
         }
 
     }

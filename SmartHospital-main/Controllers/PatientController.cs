@@ -20,8 +20,17 @@ namespace SmartHospital.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPatient([FromBody] PatientDto dto)
         {
-            return Ok(await PatientService.AddPatient(dto));
+            Console.WriteLine(dto.ToString());
+            //check if username already used
+            var user = await PatientService.GetUserByName(dto.UserName);
+            if (user != null)
+            {
+                return Ok("Username already taken.");
+            }
+            await PatientService.AddPatient(dto);
+            return Ok("User: "+dto.UserName+" was added successfully!");
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute] int id)
@@ -40,6 +49,7 @@ namespace SmartHospital.Controllers
         {
             return Ok(await PatientService.GetAllPatients());
         }
+
 
         [HttpPut("update")]
         public async Task<IActionResult> Update(PatientDto userDto)

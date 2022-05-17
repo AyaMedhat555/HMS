@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Domain.Models
 {
@@ -22,7 +23,9 @@ namespace Domain.Models
         [NotMapped]
         public string Role { get; set; }
 
+        [JsonIgnore]
         public Department Department { get; set; }
+        public bool IsActive { get; set; } = true;
         public int? DepartmentId { get; set; }
 
     }

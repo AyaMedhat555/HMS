@@ -16,6 +16,8 @@ namespace Service.IServices
         Task<Nurse> UpdateNurse(NurseDto doc_dto);
         Task<IEnumerable<NurseDto>> GetAllNurses();
         Task<NurseDto> GetNurseById(int Nurse_id);
+        Task<IEnumerable<NurseDto>> GetNursesByState(bool state);
+        Task<IEnumerable<NurseDto>> GetNursesBySpecialization(string specialization);
         Task<Nurse> DeleteNurse(int Nurse_id);
         Task<NurseDto> GetNurseByName(String Nursename);
         Task<VitalSign> AddVitalSignes(VitalSigneDto VitalSignesDto);

@@ -12,6 +12,6 @@ namespace Service.DTO
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string DocDegree { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Docspecialization { get; set; }
+        public string DocSpecialization { get; set; }
     }
 }

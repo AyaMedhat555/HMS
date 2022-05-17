@@ -28,6 +28,16 @@ namespace Repository.Repositories
             }
             return user;
         }
+
+        public IQueryable<Nurse> GetNursesBySpecialization(string specialization)
+        {
+            return _unitOfWork.Context.Nurses.Where(N => N.NurseSpecialization == specialization);
+        }
+
+        public IQueryable<Nurse> GetNursesByState(bool state)
+        {
+            return _unitOfWork.Context.Nurses.Where(N => N.IsActive == state);
+        }
     }
 }
 

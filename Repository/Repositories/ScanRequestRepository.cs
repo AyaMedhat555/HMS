@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Labs;
+using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
 using System;
@@ -22,7 +23,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.ScanRequests.Where(
 
-               P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id)).OrderByDescending(P => P.CreatedDtm);
+               P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id)).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan).OrderByDescending(P => P.CreatedDtm);
 
         }
 
@@ -30,13 +31,13 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.ScanRequests.Where(
 
-                P => P.DoctorId == doctor_id).OrderByDescending(P => P.CreatedDtm); ;
+                P => P.DoctorId == doctor_id).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan).OrderByDescending(P => P.CreatedDtm); ;
         }
 
         public IQueryable<ScanRequest> GetAllScanRequestsForAll()
         {
 
-            return _unitOfWork.Context.ScanRequests.OrderByDescending(P => P.CreatedDtm);
+            return _unitOfWork.Context.ScanRequests.Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan).OrderByDescending(P => P.CreatedDtm);
 
         }
 
@@ -44,7 +45,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.ScanRequests.Where(
 
-                P => P.PatientId== Patient_id).OrderByDescending(P => P.CreatedDtm);
+                P => P.PatientId== Patient_id).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan).OrderByDescending(P => P.CreatedDtm);
 
         }
 
@@ -52,7 +53,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.ScanRequests.Where(
 
-               P => (P.DoctorId == doctor_id) && (P.CreatedDtm == ScanRequestDate));
+               P => (P.DoctorId == doctor_id) && (P.CreatedDtm == ScanRequestDate)).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan);
 
         }
 
@@ -60,7 +61,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.ScanRequests.Where(
 
-               P => (P.PatientId == Patient_id) && (P.CreatedDtm == ScanRequestDate));
+               P => (P.PatientId == Patient_id) && (P.CreatedDtm == ScanRequestDate)).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan);
 
 
         }

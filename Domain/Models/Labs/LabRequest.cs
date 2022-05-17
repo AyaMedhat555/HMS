@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHospital.Models.Labs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,10 @@ namespace Domain.Models.Labs
     public class LabRequest
     {
         public int Id { get; set; }
-        public string LabName { get; set; }
         public DateTime CreatedDtm { get; set; }
+        [JsonIgnore]
+        public Test Test { get; set; }
+        public int TestId { get; set; }
         [JsonIgnore]
         public Patient Patient { get; set; }
         public int PatientId { get; set; }

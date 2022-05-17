@@ -10,5 +10,7 @@ namespace Repository.IRepositories
     public interface INurseRepository: IGenericRepository<Nurse>
     {
         Task<Nurse> FindByName(String username);
+        IQueryable<Nurse> GetNursesBySpecialization(string specialization);
+        IQueryable<Nurse> GetNursesByState(bool state);
     }
 }

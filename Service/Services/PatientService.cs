@@ -45,17 +45,26 @@ namespace Service.Services
                 Id = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
-                DepartmentId = u.DepartmentId
+                UserName = u.UserName,
+                Mail = u.Mail,
+                NationalId = u.NationalId,
+                Image = u.Image,
+                Gender = u.Gender,
+                PhoneNumber = u.PhoneNumber,
+                DepartmentName = u.Department.Department_Name,
+                CreatedDtm = u.CreatedDtm,
+                IsActive = u.IsActive
             }).ToListAsync();
         }
 
         public async Task<Patient> UpdatePatient(PatientDto dto)
         {
-            Patient doctor = UserMapper.ToPatient(dto);
+            Patient currentPatient = await PatientRepository.GetById(dto.Id);
+            Patient Patient = UserMapper.UpdatePatient(dto, currentPatient);
             CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            doctor.PasswordHash = passwordHash;
-            doctor.PasswordSalt = passwordSalt;
-            return await PatientRepository.Update(doctor);
+            Patient.PasswordHash = passwordHash;
+            Patient.PasswordSalt = passwordSalt;
+            return await PatientRepository.Update(Patient);
         }
 
         public async Task<PatientDto> GetPatientById(int Patient_id)

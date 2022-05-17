@@ -2,7 +2,7 @@
 {
     public class Nurse : User
     {
-        public string nurseDegree { get; set; }
+        public string NurseDegree { get; set; }
         public string NurseSpecialization { get; set; }
     }
 }

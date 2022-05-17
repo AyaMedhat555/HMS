@@ -7,6 +7,8 @@ namespace Service.DTO
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public DateTime CreatedDtm { get; set; }
+
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public int Age { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -31,5 +33,10 @@ namespace Service.DTO
         public string Role { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? DepartmentId { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string DepartmentName { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public bool IsActive { get; set; } = true;
     }
+
 }

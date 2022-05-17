@@ -25,11 +25,16 @@ namespace SmartHospital.Controllers
         public async Task<IActionResult> Add(Scan scan)
         {
             Console.WriteLine(scan.ToString());
-            //check if username already used
+            //check if name already used
+            var foundScan = await _medicalScanService.GetScanByName(scan.ScanName);
+            if (foundScan != null)
+            {
+                return Ok("a scan with the name "+scan.ScanName+" already exists.");
+            }
             return Ok(await _medicalScanService.AddScan(scan));
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{scan_id}")]
         public async Task<IActionResult> Delete([FromRoute] int scan_id)
         {
             Console.WriteLine(scan_id.ToString());
@@ -74,7 +79,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalScanService.AddScanRequest(scanRequest));
         }
 
-        [HttpDelete("deleteScanRequest/{id}")]
+        [HttpDelete("deleteScanRequest/{scanRequest_id}")]
         public async Task<IActionResult> DeleteScanRequest([FromRoute] int scanRequest_id)
         {
             Console.WriteLine(scanRequest_id.ToString());
@@ -134,7 +139,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalScanService.AddPatientScan(patientScanDto));
         }
 
-        [HttpDelete("deletePatientScan/{id}")]
+        [HttpDelete("deletePatientScan/{patientScan_id}")]
         public async Task<IActionResult> DeletePatientScan([FromRoute] int patientScan_id)
         {
             Console.WriteLine(patientScan_id.ToString());

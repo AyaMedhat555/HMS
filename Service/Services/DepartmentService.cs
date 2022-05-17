@@ -45,50 +45,79 @@ namespace Service.Services
             return await _departmentRepository.Update(department);
         }
 
-        public async Task<IEnumerable<DepartmentsEmps>> GetAllDepartmentsEmps()
+        public async Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsEmps()
         {
-            List<Department> depts = await _departmentRepository.GetAll().ToListAsync();
-            List<Doctor> docs = await _doctorRepository.GetAll().ToListAsync();
-            List<Nurse> nurses = await _nurseRepository.GetAll().ToListAsync();
-            List<DoctorDto> doctors = new List<DoctorDto>();
-            List<NurseDto> nursesDtos = new List<NurseDto>();
-            foreach (var doc in docs)
+            List<Department> departments = await _departmentRepository.GetAll().Include(D => D.Doctors).Include(D => D.Nurses).ToListAsync();
+            List<DepartmentResponse> allDepartmentsEmps = new List<DepartmentResponse>();
+            foreach (var dept in departments)
             {
-                doctors.Add(UserMapper.ToDoctorDto(doc));
+                List<DoctorDto> docs = new List<DoctorDto>();
+                List<NurseDto> nurses = new List<NurseDto>();
+                foreach(var doc in dept.Doctors)
+                {
+                    DoctorDto doctorDto = new DoctorDto()
+                    {
+                        Id = doc.Id,
+                        FirstName = doc.FirstName,
+                        LastName = doc.LastName,
+                        Age = doc.Age,
+                        PhoneNumber = doc.PhoneNumber
+                    };
+                    docs.Add(doctorDto);
+                }
+                foreach(var nurse in dept.Nurses)
+                {
+                    NurseDto nurseDto = new NurseDto()
+                    {
+                        Id = nurse.Id,
+                        FirstName = nurse.FirstName,
+                        LastName = nurse.LastName,
+                        Age = nurse.Age,
+                        PhoneNumber = nurse.PhoneNumber
+                    };
+                    nurses.Add(nurseDto);
+                }
+                DepartmentResponse departmentemps = new DepartmentResponse()
+                {
+                    DepartmentId = dept.Id,
+                    DepartmentName = dept.Department_Name,
+                    DoctorDtos = docs,
+                    NurseDtos = nurses
+                };
+                allDepartmentsEmps.Add(departmentemps);
             }
+            return allDepartmentsEmps;
+        }
+        public async Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsPatients()
+        {
+            List<Department> departments = await _departmentRepository.GetAll().Include(D => D.Patients).ToListAsync();
+            List<DepartmentResponse> allDepartmentsResponses = new List<DepartmentResponse>();
+            
+            foreach (var dept in departments)
+            {
+                List<PatientDto> patients = new List<PatientDto>();
+                foreach (var patient in dept.Patients)
+                {
+                    PatientDto patientDto = new PatientDto()
+                    {
+                        Id = patient.Id,
+                        FirstName = patient.FirstName,
+                        LastName = patient.LastName,
+                        Age = patient.Age,
+                        PhoneNumber = patient.PhoneNumber
+                    };
+                    patients.Add(patientDto);
+                }
+                DepartmentResponse departmentResponse = new DepartmentResponse()
+                {
+                    DepartmentId = dept.Id,
+                    DepartmentName = dept.Department_Name,
+                    PatientDtos = patients
+                };
+                allDepartmentsResponses.Add(departmentResponse);
+            }
+            return allDepartmentsResponses;
 
-            foreach (var nurse in nurses)
-            {
-                nursesDtos.Add(UserMapper.ToNurseDto(nurse));
-            }
-      var result = from dept in depts
-                         join doctorsGroup in (
-                            from d in doctors
-                            group new DoctorDto{
-                                Id = d.Id,
-                                FirstName = d.FirstName,
-                                LastName = d.LastName,
-                            } by d.DepartmentId into g
-                            select g
-                         ) on dept.Id equals doctorsGroup.Key
-                         join nursesGroup in (
-                            from n in nursesDtos
-                            group new NurseDto
-                            {
-                                Id = n.Id,
-                                FirstName = n.FirstName,
-                                LastName = n.LastName,
-                            } by n.DepartmentId into g
-                            select g
-                         ) on dept.Id equals nursesGroup.Key
-                         select new DepartmentsEmps()
-                         {
-                             DepartmentId = dept.Id,
-                             DepartmentName = dept.Department_Name,
-                             DoctorDtos = doctorsGroup.ToList(),
-                             NurseDtos = nursesGroup.ToList()
-                         };
-            return result;
         }
     }
 }

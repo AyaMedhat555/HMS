@@ -35,5 +35,11 @@ namespace SmartHospital.Controllers
         {
             return Ok(await _departmentService.GetAllDepartmentsEmps());
         }
+
+        [HttpGet("getAllPatients")]
+        public async Task<IActionResult> GetAllPatients()
+        {
+            return Ok(await _departmentService.GetAllDepartmentsEmps());
+        }
     }
 }

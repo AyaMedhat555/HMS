@@ -28,5 +28,15 @@ namespace Repository.Repositories
             }
             return user;
         }
+
+        public IQueryable<Doctor> GetDoctorsBySpecialization(string specialization)
+        {
+            return _unitOfWork.Context.Doctors.Where(D => D.DocSpecialization == specialization);
+        }
+
+        public IQueryable<Doctor> GetDoctorsByState(bool state)
+        {
+            return _unitOfWork.Context.Doctors.Where(D => D.IsActive == state);
+        }
     }
 }

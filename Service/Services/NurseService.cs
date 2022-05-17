@@ -48,17 +48,71 @@ namespace Service.Services
                 Id = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
-                DepartmentId = u.DepartmentId
+                UserName = u.UserName,
+                Mail = u.Mail,
+                NationalId = u.NationalId,
+                Image = u.Image,
+                Gender = u.Gender,
+                PhoneNumber = u.PhoneNumber,
+                DepartmentName = u.Department.Department_Name,
+                NurseSpecialization = u.NurseSpecialization,
+                NurseDegree = u.NurseDegree,
+                CreatedDtm = u.CreatedDtm,
+                IsActive = u.IsActive
             }).ToListAsync();
         }
 
+        public async Task<IEnumerable<NurseDto>> GetNursesByState(bool state)
+        {
+            return await NurseRepository.GetNursesByState(state).Select(u => new NurseDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                UserName = u.UserName,
+                Mail = u.Mail,
+                NationalId = u.NationalId,
+                Image = u.Image,
+                Gender = u.Gender,
+                PhoneNumber = u.PhoneNumber,
+                DepartmentName = u.Department.Department_Name,
+                NurseSpecialization = u.NurseSpecialization,
+                NurseDegree = u.NurseDegree,
+                CreatedDtm = u.CreatedDtm,
+                IsActive = u.IsActive
+            }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<NurseDto>> GetNursesBySpecialization(string specialization)
+        {
+            return await NurseRepository.GetNursesBySpecialization(specialization).Select(u => new NurseDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                UserName = u.UserName,
+                Mail = u.Mail,
+                NationalId = u.NationalId,
+                Image = u.Image,
+                Gender = u.Gender,
+                PhoneNumber = u.PhoneNumber,
+                DepartmentName = u.Department.Department_Name,
+                NurseSpecialization = u.NurseSpecialization,
+                NurseDegree = u.NurseDegree,
+                CreatedDtm = u.CreatedDtm,
+                IsActive = u.IsActive
+            }).ToListAsync();
+        }
+    
+
         public async Task<Nurse> UpdateNurse(NurseDto dto)
         {
-            Nurse nurse = UserMapper.ToNurse(dto);
+            Nurse currentNurse = await NurseRepository.GetById(dto.Id);
+            Nurse Nurse = UserMapper.UpdateNurse(dto, currentNurse);
             CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            nurse.PasswordHash = passwordHash;
-            nurse.PasswordSalt = passwordSalt;
-            return await NurseRepository.Update(nurse);
+            Nurse.PasswordHash = passwordHash;
+            Nurse.PasswordSalt = passwordSalt;
+            return await NurseRepository.Update(Nurse);
         }
 
         public async Task<NurseDto> GetNurseById(int Nurse_id)
@@ -112,13 +166,8 @@ namespace Service.Services
                  Note = r.Note
 
                 })
-
                 .ToListAsync();
         }
-
-       
-
-
     }
 }
 

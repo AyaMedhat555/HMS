@@ -22,8 +22,15 @@ namespace SmartHospital.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNurse([FromBody] NurseDto dto)
         {
-            NurseDto nurse = UserMapper.ToNurseDto(await NurseService.AddNurse(dto));
-            return Ok(nurse);
+            Console.WriteLine(dto.ToString());
+            //check if username already used
+            var user = await NurseService.GetUserByName(dto.UserName);
+            if (user != null)
+            {
+                return Ok("Username already taken.");
+            }
+            await NurseService.AddNurse(dto);
+            return Ok("User: "+dto.UserName+" was added successfully!");
         }
 
         [HttpGet("{id}")]
@@ -42,6 +49,18 @@ namespace SmartHospital.Controllers
         public async Task<IActionResult> GetAll()
         {
             return Ok(await NurseService.GetAllNurses());
+        }
+
+        [HttpGet("getByState")]
+        public async Task<IActionResult> GetByState(bool state)
+        {
+            return Ok(await NurseService.GetNursesByState(state));
+        }
+
+        [HttpGet("getBySpecialization")]
+        public async Task<IActionResult> GetBySpecialization(string specialization)
+        {
+            return Ok(await NurseService.GetNursesBySpecialization(specialization));
         }
 
         [HttpPut("update")]

@@ -23,23 +23,23 @@ namespace Service.IServices
         Task<LabRequest> AddLabRequest(LabRequestDto LabRequest);
         Task<LabRequest> DeleteLabRequest (int Lab_id);
         Task<LabRequest> UpdateLabRequest(LabRequestDto LabRequest);
-        Task<LabRequest> GetLabRequestById(int Lab_id);
-        Task<IEnumerable<LabRequest>> GetLabRequestsByPatientId(int Patinet_id);
-        Task<IEnumerable<LabRequest>> GetLabRequestsByDoctorId(int Doctor_id);
-        Task<IEnumerable<LabRequest>> GetDoctorLabRequestsByDate(int Doctor_id, DateTime date);
-        Task<IEnumerable<LabRequest>> GetPatientLabRequestsByDate(int Patient_id, DateTime date);
-        Task<IEnumerable<LabRequest>> GetAllLabRequests();
+        Task<LabRequestResponse> GetLabRequestById(int Lab_id);
+        Task<IEnumerable<LabRequestResponse>> GetLabRequestsByPatientId(int Patinet_id);
+        Task<IEnumerable<LabRequestResponse>> GetLabRequestsByDoctorId(int Doctor_id);
+        Task<IEnumerable<LabRequestResponse>> GetDoctorLabRequestsByDate(int Doctor_id, DateTime date);
+        Task<IEnumerable<LabRequestResponse>> GetPatientLabRequestsByDate(int Patient_id, DateTime date);
+        Task<IEnumerable<LabRequestResponse>> GetAllLabRequests();
 
 
         Task<PatientTest> AddPatientTest(PatientTestDto Test);
         Task<PatientTest> DeletePatientTest(int Test_id);
         Task<PatientTest> UpdatePatientTest(PatientTestDto Test);
-        Task<PateintTestResponse> GetPatientTestById(int Test_id);
-        Task<IEnumerable<PatientTest>> GetPatientTestsByPatientId(int Patient_id);
-        Task<IEnumerable<PatientTest>> GetPatientTestsByDoctorId(int Doctor_id);
-        Task<IEnumerable<PatientTest>> GetPatientTestsByDate(int Patient_id, DateTime date);
-        Task<IEnumerable<PatientTest>> GetDoctorTestsByDate(int Doctor_id, DateTime date);
-        Task<IEnumerable<PatientTest>> GetallPatientTests();
+        Task<PatientTestResponse> GetPatientTestById(int Test_id);
+        Task<IEnumerable<PatientTestResponse>> GetPatientTestsByPatientId(int Patient_id);
+        Task<IEnumerable<PatientTestResponse>> GetPatientTestsByDoctorId(int Doctor_id);
+        Task<IEnumerable<PatientTestResponse>> GetPatientTestsByDate(int Patient_id, DateTime date);
+        Task<IEnumerable<PatientTestResponse>> GetDoctorTestsByDate(int Doctor_id, DateTime date);
+        Task<IEnumerable<PatientTestResponse>> GetallPatientTests();
 
 
 

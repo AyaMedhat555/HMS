@@ -26,11 +26,16 @@ namespace SmartHospital.Controllers
         public async Task<IActionResult> Add(Test test)
         {
             Console.WriteLine(test.ToString());
-            //check if username already used
+            //check if name already used
+            var foundTest = await _medicalTestService.GetTestByName(test.Name);
+            if (foundTest != null)
+            {
+                return Ok("a test with the name "+test.Name+" already exists.");
+            }
             return Ok(await _medicalTestService.AddTest(test));
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{test_id}")]
         public async Task<IActionResult> Delete([FromRoute] int test_id)
         {
             Console.WriteLine(test_id.ToString());
@@ -75,7 +80,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalTestService.AddLabRequest(labRequest));
         }
 
-        [HttpDelete("deleteLabRequest/{id}")]
+        [HttpDelete("deleteLabRequest/{labRequest_id}")]
         public async Task<IActionResult> DeleteLabRequest([FromRoute] int labRequest_id)
         {
             Console.WriteLine(labRequest_id.ToString());
@@ -135,7 +140,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalTestService.AddPatientTest(patientTestDto));
         }
 
-        [HttpDelete("deletePatientTest/{id}")]
+        [HttpDelete("deletePatientTest/{patientTest_id}")]
         public async Task<IActionResult> DeletePatientTest([FromRoute] int patientTest_id)
         {
             Console.WriteLine(patientTest_id.ToString());

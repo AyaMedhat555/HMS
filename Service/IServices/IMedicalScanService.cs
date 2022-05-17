@@ -24,23 +24,23 @@ namespace Service.IServices
         Task<ScanRequest> AddScanRequest(ScanRequestDto ScanRequest);
         Task<ScanRequest> DeleteScanRequest(int Scan_id);
         Task<ScanRequest> UpdateScanRequest(ScanRequestDto ScanRequest);
-        Task<ScanRequest> GetScanRequestById(int Scan_id);
-        Task<IEnumerable<ScanRequest>> GetScanRequestsByPatientId(int Patinet_id);
-        Task<IEnumerable<ScanRequest>> GetScanRequestsByDoctorId(int Doctor_id);
-        Task<IEnumerable<ScanRequest>> GetDoctorScanRequestsByDate(int Doctor_id, DateTime date);
-        Task<IEnumerable<ScanRequest>> GetPatientScanRequestsByDate(int Patient_id, DateTime date);
-        Task<IEnumerable<ScanRequest>> GetAllScanRequests();
+        Task<ScanRequestResponse> GetScanRequestById(int Scan_id);
+        Task<IEnumerable<ScanRequestResponse>> GetScanRequestsByPatientId(int Patinet_id);
+        Task<IEnumerable<ScanRequestResponse>> GetScanRequestsByDoctorId(int Doctor_id);
+        Task<IEnumerable<ScanRequestResponse>> GetDoctorScanRequestsByDate(int Doctor_id, DateTime date);
+        Task<IEnumerable<ScanRequestResponse>> GetPatientScanRequestsByDate(int Patient_id, DateTime date);
+        Task<IEnumerable<ScanRequestResponse>> GetAllScanRequests();
 
 
 
         Task<PatientScan> AddPatientScan(PatientScanDto Scan);
         Task<PatientScan> DeletePatientScan(int Scan_id);
         Task<PatientScan> UpdatePatientScan(PatientScanDto Scan);
-        Task<PateintScanResponse> GetPatientScanById(int Scan_id);
-        Task<IEnumerable<PatientScan>> GetPatientScansByPatientId(int Patient_id);
-        Task<IEnumerable<PatientScan>> GetPatientScansByDoctorId(int Doctor_id);
-        Task<IEnumerable<PatientScan>> GetPatientScansByDate(int Patient_id, DateTime date);
-        Task<IEnumerable<PatientScan>> GetDoctorScansByDate(int Doctor_id, DateTime date);
-        Task<IEnumerable<PatientScan>> GetallPatientScans();
+        Task<PatientScanResponse> GetPatientScanById(int Scan_id);
+        Task<IEnumerable<PatientScanResponse>> GetPatientScansByPatientId(int Patient_id);
+        Task<IEnumerable<PatientScanResponse>> GetPatientScansByDoctorId(int Doctor_id);
+        Task<IEnumerable<PatientScanResponse>> GetPatientScansByDate(int Patient_id, DateTime date);
+        Task<IEnumerable<PatientScanResponse>> GetDoctorScansByDate(int Doctor_id, DateTime date);
+        Task<IEnumerable<PatientScanResponse>> GetallPatientScans();
     }
 }

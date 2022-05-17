@@ -49,12 +49,13 @@ namespace Service.Services
 
         public async Task<Test> GetTestById(int Test_id)
         {
-            return await TestRepository.GetById(Test_id);
+            var tests = await GetAllTests();
+            return tests.SingleOrDefault(T => T.Id == Test_id);
         }
 
         public async Task<Test> GetTestByName(string Testname)
         {
-            var tests = GetAllTests().Result;
+            var tests = await GetAllTests();
             return tests.SingleOrDefault(T => T.Name == Testname);
         }
 
@@ -65,9 +66,10 @@ namespace Service.Services
 
         public async Task<LabRequest> AddLabRequest(LabRequestDto labRequest)
         {
+            int testId = await TestRepository.GetAll().Where(T => T.Name == labRequest.LabName).Select(T => T.Id).SingleOrDefaultAsync();
             LabRequest newLabRequest = new LabRequest()
             {
-                LabName = labRequest.LabName,
+                TestId = testId,
                 CreatedDtm = DateTime.Now,
                 DoctorId = labRequest.DoctorId,
                 PatientId = labRequest.PatientId
@@ -82,10 +84,10 @@ namespace Service.Services
 
         public async Task<LabRequest> UpdateLabRequest(LabRequestDto labRequest)
         {
+            int testId = await TestRepository.GetAll().Where(T => T.Name == labRequest.LabName).Select(T => T.Id).SingleOrDefaultAsync();
             LabRequest newLabRequest = new LabRequest()
             {
-                Id = labRequest.Id,
-                LabName = labRequest.LabName,
+                TestId = testId,
                 CreatedDtm = DateTime.Now,
                 DoctorId = labRequest.DoctorId,
                 PatientId = labRequest.PatientId
@@ -93,34 +95,131 @@ namespace Service.Services
             return await LabRequestRepository.Update(newLabRequest);
         }
 
-        public async Task<LabRequest> GetLabRequestById(int Lab_id)
+        public async Task<LabRequestResponse> GetLabRequestById(int Lab_id)
         {
-            return await LabRequestRepository.GetById(Lab_id);
+            LabRequest labRequest = await LabRequestRepository.GetById(Lab_id);
+            LabRequestResponse labRequestResponse = new LabRequestResponse()
+            {
+                Id = labRequest.Id,
+                LabName = labRequest.Test.Name,
+                TestId = labRequest.Test.Id,
+                CreatedDtm = labRequest.CreatedDtm,
+                DoctorName = labRequest.Doctor.FirstName+" "+labRequest.Doctor.LastName,
+                PatientName = labRequest.Patient.FirstName+" "+labRequest.Patient.LastName,
+                DoctorId = labRequest.DoctorId,
+                PatientId = labRequest.PatientId
+            };
+            return labRequestResponse;
         }
 
-        public async Task<IEnumerable<LabRequest>> GetLabRequestsByPatientId(int Patinet_id)
+        public async Task<IEnumerable<LabRequestResponse>> GetLabRequestsByPatientId(int Patinet_id)
         {
-            return await LabRequestRepository.GetAllLabRequestsForPatient(Patinet_id).ToListAsync();
+            List<LabRequest> requests = await LabRequestRepository.GetAllLabRequestsForPatient(Patinet_id).ToListAsync();
+            List<LabRequestResponse> requestsResponse = new List<LabRequestResponse>();
+            foreach(LabRequest labRequest in requests)
+            {
+                LabRequestResponse response = new LabRequestResponse()
+                {
+                    Id = labRequest.Id,
+                    LabName = labRequest.Test.Name,
+                    TestId = labRequest.Test.Id,
+                    CreatedDtm = labRequest.CreatedDtm,
+                    DoctorName = labRequest.Doctor.FirstName+" "+labRequest.Doctor.LastName,
+                    PatientName = labRequest.Patient.FirstName+" "+labRequest.Patient.LastName,
+                    DoctorId = labRequest.DoctorId,
+                    PatientId = labRequest.PatientId
+                };
+                requestsResponse.Add(response);                                
+            }
+            return requestsResponse;
         }
 
-        public async Task<IEnumerable<LabRequest>> GetLabRequestsByDoctorId(int Doctor_id)
+        public async Task<IEnumerable<LabRequestResponse>> GetLabRequestsByDoctorId(int Doctor_id)
         {
-            return await LabRequestRepository.GetAllLabRequestsByDocId(Doctor_id).ToListAsync();
+            List<LabRequest> requests = await LabRequestRepository.GetAllLabRequestsByDocId(Doctor_id).ToListAsync();
+            List<LabRequestResponse> requestsResponse = new List<LabRequestResponse>();
+            foreach (LabRequest labRequest in requests)
+            {
+                LabRequestResponse response = new LabRequestResponse()
+                {
+                    Id = labRequest.Id,
+                    LabName = labRequest.Test.Name,
+                    TestId = labRequest.Test.Id,
+                    CreatedDtm = labRequest.CreatedDtm,
+                    DoctorName = labRequest.Doctor.FirstName+" "+labRequest.Doctor.LastName,
+                    PatientName = labRequest.Patient.FirstName+" "+labRequest.Patient.LastName,
+                    DoctorId = labRequest.DoctorId,
+                    PatientId = labRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
-        public async Task<IEnumerable<LabRequest>> GetDoctorLabRequestsByDate(int Doctor_id, DateTime date)
+        public async Task<IEnumerable<LabRequestResponse>> GetDoctorLabRequestsByDate(int Doctor_id, DateTime date)
         {
-            return await LabRequestRepository.GetDoctorLabRequestsByDate(Doctor_id, date).ToListAsync();
+            List<LabRequest> requests = await LabRequestRepository.GetDoctorLabRequestsByDate(Doctor_id, date).ToListAsync();
+            List<LabRequestResponse> requestsResponse = new List<LabRequestResponse>();
+            foreach (LabRequest labRequest in requests)
+            {
+                LabRequestResponse response = new LabRequestResponse()
+                {
+                    Id = labRequest.Id,
+                    LabName = labRequest.Test.Name,
+                    TestId = labRequest.Test.Id,
+                    CreatedDtm = labRequest.CreatedDtm,
+                    DoctorName = labRequest.Doctor.FirstName+" "+labRequest.Doctor.LastName,
+                    PatientName = labRequest.Patient.FirstName+" "+labRequest.Patient.LastName,
+                    DoctorId = labRequest.DoctorId,
+                    PatientId = labRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
-        public async Task<IEnumerable<LabRequest>> GetPatientLabRequestsByDate(int Patient_id, DateTime date)
+        public async Task<IEnumerable<LabRequestResponse>> GetPatientLabRequestsByDate(int Patient_id, DateTime date)
         {
-            return await LabRequestRepository.GetPatientLabRequestByDate(Patient_id, date).ToListAsync();
+            List<LabRequest> requests = await LabRequestRepository.GetPatientLabRequestByDate(Patient_id, date).ToListAsync();
+            List<LabRequestResponse> requestsResponse = new List<LabRequestResponse>();
+            foreach (LabRequest labRequest in requests)
+            {
+                LabRequestResponse response = new LabRequestResponse()
+                {
+                    Id = labRequest.Id,
+                    LabName = labRequest.Test.Name,
+                    TestId = labRequest.Test.Id,
+                    CreatedDtm = labRequest.CreatedDtm,
+                    DoctorName = labRequest.Doctor.FirstName+" "+labRequest.Doctor.LastName,
+                    PatientName = labRequest.Patient.FirstName+" "+labRequest.Patient.LastName,
+                    DoctorId = labRequest.DoctorId,
+                    PatientId = labRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
-        public async Task<IEnumerable<LabRequest>> GetAllLabRequests()
+        public async Task<IEnumerable<LabRequestResponse>> GetAllLabRequests()
         {
-            return await LabRequestRepository.GetAll().ToListAsync();
+            List<LabRequest> requests = await LabRequestRepository.GetAll().ToListAsync();
+            List<LabRequestResponse> requestsResponse = new List<LabRequestResponse>();
+            foreach (LabRequest labRequest in requests)
+            {
+                LabRequestResponse response = new LabRequestResponse()
+                {
+                    Id = labRequest.Id,
+                    LabName = labRequest.Test.Name,
+                    TestId = labRequest.Test.Id,
+                    CreatedDtm = labRequest.CreatedDtm,
+                    DoctorName = labRequest.Doctor.FirstName+" "+labRequest.Doctor.LastName,
+                    PatientName = labRequest.Patient.FirstName+" "+labRequest.Patient.LastName,
+                    DoctorId = labRequest.DoctorId,
+                    PatientId = labRequest.PatientId
+                };
+                requestsResponse.Add(response);
+            }
+            return requestsResponse;
         }
 
 
@@ -131,18 +230,17 @@ namespace Service.Services
         public async Task<PatientTest> AddPatientTest(PatientTestDto Test)
         {
             int ReqId = Test.LabRequestId;
-            LabRequest lab = GetLabRequestById(ReqId).Result;
-
-            int testId = await TestRepository.GetAll().Where(T => T.Name == lab.LabName).Select(T => T.Id).SingleOrDefaultAsync();
+            LabRequest lab = await LabRequestRepository.GetById(ReqId);
             PatientTest newTest = new PatientTest()
             {
                 CategoricalDetails = Test.CategoricalDetails,
                 NumericalDetails = Test.NumericalDetails,
-                TestDate = Test.TestDate,
+                TestDate = DateTime.Now,
                 DoctorId = lab.DoctorId,
                 PatientId = lab.PatientId,
-                TestId = testId
+                TestId = lab.TestId                
             };
+            await DeleteLabRequest(ReqId);
             return await PatientTestRepository.Add(newTest);
         }
 
@@ -154,61 +252,138 @@ namespace Service.Services
         public async Task<PatientTest> UpdatePatientTest(PatientTestDto Test)
         {
             int ReqId = Test.LabRequestId;
-            LabRequest lab = GetLabRequestById(ReqId).Result;
-
-            int testId = await TestRepository.GetAll().Where(T => T.Name == lab.LabName).Select(T => T.Id).SingleOrDefaultAsync();
+            LabRequest lab = await LabRequestRepository.GetById(ReqId);
             PatientTest newTest = new PatientTest()
             {
                 CategoricalDetails = Test.CategoricalDetails,
                 NumericalDetails = Test.NumericalDetails,
-                TestDate = Test.TestDate,
+                TestDate = DateTime.Now,
                 DoctorId = lab.DoctorId,
                 PatientId = lab.PatientId,
-                TestId = testId
+                TestId = lab.TestId
             };
             return await PatientTestRepository.Update(newTest);
         }
 
-        public async Task<PateintTestResponse> GetPatientTestById(int Test_id)
+        public async Task<PatientTestResponse> GetPatientTestById(int Test_id)
         {
             PatientTest patientTest = await PatientTestRepository.GetById(Test_id);
-            string testName = TestRepository.GetAll().Where(T => T.Id == patientTest.TestId).Select(T => T.Name).SingleOrDefault();
-            PateintTestResponse pateintTestResponse = new PateintTestResponse()
+            PatientTestResponse pateintTestResponse = new PatientTestResponse()
             {
                 CategoricalDetails = patientTest.CategoricalDetails,
                 NumericalDetails = patientTest.NumericalDetails,
                 DoctorId = patientTest.DoctorId,
                 PatientId = patientTest.PatientId,
-                TestName = testName,
+                TestName = patientTest.Test.Name,
                 PatientTestId = patientTest.PatientTestId,
                 TestDate = patientTest.TestDate
             };
             return pateintTestResponse;
         }
 
-        public async Task<IEnumerable<PatientTest>> GetPatientTestsByPatientId(int Patient_id)
+        public async Task<IEnumerable<PatientTestResponse>> GetPatientTestsByPatientId(int Patient_id)
         {
-            return await PatientTestRepository.GetAllPatientTestsForPatient(Patient_id).ToListAsync();
+            List<PatientTest> tests = await PatientTestRepository.GetAllPatientTestsForPatient(Patient_id).ToListAsync();
+            List<PatientTestResponse> testsResponses = new List<PatientTestResponse>();
+            foreach (var patientTest in tests)
+            {
+                PatientTestResponse pateintTestResponse = new PatientTestResponse()
+                {
+                    CategoricalDetails = patientTest.CategoricalDetails,
+                    NumericalDetails = patientTest.NumericalDetails,
+                    DoctorId = patientTest.DoctorId,
+                    PatientId = patientTest.PatientId,
+                    TestName = patientTest.Test.Name,
+                    PatientTestId = patientTest.PatientTestId,
+                    TestDate = patientTest.TestDate
+                };
+                testsResponses.Add(pateintTestResponse);
+            }
+            return testsResponses;
         }
 
-        public async Task<IEnumerable<PatientTest>> GetPatientTestsByDoctorId(int Doctor_id)
+        public async Task<IEnumerable<PatientTestResponse>> GetPatientTestsByDoctorId(int Doctor_id)
         {
-            return await PatientTestRepository.GetAllPatientTestsByDocId(Doctor_id).ToListAsync();
+            List<PatientTest> tests = await PatientTestRepository.GetAllPatientTestsByDocId(Doctor_id).ToListAsync();
+            List<PatientTestResponse> testsResponses = new List<PatientTestResponse>();
+            foreach (var patientTest in tests)
+            {
+                PatientTestResponse pateintTestResponse = new PatientTestResponse()
+                {
+                    CategoricalDetails = patientTest.CategoricalDetails,
+                    NumericalDetails = patientTest.NumericalDetails,
+                    DoctorId = patientTest.DoctorId,
+                    PatientId = patientTest.PatientId,
+                    TestName = patientTest.Test.Name,
+                    PatientTestId = patientTest.PatientTestId,
+                    TestDate = patientTest.TestDate
+                };
+                testsResponses.Add(pateintTestResponse);
+            }
+            return testsResponses;
         }
 
-        public async Task<IEnumerable<PatientTest>> GetPatientTestsByDate(int Patient_id, DateTime date)
+        public async Task<IEnumerable<PatientTestResponse>> GetPatientTestsByDate(int Patient_id, DateTime date)
         {
-            return await PatientTestRepository.GetPatientTestByDate(Patient_id, date).ToListAsync();
+            List<PatientTest> tests = await PatientTestRepository.GetPatientTestByDate(Patient_id, date).ToListAsync();
+            List<PatientTestResponse> testsResponses = new List<PatientTestResponse>();
+            foreach (var patientTest in tests)
+            {
+                PatientTestResponse pateintTestResponse = new PatientTestResponse()
+                {
+                    CategoricalDetails = patientTest.CategoricalDetails,
+                    NumericalDetails = patientTest.NumericalDetails,
+                    DoctorId = patientTest.DoctorId,
+                    PatientId = patientTest.PatientId,
+                    TestName = patientTest.Test.Name,
+                    PatientTestId = patientTest.PatientTestId,
+                    TestDate = patientTest.TestDate
+                };
+                testsResponses.Add(pateintTestResponse);
+            }
+            return testsResponses;
         }
 
-        public async Task<IEnumerable<PatientTest>> GetDoctorTestsByDate(int Doctor_id, DateTime date)
+        public async Task<IEnumerable<PatientTestResponse>> GetDoctorTestsByDate(int Doctor_id, DateTime date)
         {
-            return await PatientTestRepository.GetDoctorTestsByDate(Doctor_id, date).ToListAsync();
+            List<PatientTest> tests = await PatientTestRepository.GetDoctorTestsByDate(Doctor_id, date).ToListAsync();
+            List<PatientTestResponse> testsResponses = new List<PatientTestResponse>();
+            foreach (var patientTest in tests)
+            {
+                PatientTestResponse pateintTestResponse = new PatientTestResponse()
+                {
+                    CategoricalDetails = patientTest.CategoricalDetails,
+                    NumericalDetails = patientTest.NumericalDetails,
+                    DoctorId = patientTest.DoctorId,
+                    PatientId = patientTest.PatientId,
+                    TestName = patientTest.Test.Name,
+                    PatientTestId = patientTest.PatientTestId,
+                    TestDate = patientTest.TestDate
+                };
+                testsResponses.Add(pateintTestResponse);
+            }
+            return testsResponses;
         }
 
-        public async Task<IEnumerable<PatientTest>> GetallPatientTests()
+        public async Task<IEnumerable<PatientTestResponse>> GetallPatientTests()
         {
-            return await PatientTestRepository.GetAll().ToListAsync();
+            List<PatientTest> tests = await PatientTestRepository.GetAll().ToListAsync();
+            List<PatientTestResponse> testsResponses = new List<PatientTestResponse>();
+            foreach (var patientTest in tests)
+            {
+                PatientTestResponse pateintTestResponse = new PatientTestResponse()
+                {
+                    CategoricalDetails = patientTest.CategoricalDetails,
+                    NumericalDetails = patientTest.NumericalDetails,
+                    DoctorId = patientTest.DoctorId,
+                    PatientId = patientTest.PatientId,
+                    TestName = patientTest.Test.Name,
+                    PatientTestId = patientTest.PatientTestId,
+                    TestDate = patientTest.TestDate
+                };
+                testsResponses.Add(pateintTestResponse);
+            }
+            return testsResponses;
         }
     }
 }

@@ -21,7 +21,15 @@ namespace SmartHospital.Controllers
         [HttpPost]
         public async Task<IActionResult> AddDoctor([FromBody] DoctorDto dto)
         {
-            return Ok(await DoctorService.AddDoctor(dto));
+            Console.WriteLine(dto.ToString());
+            //check if username already used
+            var user = await DoctorService.GetUserByName(dto.UserName);
+            if (user != null)
+            {
+                return Ok("Username already taken.");
+            }
+            await DoctorService.AddDoctor(dto);
+            return Ok("User: "+dto.UserName+" was added successfully!");
         }
 
         [HttpGet("{id}")]
@@ -42,6 +50,18 @@ namespace SmartHospital.Controllers
             return Ok(await DoctorService.GetAllDoctors());
         }
 
+        [HttpGet("getByState")]
+        public async Task<IActionResult> GetByState(bool state)
+        {
+            return Ok(await DoctorService.GetDoctorsByState(state));
+        }
+
+        [HttpGet("getBySpecialization")]
+        public async Task<IActionResult> GetBySpecialization(string specialization)
+        {
+            return Ok(await DoctorService.GetDoctorsBySpecialization(specialization));
+        }
+
         [HttpPut("update")]
         public async Task<IActionResult> Update(DoctorDto userDto)
         {
@@ -52,6 +72,18 @@ namespace SmartHospital.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(await DoctorService.DeleteDoctor(id));
+        }
+
+        [HttpGet("getByName")]
+        public async Task<IActionResult> GetUserByName(string name)
+        {
+            DoctorDto user = await DoctorService.GetDoctorByName(name);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            return Ok("User not found!");
+
         }
 
         [HttpPost("AddPrescription")]

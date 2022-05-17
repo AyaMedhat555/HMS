@@ -26,6 +26,8 @@ namespace Service.Helpers
             newUser.Image = userDto.Image;
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
+            newUser.DocDegree = userDto.DocDegree;
+            newUser.DocSpecialization = userDto.DocSpecialization;
             return newUser;
         }
 
@@ -46,6 +48,26 @@ namespace Service.Helpers
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
             return newUserDto;
+        }
+
+        public static Doctor UpdateDoctor(DoctorDto userDto, Doctor newUser)
+        {
+            newUser.Id = userDto.Id;
+            newUser.PhoneNumber = userDto.PhoneNumber;
+            newUser.UserName = userDto.UserName;
+            newUser.BloodType = userDto.BloodType;
+            newUser.Age = userDto.Age;
+            newUser.FirstName = userDto.FirstName;
+            newUser.LastName = userDto.LastName;
+            newUser.Address = userDto.Address;
+            newUser.NationalId = userDto.NationalId;
+            newUser.Gender = userDto.Gender;
+            newUser.Image = userDto.Image;
+            newUser.DepartmentId = userDto.DepartmentId;
+            newUser.Mail = userDto.Mail;
+            newUser.DocDegree = userDto.DocDegree;
+            newUser.DocSpecialization = userDto.DocSpecialization;
+            return newUser;
         }
 
         public static Admin ToAdmin(AdminDto userDto)
@@ -86,6 +108,23 @@ namespace Service.Helpers
             return newUserDto;
         }
 
+        public static Admin UpdateAdmin(AdminDto userDto, Admin newUser)
+        {
+            newUser.Id = userDto.Id;
+            newUser.PhoneNumber = userDto.PhoneNumber;
+            newUser.UserName = userDto.UserName;
+            newUser.BloodType = userDto.BloodType;
+            newUser.Age = userDto.Age;
+            newUser.FirstName = userDto.FirstName;
+            newUser.LastName = userDto.LastName;
+            newUser.Address = userDto.Address;
+            newUser.NationalId = userDto.NationalId;
+            newUser.Gender = userDto.Gender;
+            newUser.Image = userDto.Image;
+            newUser.DepartmentId = userDto.DepartmentId;
+            newUser.Mail = userDto.Mail;
+            return newUser;
+        }
         public static Nurse ToNurse(NurseDto userDto)
         {
             Nurse newUser = new Nurse();
@@ -103,7 +142,7 @@ namespace Service.Helpers
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.NurseSpecialization = userDto.NurseSpecialization;
-            newUser.nurseDegree = userDto.NurseDegree;
+            newUser.NurseDegree = userDto.NurseDegree;
             return newUser;
         }
 
@@ -123,9 +162,29 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
-            newUserDto.NurseDegree = user.nurseDegree;
+            newUserDto.NurseDegree = user.NurseDegree;
             newUserDto.NurseSpecialization = user.NurseSpecialization;
             return newUserDto;
+        }
+
+        public static Nurse UpdateNurse(NurseDto userDto, Nurse newUser)
+        {
+            newUser.Id = userDto.Id;
+            newUser.PhoneNumber = userDto.PhoneNumber;
+            newUser.UserName = userDto.UserName;
+            newUser.BloodType = userDto.BloodType;
+            newUser.Age = userDto.Age;
+            newUser.FirstName = userDto.FirstName;
+            newUser.LastName = userDto.LastName;
+            newUser.Address = userDto.Address;
+            newUser.NationalId = userDto.NationalId;
+            newUser.Gender = userDto.Gender;
+            newUser.Image = userDto.Image;
+            newUser.DepartmentId = userDto.DepartmentId;
+            newUser.Mail = userDto.Mail;
+            newUser.NurseDegree = userDto.NurseDegree;
+            newUser.NurseSpecialization = userDto.NurseSpecialization;
+            return newUser;
         }
 
 
@@ -167,5 +226,24 @@ namespace Service.Helpers
             newUserDto.DepartmentId = user.DepartmentId;
             return newUserDto;
         }
+
+        public static Patient UpdatePatient(PatientDto userDto, Patient newUser)
+        {
+            newUser.Id = userDto.Id;
+            newUser.PhoneNumber = userDto.PhoneNumber;
+            newUser.UserName = userDto.UserName;
+            newUser.BloodType = userDto.BloodType;
+            newUser.Age = userDto.Age;
+            newUser.FirstName = userDto.FirstName;
+            newUser.LastName = userDto.LastName;
+            newUser.Address = userDto.Address;
+            newUser.NationalId = userDto.NationalId;
+            newUser.Gender = userDto.Gender;
+            newUser.Image = userDto.Image;
+            newUser.DepartmentId = userDto.DepartmentId;
+            newUser.Mail = userDto.Mail;
+            return newUser;
+        }
+
     }
 }

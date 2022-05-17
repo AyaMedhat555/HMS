@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.Responses
 {
-    public class PateintTestResponse
+    public class PatientTestResponse
     {
         public int PatientTestId { get; set; }
         public int PatientId { get; set; }
