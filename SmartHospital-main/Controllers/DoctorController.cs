@@ -24,17 +24,17 @@ namespace SmartHospital.Controllers
             return Ok(await DoctorService.AddDoctor(dto));
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById([FromRoute] int id)
-        {
-            DoctorDto user = await DoctorService.GetDoctorById(id);
-            if (user != null)
-            {
-                return Ok(user);
-            }
-            return Ok("User not found!");
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetUserById([FromRoute] int id)
+        //{
+        //    DoctorDto user = await DoctorService.GetDoctorById(id);
+        //    if (user != null)
+        //    {
+        //        return Ok(user);
+        //    }
+        //    return Ok("User not found!");
 
-        }
+        //}
 
         [HttpGet("getAllDoctors")]
         public async Task<IActionResult> GetAll()

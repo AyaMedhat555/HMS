@@ -3,8 +3,8 @@
         public class Patient : User
         {
            
-            public virtual ICollection<ClinicPatient> ClinicPatientRecord { get; set; } = new HashSet<ClinicPatient>();
-            //public virtual ICollection<IndoorPatient> IndoorPatientRecord { get; set; } = new HashSet<IndoorPatient>();
+            public virtual ICollection<ClinicPatientRecord> ClinicPatientRecord { get; set; } = new HashSet<ClinicPatientRecord>();
+            public virtual ICollection<IndoorPatientRecord> IndoorPatientRecord { get; set; } = new HashSet<IndoorPatientRecord>();
 
         }
     }

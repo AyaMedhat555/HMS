@@ -164,7 +164,8 @@ namespace Service.Services
                 TestDate = Test.TestDate,
                 DoctorId = lab.DoctorId,
                 PatientId = lab.PatientId,
-                TestId = testId
+                TestId = testId,
+                IndoorPatientRecordId = Test.IndoorPatientRecordId
             };
             return await PatientTestRepository.Update(newTest);
         }

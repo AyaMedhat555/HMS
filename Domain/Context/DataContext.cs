@@ -96,12 +96,19 @@ namespace Domain.Context
         //public DbSet<BloodElement> Bloods { get; set; }
         //public DbSet<Donner> Donners { get; set; }
         //public DbSet<BloodBank> BloodBanks { get; set; }
-        //public DbSet<Note> Notes { get; set; }
-        //public DbSet<IndoorPatient> IndoorPatients { get; set; }
-        // public DbSet<ClinicPatient> ClinicPatients { get; set; }
+
+        //public DbSet<PatientReport> PatientsReports { get; set; }
+        public DbSet<Note> Notes { get; set; }
+        public DbSet<IndoorPatientRecord> IndoorPatients { get; set; }
+         public DbSet<ClinicPatientRecord> ClinicPatients { get; set; }
         public DbSet<VitalSign> VitalSigns { get; set; }
         public DbSet<TimeSlot> TimeSlots { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+
+        public DbSet<Bed> Beds { get; set; }
+
+       public DbSet<Room> Rooms { get; set; }
+
 
     }
 }

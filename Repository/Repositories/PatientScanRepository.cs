@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Labs;
+using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
 using System;
@@ -54,6 +55,11 @@ namespace Repository.Repositories
 
                P => (P.DoctorId == doctor_id) && (P.ScanDate == PatientScanDate));
 
+        }
+
+        public IQueryable<PatientScan> GetInDoorPatientScans(int InDoorPatientRecordId)
+        {
+            return _unitOfWork.Context.PatientScans.Where(P => P.IndoorPatientRecordId == InDoorPatientRecordId).Include(P => P.Scan);
         }
 
         public IQueryable<PatientScan> GetPatientScanByDate(int Patient_id, DateTime PatientScanDate)

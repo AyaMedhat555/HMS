@@ -14,7 +14,7 @@ namespace Service.IServices
         Task<Doctor> AddDoctor(DoctorDto doc);
         Task<Doctor> UpdateDoctor(DoctorDto doc_dto);
         Task<IEnumerable<Doctor>> GetAllDoctors();
-        Task<DoctorDto> GetDoctorById(int Doctor_id);
+        Task<Doctor> GetDoctorById(int Doctor_id);
         Task<Doctor> DeleteDoctor(int Doctor_id);
         Task<string> Login(LoginRequest logInUser);
         Task<DoctorDto> GetDoctorByName(String Doctorname);

@@ -70,9 +70,9 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<DoctorDto> GetDoctorById(int Doctor_id)
+        public Task <Doctor> GetDoctorById(int Doctor_id)
         {
-            throw new NotImplementedException();
+            return DoctorRepository.GetById(Doctor_id);
         }
 
        
@@ -84,7 +84,8 @@ namespace Service.Services
                 PatientId = PrescriptionDto.PatientId,
                 Prescription_Date = PrescriptionDto.Prescription_Date,
                 re_appointement_date = PrescriptionDto.re_appointement_date,
-                PrescriptionItems = PrescriptionDto.PrescriptionItems
+                PrescriptionItems = PrescriptionDto.PrescriptionItems,
+                IndoorPatientRecordId = PrescriptionDto.IndoorPatientRecordId
 
             };
 

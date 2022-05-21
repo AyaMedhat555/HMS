@@ -19,6 +19,8 @@ namespace Service.IServices
 
         public int DoctorId { get; set; }
 
+        public int? IndoorPatientRecordId { get; set; }
+
     }
 
    

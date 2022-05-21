@@ -13,5 +13,7 @@
         public virtual Doctor Doctor { get; set; } //Navigational Property
 
         public int DoctorId { get; set; }
+
+        public int? IndoorPatientRecordId { get; set; }
     }
 }

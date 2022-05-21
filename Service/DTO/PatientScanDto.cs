@@ -12,5 +12,7 @@ namespace Service.DTO
         public byte[]? Image { get; set; }
         public string WrittenReport { get; set; }
         public DateTime ScanDate { get; set; }
+
+        public int? IndoorPatientRecordId { get; set; }
     }
 }

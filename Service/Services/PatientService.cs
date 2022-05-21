@@ -2,12 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repository.IRepositories;
+using Repository.Repositories;
 using Service.DTO;
 using Service.Helpers;
 using Service.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,11 +19,15 @@ namespace Service.Services
     {
 
         private IPatientRepository PatientRepository { get; }
+        private  IIndoorPatientRepository IndoorPatientRepository { get; }
+        private IDoctorService DoctorService { get; }
 
-        public PatientService(IUserRepository _UserRepository, IPatientRepository _PatientRepository, IConfiguration _Configuration)
+        public PatientService(IUserRepository _UserRepository, IPatientRepository _PatientRepository, IConfiguration _Configuration, IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository)
             : base(_UserRepository, _Configuration)
         {
             PatientRepository = _PatientRepository;
+            DoctorService = _DoctorService;
+            IndoorPatientRepository = _IndoorPatientRepository;
         }
 
         public async Task<Patient> AddPatient(PatientDto dto)
@@ -71,5 +77,7 @@ namespace Service.Services
             PatientDto doc_dto = UserMapper.ToPatientDto(doc);
             return doc_dto;
         }
+
+       
     }
 }
