@@ -9,8 +9,8 @@ namespace SmartHospital.Models.Labs
         public int PatientId { get; set; }
         public Test Test { get; set; }
         public int TestId { get; set; }
-        public Doctor Doctor { get; set; }
-        public int DoctorId { get; set; }
+        public Doctor? Doctor { get; set; }
+        public int? DoctorId { get; set; }
         public virtual ICollection<TestDetailsCategorical> CategoricalDetails { get; set; } = new HashSet<TestDetailsCategorical>();
         public virtual ICollection<TestDetailsNumerical> NumericalDetails { get; set; } = new HashSet<TestDetailsNumerical>();
 

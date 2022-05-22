@@ -9,11 +9,15 @@ namespace Repository.IRepositories
 {
     public interface ILabRequestRepository : IGenericRepository<LabRequest>
     {
+        Task<LabRequest> GetLabRequestById(int id);
+        IQueryable<LabRequest> GetAllLabRequests();
         IQueryable<LabRequest> GetAllLabRequestsByDocId(int doctor_id);
         IQueryable<LabRequest> GetAllLabRequestsForAll();
         IQueryable<LabRequest> GetAllLabRequestsForPatient(int Patient_id);
         IQueryable<LabRequest> GetAllDoctorToPatientLabRequests(int Patient_id, int doctor_id);
         IQueryable<LabRequest> GetPatientLabRequestByDate(int Patient_id, DateTime LabRequestDate);
         IQueryable<LabRequest> GetDoctorLabRequestsByDate(int doctor_id, DateTime LabRequestDate);
+        //IQueryable<LabRequest> AddLabRequests(List<LabRequest> labRequests);
+
     }
 }

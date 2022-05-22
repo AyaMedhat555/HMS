@@ -8,6 +8,7 @@ namespace Service.DTO
 {
     public class PatientScanDto
     {
+        public int PatientScanId { get; set; }
         public int ScanRequestId { get; set; }
         public byte[]? Image { get; set; }
         public string WrittenReport { get; set; }

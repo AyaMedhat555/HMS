@@ -50,6 +50,7 @@ namespace Service.Services
                 NationalId = u.NationalId,
                 Image = u.Image,
                 Gender = u.Gender,
+                BloodType = u.BloodType,
                 PhoneNumber = u.PhoneNumber,
                 DepartmentName = u.Department.Department_Name,
                 CreatedDtm = u.CreatedDtm,
@@ -60,25 +61,25 @@ namespace Service.Services
         public async Task<Patient> UpdatePatient(PatientDto dto)
         {
             Patient currentPatient = await PatientRepository.GetById(dto.Id);
-            Patient Patient = UserMapper.UpdatePatient(dto, currentPatient);
+            currentPatient = UserMapper.UpdatePatient(dto, currentPatient);
             CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            Patient.PasswordHash = passwordHash;
-            Patient.PasswordSalt = passwordSalt;
-            return await PatientRepository.Update(Patient);
+            currentPatient.PasswordHash = passwordHash;
+            currentPatient.PasswordSalt = passwordSalt;
+            return await PatientRepository.Update(currentPatient);
         }
 
         public async Task<PatientDto> GetPatientById(int Patient_id)
         {
-            Patient doc = await PatientRepository.GetById(Patient_id);
-            PatientDto doc_dto = UserMapper.ToPatientDto(doc);
-            return doc_dto;
+            Patient patient = await PatientRepository.GetById(Patient_id);
+            PatientDto patient_dto = UserMapper.ToPatientDto(patient);
+            return patient_dto;
         }
 
         public async Task<PatientDto> GetPatientByName(string Patientname)
         {
-            Patient doc = await PatientRepository.FindByName(Patientname);
-            PatientDto doc_dto = UserMapper.ToPatientDto(doc);
-            return doc_dto;
+            Patient patient = await PatientRepository.FindByName(Patientname);
+            PatientDto patient_dto = UserMapper.ToPatientDto(patient);
+            return patient_dto;
         }
     }
 }

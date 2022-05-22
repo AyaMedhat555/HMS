@@ -41,5 +41,40 @@ namespace SmartHospital.Controllers
         {
             return Ok(await _departmentService.GetAllDepartmentsEmps());
         }
+
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateDepartment(Department dept)
+        {
+            return Ok(await _departmentService.UpdateDepartment(dept));
+        }
+
+
+
+        [HttpGet("getPatientsByDepartmentId/{id}")]
+        public async Task<IActionResult> GetPatientsById([FromRoute] int id)
+        {
+            return Ok(await _departmentService.GetDepartmentPatientsById(id));
+        }
+
+        [HttpGet("getEmpsByDepartmentId/{id}")]
+        public async Task<IActionResult> GetEmpsById([FromRoute] int id)
+        {
+            return Ok(await _departmentService.GetDepartmentEmpsById(id));
+        }
+
+        [HttpGet("getPatientsByDepartmentName")]
+        public async Task<IActionResult> GetPatientsByName(string name)
+        {
+            return Ok(await _departmentService.GetDepartmentPatientsByName(name));
+        }
+
+        [HttpGet("getEmpsByDepartmentName")]
+        public async Task<IActionResult> GetEmpsByName(string name)
+        {
+            return Ok(await _departmentService.GetDepartmentEmpsByName(name));
+        }
+
+
     }
 }

@@ -39,7 +39,6 @@ namespace SmartHospital.Controllers
         public async Task<IActionResult> Delete([FromRoute] int test_id)
         {
             Console.WriteLine(test_id.ToString());
-            await _medicalTestService.DeleteTest(test_id);
             return Ok(await _medicalTestService.DeleteTest(test_id));
         }
 
@@ -128,6 +127,13 @@ namespace SmartHospital.Controllers
         public async Task<IActionResult> GetDoctorLabRequestsByDate(int doctor_id, DateTime LabRequestDate)
         {
             return Ok(await _medicalTestService.GetDoctorLabRequestsByDate(doctor_id, LabRequestDate));
+        }
+
+        [HttpPost("addLabRequests")]
+        public async Task<IActionResult> AddLabRequests(List<LabRequestDto> labRequestsDtos)
+        {
+            Console.WriteLine(labRequestsDtos.ToString());
+            return Ok(await _medicalTestService.AddLabRequests(labRequestsDtos));
         }
 
         //######################################################################################################

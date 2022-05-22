@@ -30,6 +30,8 @@ namespace Service.IServices
         Task<IEnumerable<ScanRequestResponse>> GetDoctorScanRequestsByDate(int Doctor_id, DateTime date);
         Task<IEnumerable<ScanRequestResponse>> GetPatientScanRequestsByDate(int Patient_id, DateTime date);
         Task<IEnumerable<ScanRequestResponse>> GetAllScanRequests();
+        Task<IEnumerable<ScanRequest>> AddScanRequests(List<ScanRequestDto> ScanRequests);
+
 
 
 

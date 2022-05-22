@@ -9,6 +9,7 @@ namespace Service.DTO
 {
     public class PatientTestDto
     {
+        public int PatientTestId { get; set; }
         public int LabRequestId { get; set; }
         public virtual ICollection<TestDetailsCategorical> CategoricalDetails { get; set; } = new HashSet<TestDetailsCategorical>();
         public virtual ICollection<TestDetailsNumerical> NumericalDetails { get; set; } = new HashSet<TestDetailsNumerical>();

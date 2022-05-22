@@ -9,5 +9,9 @@ namespace Repository.IRepositories
 {
     public interface IDepartmentRepository : IGenericRepository<Department>
     {
+        Task<Department> GetEmpsByName(String name);
+        Task<Department> GetEmpsById(int id);
+        Task<Department> GetPatientsByName(String name);
+        Task<Department> GetPatientsById(int id);
     }
 }

@@ -12,7 +12,7 @@ namespace Service.Responses
         public int PatientTestId { get; set; }
         public int PatientId { get; set; }
         public string TestName { get; set; }
-        public int DoctorId { get; set; }
+        public int? DoctorId { get; set; }
         public virtual ICollection<TestDetailsCategorical> CategoricalDetails { get; set; } = new HashSet<TestDetailsCategorical>();
         public virtual ICollection<TestDetailsNumerical> NumericalDetails { get; set; } = new HashSet<TestDetailsNumerical>();
 

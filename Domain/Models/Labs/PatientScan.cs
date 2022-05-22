@@ -15,8 +15,8 @@ namespace Domain.Models.Labs
         public int PatientId { get; set; }
         public Scan Scan { get; set; }
         public int ScanId { get; set; }
-        public Doctor Doctor { get; set; }
-        public int DoctorId { get; set; }
+        public Doctor? Doctor { get; set; }
+        public int? DoctorId { get; set; }
         public DateTime ScanDate { get; set; }
     }
 }

@@ -9,11 +9,14 @@ namespace Repository.IRepositories
 {
     public interface IScanRequestRepository : IGenericRepository<ScanRequest>
     {
+        Task<ScanRequest> GetScanRequestById(int id);
+        IQueryable<ScanRequest> GetAllScanRequests();
         IQueryable<ScanRequest> GetAllScanRequestsByDocId(int doctor_id);
         IQueryable<ScanRequest> GetAllScanRequestsForAll();
         IQueryable<ScanRequest> GetAllScanRequestsForPatient(int Patient_id);
         IQueryable<ScanRequest> GetAllDoctorToPatientScanRequests(int Patient_id, int doctor_id);
         IQueryable<ScanRequest> GetPatientScanRequestByDate(int Patient_id, DateTime ScanRequestDate);
         IQueryable<ScanRequest> GetDoctorScanRequestsByDate(int doctor_id, DateTime ScanRequestDate);
+        //IQueryable<ScanRequest> AddScanRequests(List<ScanRequest> scanRequests);
     }
 }

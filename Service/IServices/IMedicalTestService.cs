@@ -29,6 +29,8 @@ namespace Service.IServices
         Task<IEnumerable<LabRequestResponse>> GetDoctorLabRequestsByDate(int Doctor_id, DateTime date);
         Task<IEnumerable<LabRequestResponse>> GetPatientLabRequestsByDate(int Patient_id, DateTime date);
         Task<IEnumerable<LabRequestResponse>> GetAllLabRequests();
+        Task<IEnumerable<LabRequest>> AddLabRequests(List<LabRequestDto> LabRequests);
+
 
 
         Task<PatientTest> AddPatientTest(PatientTestDto Test);

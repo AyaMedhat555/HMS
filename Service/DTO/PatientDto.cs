@@ -8,5 +8,6 @@ namespace Service.DTO
 {
     public class PatientDto : UserDto
     {
+        public string BloodType { get; set; }
     }
 }

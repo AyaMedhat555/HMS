@@ -108,25 +108,25 @@ namespace Service.Services
         public async Task<Nurse> UpdateNurse(NurseDto dto)
         {
             Nurse currentNurse = await NurseRepository.GetById(dto.Id);
-            Nurse Nurse = UserMapper.UpdateNurse(dto, currentNurse);
+            currentNurse = UserMapper.UpdateNurse(dto, currentNurse);
             CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            Nurse.PasswordHash = passwordHash;
-            Nurse.PasswordSalt = passwordSalt;
-            return await NurseRepository.Update(Nurse);
+            currentNurse.PasswordHash = passwordHash;
+            currentNurse.PasswordSalt = passwordSalt;
+            return await NurseRepository.Update(currentNurse);
         }
 
         public async Task<NurseDto> GetNurseById(int Nurse_id)
         {
-            Nurse doc = await NurseRepository.GetById(Nurse_id);
-            NurseDto doc_dto = UserMapper.ToNurseDto(doc);
-            return doc_dto;
+            Nurse nurse = await NurseRepository.GetById(Nurse_id);
+            NurseDto nurse_dto = UserMapper.ToNurseDto(nurse);
+            return nurse_dto;
         }
 
         public async Task<NurseDto> GetNurseByName(string Nursename)
         {
-            Nurse doc = await NurseRepository.FindByName(Nursename);
-            NurseDto doc_dto = UserMapper.ToNurseDto(doc);
-            return doc_dto;
+            Nurse nurse = await NurseRepository.FindByName(Nursename);
+            NurseDto nurse_dto = UserMapper.ToNurseDto(nurse);
+            return nurse_dto;
         }
 
 

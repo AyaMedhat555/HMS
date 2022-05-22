@@ -224,6 +224,7 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
+            newUserDto.BloodType = user.BloodType;
             return newUserDto;
         }
 

@@ -53,7 +53,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.Prescriptions.Where(
 
-               P => (P.DoctorId == doctor_id) && (P.Prescription_Date == PrescriptionDate)).Include(P => P.PrescriptionItems);
+               P => (P.DoctorId == doctor_id) && (P.Prescription_Date.Date == PrescriptionDate.Date)).Include(P => P.PrescriptionItems);
 
         }
 
@@ -61,7 +61,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.Prescriptions.Where(
 
-               P => (P.PatientId == Patient_id) && (P.Prescription_Date == PrescriptionDate)).Include(P => P.PrescriptionItems);
+               P => (P.PatientId == Patient_id) && (P.Prescription_Date.Date == PrescriptionDate.Date)).Include(P => P.PrescriptionItems);
 
 
         }

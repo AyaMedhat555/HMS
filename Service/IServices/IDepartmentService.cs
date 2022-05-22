@@ -11,9 +11,14 @@ namespace Service.IServices
     public interface IDepartmentService
     {
         Task<Department> AddDepartment(Department department);
-        Task<IEnumerable<Department>> GetAllDepartments();
+        Task<IEnumerable<DepartmentResponse>> GetAllDepartments();
         Task<Department> UpdateDepartment(Department department);
         Task<Department> DeleteDepartment(int id);
+        Task<DepartmentResponse> GetDepartmentEmpsById(int id);
+        Task<DepartmentResponse> GetDepartmentPatientsById(int id);
+        Task<DepartmentResponse> GetDepartmentEmpsByName(string name);
+        Task<DepartmentResponse> GetDepartmentPatientsByName(string name);
         Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsEmps();
+        Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsPatients();
     }
 }

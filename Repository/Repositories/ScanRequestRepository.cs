@@ -53,7 +53,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.ScanRequests.Where(
 
-               P => (P.DoctorId == doctor_id) && (P.CreatedDtm == ScanRequestDate)).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan);
+               P => (P.DoctorId == doctor_id) && (P.CreatedDtm.Date == ScanRequestDate.Date)).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan);
 
         }
 
@@ -61,9 +61,28 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.ScanRequests.Where(
 
-               P => (P.PatientId == Patient_id) && (P.CreatedDtm == ScanRequestDate)).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan);
-
-
+               P => (P.PatientId == Patient_id) && (P.CreatedDtm.Date == ScanRequestDate.Date)).Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan);
         }
+
+        public IQueryable<ScanRequest> GetAllScanRequests()
+        {
+            return _unitOfWork.Context.ScanRequests.Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan);
+        }
+
+        public async Task<ScanRequest> GetScanRequestById(int id)
+        {
+            return await _unitOfWork.Context.ScanRequests.Include(S => S.Doctor).Include(S => S.Patient).Include(S => S.Scan).SingleOrDefaultAsync(S => S.Id == id);
+        }
+
+        //public IQueryable<ScanRequest> AddScanRequests(List<ScanRequest> scanRequests)
+        //{
+        //    foreach(var scanRequest in scanRequests)
+        //    {
+        //        _unitOfWork.Context.ScanRequests.Add(scanRequest);
+        //        _unitOfWork.Commit();
+        //    }
+        //    return scanRequests.AsQueryable();
+        //}
+
     }
 }

@@ -9,6 +9,8 @@ namespace Repository.IRepositories
 {
     public interface IPatientScanRepository : IGenericRepository<PatientScan>
     {
+        Task<PatientScan> GetPatientScanById(int id);
+        IQueryable<PatientScan> GetAllPatientsScans();
         IQueryable<PatientScan> GetAllPatientScansByDocId(int doctor_id);
         IQueryable<PatientScan> GetAllPatientScansForAll();
         IQueryable<PatientScan> GetAllPatientScansForPatient(int Patient_id);

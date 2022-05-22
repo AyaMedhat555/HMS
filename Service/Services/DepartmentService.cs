@@ -31,9 +31,15 @@ namespace Service.Services
         {
             return await _departmentRepository.Add(department);
         }
-        public async Task<IEnumerable<Department>> GetAllDepartments()
+        public async Task<IEnumerable<DepartmentResponse>> GetAllDepartments()
         {
-            return await _departmentRepository.GetAll().ToListAsync();
+            return await _departmentRepository.GetAll().Select(d => new DepartmentResponse
+            {
+                DepartmentId = d.Id,
+                DepartmentName = d.Department_Name,
+                DepartmentLocation = d.Location,
+                IsActive = d.IsActive
+            }).ToListAsync();
         }
         public async Task<Department> DeleteDepartment(int id)
         {
@@ -41,7 +47,7 @@ namespace Service.Services
         }
 
         public async Task<Department> UpdateDepartment(Department department)
-        {
+        {            
             return await _departmentRepository.Update(department);
         }
 
@@ -118,6 +124,102 @@ namespace Service.Services
             }
             return allDepartmentsResponses;
 
+        }
+
+        public async Task<DepartmentResponse> GetDepartmentEmpsById(int id)
+        {
+            var dept = await _departmentRepository.GetEmpsById(id);
+            DepartmentResponse departmentResponse = new DepartmentResponse()
+            {
+                DepartmentId = dept.Id,
+                DepartmentName= dept.Department_Name,
+                IsActive = dept.IsActive,
+                DoctorDtos = dept.Doctors.Select(d => new DoctorDto()
+                {
+                    Id = d.Id,
+                    FirstName = d.FirstName,
+                    LastName = d.LastName,
+                    Age = d.Age,
+                    PhoneNumber = d.PhoneNumber
+                }).ToList(),
+                NurseDtos = dept.Nurses.Select(n => new NurseDto()
+                {
+                    Id = n.Id,
+                    FirstName = n.FirstName,
+                    LastName = n.LastName,
+                    Age = n.Age,
+                    PhoneNumber = n.PhoneNumber
+                }).ToList()
+            };
+            return departmentResponse;
+        }
+
+        public async Task<DepartmentResponse> GetDepartmentPatientsById(int id)
+        {
+            var dept = await _departmentRepository.GetPatientsById(id);
+            DepartmentResponse departmentResponse = new DepartmentResponse()
+            {
+                DepartmentId = dept.Id,
+                DepartmentName= dept.Department_Name,
+                IsActive = dept.IsActive,
+                PatientDtos = dept.Patients.Select(p => new PatientDto()
+                {
+                    Id = p.Id,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    Age = p.Age,
+                    PhoneNumber = p.PhoneNumber
+                }).ToList()
+            };
+            return departmentResponse;
+        }
+
+        public async Task<DepartmentResponse> GetDepartmentEmpsByName(string name)
+        {
+            var dept = await _departmentRepository.GetEmpsByName(name);
+            DepartmentResponse departmentResponse = new DepartmentResponse()
+            {
+                DepartmentId = dept.Id,
+                DepartmentName= dept.Department_Name,
+                IsActive = dept.IsActive,
+                DoctorDtos = dept.Doctors.Select(d => new DoctorDto()
+                {
+                    Id = d.Id,
+                    FirstName = d.FirstName,
+                    LastName = d.LastName,
+                    Age = d.Age,
+                    PhoneNumber = d.PhoneNumber
+                }).ToList(),
+                NurseDtos = dept.Nurses.Select(n => new NurseDto()
+                {
+                    Id = n.Id,
+                    FirstName = n.FirstName,
+                    LastName = n.LastName,
+                    Age = n.Age,
+                    PhoneNumber = n.PhoneNumber
+                }).ToList()
+            };
+            return departmentResponse;
+        }
+
+        public async Task<DepartmentResponse> GetDepartmentPatientsByName(string name)
+        {
+            var dept = await _departmentRepository.GetPatientsByName(name);
+            DepartmentResponse departmentResponse = new DepartmentResponse()
+            {
+                DepartmentId = dept.Id,
+                DepartmentName= dept.Department_Name,
+                IsActive = dept.IsActive,
+                PatientDtos = dept.Patients.Select(p => new PatientDto()
+                {
+                    Id = p.Id,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    Age = p.Age,
+                    PhoneNumber = p.PhoneNumber
+                }).ToList()
+            };
+            return departmentResponse;
         }
     }
 }

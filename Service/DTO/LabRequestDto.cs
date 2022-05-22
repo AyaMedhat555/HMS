@@ -12,6 +12,6 @@ namespace Service.DTO
         public string LabName { get; set; }
         public DateTime CreatedDtm { get; set; }
         public int PatientId { get; set; }
-        public int DoctorId { get; set; }
+        public int? DoctorId { get; set; }
     }
 }

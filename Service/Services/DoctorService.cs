@@ -106,11 +106,11 @@ namespace Service.Services
         public async Task<Doctor> UpdateDoctor(DoctorDto dto)
         {
             Doctor currentDoctor = await DoctorRepository.GetById(dto.Id);
-            Doctor doctor = UserMapper.UpdateDoctor(dto, currentDoctor);
+            currentDoctor = UserMapper.UpdateDoctor(dto, currentDoctor);
             CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            doctor.PasswordHash = passwordHash;
-            doctor.PasswordSalt = passwordSalt;
-            return await DoctorRepository.Update(doctor);
+            currentDoctor.PasswordHash = passwordHash;
+            currentDoctor.PasswordSalt = passwordSalt;
+            return await DoctorRepository.Update(currentDoctor);
         }
 
         public async Task<DoctorDto> GetDoctorById(int Doctor_id)

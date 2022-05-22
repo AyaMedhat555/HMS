@@ -19,12 +19,23 @@ namespace Repository.Repositories
 
         }
 
+        //public IQueryable<LabRequest> AddLabRequests(List<LabRequest> labRequests)
+        //{
+        //    _unitOfWork.Context.LabRequests.AddRange(labRequests);
+        //    return labRequests.AsQueryable();
+        //}
+
         public IQueryable<LabRequest> GetAllDoctorToPatientLabRequests(int Patient_id, int doctor_id)
         {
             return _unitOfWork.Context.LabRequests.Where(
 
                P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id)).Include(L => L.Doctor).Include(L => L.Patient).Include(L => L.Test).OrderByDescending(P => P.CreatedDtm);
 
+        }
+
+        public IQueryable<LabRequest> GetAllLabRequests()
+        {
+            return _unitOfWork.Context.LabRequests.Include(L => L.Doctor).Include(L => L.Patient).Include(L => L.Test);
         }
 
         public IQueryable<LabRequest> GetAllLabRequestsByDocId(int doctor_id)
@@ -53,15 +64,20 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.LabRequests.Where(
 
-               P => (P.DoctorId == doctor_id) && (P.CreatedDtm == LabRequestDate)).Include(L => L.Doctor).Include(L => L.Patient).Include(L => L.Test);
+               P => (P.DoctorId == doctor_id) && (P.CreatedDtm.Date == LabRequestDate.Date)).Include(L => L.Doctor).Include(L => L.Patient).Include(L => L.Test);
 
+        }
+
+        public async Task<LabRequest> GetLabRequestById(int id)
+        {
+            return await _unitOfWork.Context.LabRequests.Include(L => L.Doctor).Include(L => L.Patient).Include(L => L.Test).SingleOrDefaultAsync(L => L.Id ==id);
         }
 
         public IQueryable<LabRequest> GetPatientLabRequestByDate(int Patient_id, DateTime LabRequestDate)
         {
             return _unitOfWork.Context.LabRequests.Where(
 
-               P => (P.PatientId == Patient_id) && (P.CreatedDtm == LabRequestDate)).Include(L => L.Doctor).Include(L => L.Patient).Include(L => L.Test);
+               P => (P.PatientId == Patient_id) && (P.CreatedDtm.Date == LabRequestDate.Date)).Include(L => L.Doctor).Include(L => L.Patient).Include(L => L.Test);
 
 
         }
