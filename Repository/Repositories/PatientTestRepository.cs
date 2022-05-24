@@ -62,6 +62,11 @@ namespace Repository.Repositories
 
         }
 
+        public IQueryable<PatientTest> GetInDoorPatientTests(int InDoorPatientRecordId)
+        {
+            return _unitOfWork.Context.PatientTests.Where(P =>P.IndoorPatientRecordId== InDoorPatientRecordId).Include(P=>P.Test);
+        }
+
         public IQueryable<PatientTest> GetPatientTestByDate(int Patient_id, DateTime PatientTestDate)
         {
             return _unitOfWork.Context.PatientTests.Where(

@@ -57,6 +57,8 @@ namespace Repository.Repositories
 
         }
 
+        
+
         public IQueryable<Prescription> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate)
         {
             return _unitOfWork.Context.Prescriptions.Where(
@@ -64,6 +66,20 @@ namespace Repository.Repositories
                P => (P.PatientId == Patient_id) && (P.Prescription_Date.Date == PrescriptionDate.Date)).Include(P => P.PrescriptionItems);
 
 
+        }
+
+        public Prescription GetPrescriptionsByInDoorPatient(int IndoorPatientRecordId)
+        {
+            return _unitOfWork.Context.Prescriptions.Where(
+
+                P => P.IndoorPatientRecordId == IndoorPatientRecordId).Include(P => P.PrescriptionItems).OrderByDescending(P=> P.Prescription_Date).Last() ; 
+        }
+
+        public IQueryable<Prescription> GetPrescriptionsByIndoorPatientId(int IndoorPatientRecordId)
+        {
+            return _unitOfWork.Context.Prescriptions.Where(
+
+                  P => P.IndoorPatientRecordId == IndoorPatientRecordId).Include(P => P.PrescriptionItems);
         }
     }
 }

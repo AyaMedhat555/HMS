@@ -36,10 +36,21 @@ builder.Services.AddDbContext<DataContext>(options => options
 .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
 
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IPatientReportService, PatientReportService>();
+builder.Services.AddScoped<IPatientReportRepository,PatientReportRepository>();
+
+
+builder.Services.AddScoped< IIndoorPatientService ,IndoorPatientService >();
+builder.Services.AddScoped<IIndoorPatientRepository, IndoorPatientRepository>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddScoped<IVitalSignsRepository, VitalSignsRepository>();
 builder.Services.AddScoped<IVitalSignesService, VitalSignsService>();

@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using Service.DTO;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,8 @@ namespace Service.IServices
         Task<PatientDto> GetPatientById(int Patient_id);
         Task<Patient> DeletePatient(int Patient_id);
         Task<PatientDto> GetPatientByName(String Patientname);
+        
+
+        //  Task<IEnumerable<InDoorPatientGetter>> GetAllInDoorPatients(bool In);
     }
 }

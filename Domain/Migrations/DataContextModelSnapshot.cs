@@ -30,6 +30,9 @@ namespace Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<float>("AppointmentCharge")
+                        .HasColumnType("real");
+
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
@@ -56,25 +59,42 @@ namespace Domain.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("Domain.Models.ClinicPatient", b =>
+            modelBuilder.Entity("Domain.Models.Bed", b =>
                 {
-                    b.Property<int>("ClinicPatientId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClinicPatientId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Beds");
+                });
+
+            modelBuilder.Entity("Domain.Models.ClinicPatientRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AppointmentId")
                         .HasColumnType("int");
-
-                    b.Property<float>("Appointmentcharges")
-                        .HasColumnType("real");
 
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Diagnosis")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DoctorId")
@@ -87,11 +107,10 @@ namespace Domain.Migrations
                     b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<string>("complain")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PrescriptionId")
+                        .HasColumnType("int");
 
-                    b.HasKey("ClinicPatientId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AppointmentId");
 
@@ -101,7 +120,9 @@ namespace Domain.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("ClinicPatient");
+                    b.HasIndex("PrescriptionId");
+
+                    b.ToTable("ClinicPatients");
                 });
 
             modelBuilder.Entity("Domain.Models.Department", b =>
@@ -127,7 +148,7 @@ namespace Domain.Migrations
                     b.ToTable("Department");
                 });
 
-            modelBuilder.Entity("Domain.Models.Labs.LabRequest", b =>
+            modelBuilder.Entity("Domain.Models.IndoorPatientRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,28 +156,85 @@ namespace Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedDtm")
+                    b.Property<string>("CauseOfAdmission")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Diagnosis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DischargeDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DoctorId")
+                    b.Property<bool>("Disharged")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("EnterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OralMedicalHistory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderdByDoctorId")
                         .HasColumnType("int");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TestId")
+                    b.Property<string>("Recommendation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("OrderdByDoctorId");
 
                     b.HasIndex("PatientId");
 
-                    b.HasIndex("TestId");
+                    b.HasIndex("RoomId");
 
-                    b.ToTable("LabRequests");
+                    b.ToTable("IndoorPatients");
                 });
+
+
+            modelBuilder.Entity("Domain.Models.Labs.LabRequest", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                b.Property<DateTime>("CreatedDtm")
+                    .HasColumnType("datetime2");
+
+                b.Property<int>("DoctorId")
+                    .HasColumnType("int");
+
+                b.Property<int>("PatientId")
+                    .HasColumnType("int");
+
+                b.Property<int>("TestId")
+                    .HasColumnType("int");
+
+                b.HasKey("Id");
+
+                b.HasIndex("DoctorId");
+
+                b.HasIndex("PatientId");
+
+                b.HasIndex("TestId");
+
+                b.ToTable("LabRequests");
+            });
 
             modelBuilder.Entity("Domain.Models.Labs.PatientScan", b =>
                 {
@@ -171,6 +249,9 @@ namespace Domain.Migrations
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<int?>("IndoorPatientRecordId")
+                        .HasColumnType("int");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -188,6 +269,8 @@ namespace Domain.Migrations
                     b.HasKey("PatientScanId");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("IndoorPatientRecordId");
 
                     b.HasIndex("PatientId");
 
@@ -262,13 +345,28 @@ namespace Domain.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IndoorPatientRecordId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NurseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Note");
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("IndoorPatientRecordId");
+
+                    b.HasIndex("NurseId");
+
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("Domain.Models.Prescription", b =>
@@ -280,6 +378,9 @@ namespace Domain.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrescriptionId"), 1L, 1);
 
                     b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IndoorPatientRecordId")
                         .HasColumnType("int");
 
                     b.Property<int>("PatientId")
@@ -294,6 +395,8 @@ namespace Domain.Migrations
                     b.HasKey("PrescriptionId");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("IndoorPatientRecordId");
 
                     b.HasIndex("PatientId");
 
@@ -340,6 +443,43 @@ namespace Domain.Migrations
                     b.HasIndex("PrescriptionId");
 
                     b.ToTable("PrescriptionItems");
+                });
+
+            modelBuilder.Entity("Domain.Models.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FloorNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfBeds")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Reserved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RoomCharges")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RoomType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
@@ -490,6 +630,9 @@ namespace Domain.Migrations
                     b.Property<byte[]>("ECG")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int?>("IndoorPatientRecordId")
+                        .HasColumnType("int");
+
                     b.Property<int>("NoteId")
                         .HasColumnType("int");
 
@@ -517,6 +660,8 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IndoorPatientRecordId");
+
                     b.HasIndex("NoteId");
 
                     b.HasIndex("NurseId");
@@ -537,6 +682,9 @@ namespace Domain.Migrations
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("IndoorPatientRecordId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -549,6 +697,8 @@ namespace Domain.Migrations
                     b.HasKey("PatientTestId");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("IndoorPatientRecordId");
 
                     b.HasIndex("PatientId");
 
@@ -656,7 +806,13 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("IndoorPatientRecordId")
+                        .HasColumnType("int")
+                        .HasColumnName("Doctor_IndoorPatientRecordId");
+
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("IndoorPatientRecordId");
 
                     b.HasDiscriminator().HasValue("Doctor");
                 });
@@ -665,15 +821,20 @@ namespace Domain.Migrations
                 {
                     b.HasBaseType("Domain.Models.User");
 
-                    b.Property<string>("NurseDegree")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("IndoorPatientRecordId")
+                        .HasColumnType("int");
 
                     b.Property<string>("NurseSpecialization")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NurseDegree")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("IndoorPatientRecordId");
 
                     b.HasDiscriminator().HasValue("Nurse");
                 });
@@ -783,7 +944,18 @@ namespace Domain.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Domain.Models.ClinicPatient", b =>
+            modelBuilder.Entity("Domain.Models.Bed", b =>
+                {
+                    b.HasOne("Domain.Models.Room", "Room")
+                        .WithMany("Beds")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Domain.Models.ClinicPatientRecord", b =>
                 {
                     b.HasOne("Domain.Models.Appointment", "Appointment")
                         .WithMany()
@@ -807,11 +979,54 @@ namespace Domain.Migrations
                         .WithMany("ClinicPatientRecord")
                         .HasForeignKey("PatientId");
 
+                    b.HasOne("Domain.Models.Prescription", "Prescription")
+                        .WithMany()
+                        .HasForeignKey("PrescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Appointment");
 
                     b.Navigation("Department");
 
                     b.Navigation("Doctor");
+
+                    b.Navigation("Prescription");
+                });
+
+            modelBuilder.Entity("Domain.Models.IndoorPatientRecord", b =>
+                {
+                    b.HasOne("Domain.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Doctor", "OrderdByDoctor")
+                        .WithMany()
+                        .HasForeignKey("OrderdByDoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Patient", "Patient")
+                        .WithMany("IndoorPatientRecord")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("OrderdByDoctor");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Domain.Models.Labs.LabRequest", b =>
@@ -844,6 +1059,10 @@ namespace Domain.Migrations
                     b.HasOne("Domain.Models.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId");
+
+                    b.HasOne("Domain.Models.IndoorPatientRecord", null)
+                        .WithMany("Scans")
+                        .HasForeignKey("IndoorPatientRecordId");
 
                     b.HasOne("Domain.Models.Patient", "Patient")
                         .WithMany()
@@ -889,6 +1108,29 @@ namespace Domain.Migrations
                     b.Navigation("Scan");
                 });
 
+            modelBuilder.Entity("Domain.Models.Note", b =>
+                {
+                    b.HasOne("Domain.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.IndoorPatientRecord", null)
+                        .WithMany("Notes")
+                        .HasForeignKey("IndoorPatientRecordId");
+
+                    b.HasOne("Domain.Models.Nurse", "Nurse")
+                        .WithMany()
+                        .HasForeignKey("NurseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Nurse");
+                });
+
             modelBuilder.Entity("Domain.Models.Prescription", b =>
                 {
                     b.HasOne("Domain.Models.Doctor", "Doctor")
@@ -896,6 +1138,10 @@ namespace Domain.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Models.IndoorPatientRecord", null)
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("IndoorPatientRecordId");
 
                     b.HasOne("Domain.Models.Patient", "patient")
                         .WithMany()
@@ -913,6 +1159,17 @@ namespace Domain.Migrations
                     b.HasOne("Domain.Models.Prescription", null)
                         .WithMany("PrescriptionItems")
                         .HasForeignKey("PrescriptionId");
+                });
+
+            modelBuilder.Entity("Domain.Models.Room", b =>
+                {
+                    b.HasOne("Domain.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("Domain.Models.Schedule", b =>
@@ -939,6 +1196,10 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Models.VitalSign", b =>
                 {
+                    b.HasOne("Domain.Models.IndoorPatientRecord", null)
+                        .WithMany("VitalSigns")
+                        .HasForeignKey("IndoorPatientRecordId");
+
                     b.HasOne("Domain.Models.Note", "Note")
                         .WithMany()
                         .HasForeignKey("NoteId")
@@ -969,6 +1230,10 @@ namespace Domain.Migrations
                     b.HasOne("Domain.Models.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId");
+
+                    b.HasOne("Domain.Models.IndoorPatientRecord", null)
+                        .WithMany("Tests")
+                        .HasForeignKey("IndoorPatientRecordId");
 
                     b.HasOne("Domain.Models.Patient", "Patient")
                         .WithMany()
@@ -1015,6 +1280,10 @@ namespace Domain.Migrations
                         .WithMany("Doctors")
                         .HasForeignKey("DepartmentId");
 
+                    b.HasOne("Domain.Models.IndoorPatientRecord", null)
+                        .WithMany("Doctors")
+                        .HasForeignKey("IndoorPatientRecordId");
+
                     b.Navigation("Department");
                 });
 
@@ -1023,6 +1292,10 @@ namespace Domain.Migrations
                     b.HasOne("Domain.Models.Department", "Department")
                         .WithMany("Nurses")
                         .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Domain.Models.IndoorPatientRecord", null)
+                        .WithMany("Nurses")
+                        .HasForeignKey("IndoorPatientRecordId");
 
                     b.Navigation("Department");
                 });
@@ -1081,18 +1354,40 @@ namespace Domain.Migrations
                     b.Navigation("Test");
                 });
 
-            modelBuilder.Entity("Domain.Models.Department", b =>
+            modelBuilder.Entity("Domain.Models.IndoorPatientRecord", b =>
                 {
                     b.Navigation("Doctors");
 
+                    b.Navigation("Notes");
+
                     b.Navigation("Nurses");
 
-                    b.Navigation("Patients");
+                    b.Navigation("Prescriptions");
+
+                    b.Navigation("Scans");
+
+                    b.Navigation("Tests");
+
+                    b.Navigation("VitalSigns");
                 });
+
+            modelBuilder.Entity("Domain.Models.Department", b =>
+            {
+                b.Navigation("Doctors");
+
+                b.Navigation("Nurses");
+
+                b.Navigation("Patients");
+            });
 
             modelBuilder.Entity("Domain.Models.Prescription", b =>
                 {
                     b.Navigation("PrescriptionItems");
+                });
+
+            modelBuilder.Entity("Domain.Models.Room", b =>
+                {
+                    b.Navigation("Beds");
                 });
 
             modelBuilder.Entity("SmartHospital.Models.Labs.PatientTest", b =>
@@ -1112,6 +1407,8 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Models.Patient", b =>
                 {
                     b.Navigation("ClinicPatientRecord");
+
+                    b.Navigation("IndoorPatientRecord");
                 });
 #pragma warning restore 612, 618
         }

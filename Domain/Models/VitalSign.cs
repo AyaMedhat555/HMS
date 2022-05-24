@@ -17,5 +17,7 @@
         public Patient Patient { get; set; }
         public int Patientid { get; set; }
 
+        public int? IndoorPatientRecordId { get; set; }
+
     }
 }

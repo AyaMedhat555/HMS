@@ -136,7 +136,8 @@ namespace Service.Services
                 PatientId = PrescriptionDto.PatientId,
                 Prescription_Date = PrescriptionDto.Prescription_Date,
                 re_appointement_date = PrescriptionDto.re_appointement_date,
-                PrescriptionItems = PrescriptionDto.PrescriptionItems
+                PrescriptionItems = PrescriptionDto.PrescriptionItems,
+                IndoorPatientRecordId = PrescriptionDto.IndoorPatientRecordId
 
             };
 

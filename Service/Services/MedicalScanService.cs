@@ -218,7 +218,8 @@ namespace Service.Services
                 ScanDate = DateTime.Now,
                 DoctorId = scanRequest.DoctorId,
                 PatientId = scanRequest.PatientId,
-                ScanId = scanRequest.ScanId
+                ScanId = scanRequest.ScanId,
+                IndoorPatientRecordId= Scan. IndoorPatientRecordId 
             };
             await DeleteScanRequest(ReqId);
             return await PatientScanRepository.Add(newScan);

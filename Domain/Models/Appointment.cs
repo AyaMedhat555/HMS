@@ -20,6 +20,8 @@ namespace Domain.Models
 
          public int DoctorId { get; set; }
 
+        public  float AppointmentCharge  { get; set; }
+
 
     }
 }

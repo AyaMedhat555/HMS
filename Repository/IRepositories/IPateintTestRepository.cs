@@ -17,5 +17,8 @@ namespace Repository.IRepositories
         IQueryable<PatientTest> GetAllDoctorToPatientTests(int Patient_id, int doctor_id);
         IQueryable<PatientTest> GetPatientTestByDate(int Patient_id, DateTime PatientTestDate);
         IQueryable<PatientTest> GetDoctorTestsByDate(int doctor_id, DateTime PatientTestDate);
+
+        IQueryable<PatientTest> GetInDoorPatientTests(int InDoorPatientRecordId);
+
     }
 }

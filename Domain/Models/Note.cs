@@ -7,10 +7,19 @@ namespace Domain.Models
         public string Subject { get; set; }
         public DateTime CreatedDate { get; set; }
         public string Body { get; set; }
-       // public Nurse Nurse { get; set; }
+        public Nurse Nurse { get; set; }
+         
+        public int NurseId { get; set; }
+        public int DoctorId { get; set; }
 
-       // public enum writer { Doctor ,Nurse};
+        public Doctor Doctor { get; set; }
 
-    
+        public int? IndoorPatientRecordId { get; set; }
+
+
+
+
+
+
     }
 }
