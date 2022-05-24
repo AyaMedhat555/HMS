@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Repository.IRepositories;
+using Repository.Repositories;
 using Service.DTO;
 using Service.IServices;
 using System;
@@ -138,5 +139,27 @@ namespace Service.Services
             return appointmentDb;
 
         }
+
+        public async Task<IEnumerable<FullSlots>> GetFreeTimeSlots(int doctor_id)
+        {
+            List<Appointment> ReservedAppointments = await TimeSlotsRepository.GetReservedAppointments(doctor_id).ToListAsync();
+            TimeSpan ReservedTime;
+            List<FullSlots> AllSlots = new List<FullSlots>();
+
+            for (int i = 0; i <( ReservedAppointments.Count-1); i++)
+            {
+
+                ReservedTime = new TimeSpan(ReservedAppointments[i].AppointmentDate.Hour, ReservedAppointments[i].AppointmentDate.Minute, 0);
+                List<TimeSlot> FreeSlots =await TimeSlotsRepository.GetFreeSlots(doctor_id, ReservedTime).ToListAsync();
+
+                AllSlots[i].FreeSlots = FreeSlots;
+                AllSlots[i].AppointmentDate = ReservedAppointments[i].AppointmentDate;
+            }
+
+            return AllSlots;
+
+        }
+
+        
     }
 }

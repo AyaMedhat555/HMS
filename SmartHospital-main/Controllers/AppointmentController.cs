@@ -37,5 +37,14 @@ namespace SmartHospital.Controllers
 
             return Ok(await TimeSlotService.MakeAppointment(AppointmentDto, timeslotdto));
         }
+
+
+        [HttpGet("GetFreeTimeSlots/{id}")]
+
+        public async Task<IActionResult> GetFreeTimeSlots(int id)
+        {
+            var Freeslots =  await TimeSlotService.GetFreeTimeSlots(id);
+            return Ok(Freeslots);
+        }
     } 
 }
