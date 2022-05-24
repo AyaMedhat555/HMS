@@ -17,5 +17,10 @@ namespace Repository.Repositories
             _unitOfWork = unitOfWork;
 
         }
+
+        public IQueryable<Appointment> GetAppointmentsByDate(DateTime StartDate, int DoctorId)
+        {
+           return _unitOfWork.Context.Appointments.Where(A=>(A.AppointmentDate.Date== StartDate.Date)&&(A.DoctorId== DoctorId));
+        }
     }
 }

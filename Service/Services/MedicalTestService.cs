@@ -190,15 +190,15 @@ namespace Service.Services
 
         public async Task<IEnumerable<LabRequest>> AddLabRequests(List<LabRequestDto> labRequestsDtos)
         {
-            List<Test> scans = await TestRepository.GetAll().ToListAsync();
+            List<Test> tests = await TestRepository.GetAll().ToListAsync();
             List<LabRequest> labRequests = labRequestsDtos.Select(S => new LabRequest()
             {
-                Id = S.Id,
+                TestId = tests.Where(t => t.Name == S.LabName).Select(t => t.Id).SingleOrDefault(),
                 CreatedDtm = DateTime.Now,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId
             }).ToList();
-            foreach(LabRequest labRequest in labRequests)
+            foreach (LabRequest labRequest in labRequests)
             {
                 await LabRequestRepository.Add(labRequest);
             }

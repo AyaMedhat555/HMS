@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository;
 using Repository.Repositories;
+using Service.Responses;
 
 namespace Service.IServices
 {
@@ -21,6 +22,10 @@ namespace Service.IServices
         Task<Appointment> MakeAppointment(AppointmentDto appointment, TimeSlotDto timeslotdto);
 
        Task <IEnumerable<FullSlots>> GetFreeTimeSlots(int doctor_id);
+
+       IEnumerable<BusySlotResponce> GetBusySlots(int DoctorId,DateTime StartDate ,DateTime EndDate);
+
+
 
     }
 }

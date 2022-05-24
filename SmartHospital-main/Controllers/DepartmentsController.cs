@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.IServices;
+using Service.Responses;
 
 namespace SmartHospital.Controllers
 {
@@ -16,14 +17,13 @@ namespace SmartHospital.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Register(Department request)
+        public async Task<IActionResult> Register(DepartmentResponse request)
         {
             Console.WriteLine(request.ToString());
-            //check if username already used
             await _departmentService.AddDepartment(request);
-            return Ok("Department: "+request.Department_Name+" was added successfully!");
+            return Ok("Department: " + request.DepartmentName + " was added successfully!");
         }
-
+       
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll()
         {

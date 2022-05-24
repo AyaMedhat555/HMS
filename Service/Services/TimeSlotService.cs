@@ -5,6 +5,7 @@ using Repository.IRepositories;
 using Repository.Repositories;
 using Service.DTO;
 using Service.IServices;
+using Service.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -114,27 +115,29 @@ namespace Service.Services
             int offset = CalculateOffset(NOW.DayOfWeek, desired);
             DateTime Datedesired = NOW.AddDays(offset);
 
-            return Datedesired;
+            return Datedesired.Date;
 
         }
 
         public async Task<Appointment> MakeAppointment(AppointmentDto appointment, TimeSlotDto timeslotdto)
         {
+           
             Appointment appointmentDb = new Appointment()
             {
                 DoctorId = appointment.DoctorId,
                 Complain = appointment.Complain,
                 PatientId = appointment.PatientId,
                 AppointmentType = appointment.AppointmentType,
-                AppointmentDate =  performCalculateOffset(timeslotdto.Dayofwork),
+                AppointmentDate= appointment.AppointmentDate.Date.Add(TimeSpan.Parse(timeslotdto.slot_time))
+                //AppointmentDate=  performCalculateOffset(timeslotdto.Dayofwork).Add(TimeSpan.Parse(timeslotdto.slot_time))
 
             };
            await AppointmentRepository.Add(appointmentDb);
 
              
-            TimeSlot timeslot2 = await TimeSlotsRepository.GetById(timeslotdto.id);
-            timeslot2.Reserved = timeslotdto.Reserved;
-            TimeSlotsRepository.Update(timeslot2);
+            //TimeSlot timeslot2 = await TimeSlotsRepository.GetById(timeslotdto.id);
+            //timeslot2.Reserved = timeslotdto.Reserved;
+            //TimeSlotsRepository.Update(timeslot2);
 
             return appointmentDb;
 
@@ -160,6 +163,38 @@ namespace Service.Services
 
         }
 
-        
+        public IEnumerable<BusySlotResponce> GetBusySlots(int DoctorId, DateTime StartDate, DateTime EndDate)
+        {
+            List<BusySlotResponce> busySlotResponces = new List<BusySlotResponce>();
+            
+            List<Appointment> Appointments;
+            DateTime Day = new DateTime();
+            TimeSpan ReservedSlot;
+
+            do
+            {
+
+               Appointments = AppointmentRepository.GetAppointmentsByDate(StartDate, DoctorId).ToList();
+               List<TimeSpan> ReservedSlots = new List<TimeSpan>();
+
+                BusySlotResponce busySlotResponce = new BusySlotResponce();
+                for (int i=0; i<Appointments.Count; i++)
+                {
+                    busySlotResponce.Day = Appointments[0].AppointmentDate.Date;
+                    ReservedSlot = new TimeSpan(Appointments[i].AppointmentDate.Hour, Appointments[i].AppointmentDate.Minute, 0);
+
+                    ReservedSlots.Add(ReservedSlot);
+
+                }
+
+                busySlotResponce.BusySlots = ReservedSlots;
+                busySlotResponces.Add(busySlotResponce);
+
+              StartDate = StartDate.AddDays(1);
+            }
+            while (StartDate <= EndDate);
+
+            return busySlotResponces;
+        }
     }
 }

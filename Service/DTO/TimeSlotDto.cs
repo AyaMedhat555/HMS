@@ -12,7 +12,7 @@ namespace Service.DTO
         public int slotnumber { get; set; }
         public DayOfWeek Dayofwork { get; set; }
         public string slot_time { get; set; }
-        public bool Reserved { get; set; } = false;
+        public bool Reserved { get; set; } 
   
         public int DoctorId { get; set; }
     }

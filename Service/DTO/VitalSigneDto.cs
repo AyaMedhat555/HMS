@@ -17,7 +17,7 @@ namespace Service.DTO
         public float RespirationRate { get; set; }
         public DateTime vitals_date { get; set; }
         public int NurseId { get; set; }
-        public Note Note { get; set; }
+        public NoteDto NoteDto { get; set; }
         public int PatientId { get; set; }
     }
 }

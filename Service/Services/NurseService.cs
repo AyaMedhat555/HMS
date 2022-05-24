@@ -143,7 +143,17 @@ namespace Service.Services
                 vitals_date = VitalSigneDto.vitals_date,
                 NurseId = VitalSigneDto.NurseId,
                 Patientid = VitalSigneDto.PatientId,
-                Note = VitalSigneDto.Note
+
+                Note =new Note
+                {
+                    Body= VitalSigneDto.NoteDto.Body,
+                    NurseId= VitalSigneDto.NoteDto.NurseId,
+                    CreatedDate= VitalSigneDto.NoteDto.CreatedDate,
+                    Subject = VitalSigneDto.NoteDto.Subject,
+                    IndoorPatientRecordId= VitalSigneDto.NoteDto.IndoorPatientRecordId
+
+
+                }
 
             };
             return await VitalSignsRepository.Add(vitalsign);
@@ -163,7 +173,16 @@ namespace Service.Services
                 ECG = r.ECG,
                 RespirationRate = r.RespirationRate,
                 vitals_date = r.vitals_date,
-                 Note = r.Note
+                NoteDto = new NoteDto()
+                {
+                    Body = r.Note.Body,
+                    NurseId = r.Note.NurseId,
+                    CreatedDate = r.Note.CreatedDate,
+                    Subject = r.Note.Subject,
+                    IndoorPatientRecordId = r.Note.IndoorPatientRecordId
+
+
+                }
 
                 })
                 .ToListAsync();

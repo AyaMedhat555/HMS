@@ -27,9 +27,15 @@ namespace Service.Services
             _nurseRepository = iNurseRepository;
         }
 
-        public async Task<Department> AddDepartment(Department department)
+        public async Task<Department> AddDepartment(DepartmentResponse department)
         {
-            return await _departmentRepository.Add(department);
+
+            return await _departmentRepository.Add(new Department()
+            {
+                Department_Name = department.DepartmentName,
+                Location = department.DepartmentLocation,
+                IsActive = department.IsActive
+            });
         }
         public async Task<IEnumerable<DepartmentResponse>> GetAllDepartments()
         {

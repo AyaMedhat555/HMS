@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Service.DTO;
 
 namespace Service.Responses
 {
@@ -13,6 +14,6 @@ namespace Service.Responses
         public byte[]? ECG { get; set; }
         public float RespirationRate { get; set; }
         public DateTime vitals_date { get; set; }
-        public Note Note { get; set; }
+        public NoteDto NoteDto { get; set; }
     }
 }

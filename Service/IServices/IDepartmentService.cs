@@ -10,7 +10,7 @@ namespace Service.IServices
 {
     public interface IDepartmentService
     {
-        Task<Department> AddDepartment(Department department);
+        Task<Department> AddDepartment(DepartmentResponse department);
         Task<IEnumerable<DepartmentResponse>> GetAllDepartments();
         Task<Department> UpdateDepartment(Department department);
         Task<Department> DeleteDepartment(int id);
@@ -20,5 +20,6 @@ namespace Service.IServices
         Task<DepartmentResponse> GetDepartmentPatientsByName(string name);
         Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsEmps();
         Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsPatients();
+        
     }
 }
