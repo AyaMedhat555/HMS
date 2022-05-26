@@ -13,11 +13,13 @@ namespace SmartHospital.Controllers
     {
         private IScheduleService ScheduleService { get; }
         private ITimeSlotService TimeSlotService { get; }
+        private IDoctorService DoctorService { get; }
 
-        public ScheduleController(IScheduleService _IScheduleService, ITimeSlotService _TimeSlotService  )
+        public ScheduleController(IScheduleService _IScheduleService, ITimeSlotService _TimeSlotService, IDoctorService _DoctorService)
         {
             ScheduleService = _IScheduleService;
             TimeSlotService = _TimeSlotService;
+            DoctorService = _DoctorService;
 
         }
 
@@ -35,6 +37,33 @@ namespace SmartHospital.Controllers
         }
 
 
-        
+        [HttpPut("UpdateSchedule")]
+        public async Task<IActionResult> Update(scheduleDto ScheduleDto)
+        {
+            return Ok(await ScheduleService.UpdateSchedule(ScheduleDto));
+        }
+
+
+        [HttpDelete("DeleteSchedule/{ScheduleId}")]
+        public async Task<IActionResult> Delete( [FromRoute]int ScheduleId)
+        {
+            await ScheduleService.DeleteSchedule(ScheduleId);
+            return Ok($"Schedule With Id {ScheduleId} deleted Successfuly");
+        }
+
+
+        [HttpGet(" GetSchedulesByDoctor_Id/{Doctor_ID}")]
+        public async Task<IActionResult> GetSchedulesByDoctor_Id([FromRoute] int Doctor_ID)
+        {
+            return Ok(await ScheduleService.GetSchedulesByDoctor_Id(Doctor_ID));
+        }
+
+
+        [HttpGet("GetSchedulesByDepartment_Id/{Department_ID}")]
+        public async Task<IActionResult> GetSchedulesByDepartment_Id([FromRoute] int Department_ID)
+        {
+            return Ok(await ScheduleService.GetSchedulesByDepartment_Id(Department_ID));
+        }
+
     }
 }

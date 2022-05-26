@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
 using System;
@@ -21,6 +22,11 @@ namespace Repository.Repositories
         public IQueryable<Appointment> GetAppointmentsByDate(DateTime StartDate, int DoctorId)
         {
            return _unitOfWork.Context.Appointments.Where(A=>(A.AppointmentDate.Date== StartDate.Date)&&(A.DoctorId== DoctorId));
+        }
+
+        public IQueryable<Appointment> GetAppointmentsForTodayByDoctorId(DateTime Today, int DoctorId)
+        {
+            return _unitOfWork.Context.Appointments.Where(A => (A.AppointmentDate.Date == Today.Date) && (A.DoctorId == DoctorId)).Include(A => A.Patient); 
         }
     }
 }

@@ -19,11 +19,17 @@ namespace Service.Services
 
         private ITimeSlotsRepository TimeSlotsRepository { get; }
         private IAppointmentRepository AppointmentRepository { get; }
-        public TimeSlotService(ITimeSlotsRepository _TimeSlotsRepository, IAppointmentRepository _AppointmentRepository)
+
+        private IDoctorRepository DoctorRepository { get; }
+
+        private IScheduleRepository ScheduleRepository { get; }
+        public TimeSlotService(ITimeSlotsRepository _TimeSlotsRepository, IAppointmentRepository _AppointmentRepository, IScheduleRepository _ScheduleRepository, IDoctorRepository _DoctorRepository)
         {
 
             TimeSlotsRepository = _TimeSlotsRepository;
             AppointmentRepository = _AppointmentRepository;
+            ScheduleRepository = _ScheduleRepository;
+            DoctorRepository = _DoctorRepository;
 
         }
 
@@ -196,5 +202,62 @@ namespace Service.Services
 
             return busySlotResponces;
         }
-    }
+
+        public async Task<IEnumerable<WorkScheduleByDept>> GetAllTimeSlotsByDepartmentId(int DepartmentId)
+        {
+            
+            
+            
+               List<Doctor> Doctors =  await DoctorRepository.GetDoctorsByDepartment_Id(DepartmentId).ToListAsync();
+
+            List<TimeSlot> slotsPerDay = new List<TimeSlot>();
+            List<DayOfWeek> DoctorDaysOfWork = new List<DayOfWeek>();
+            List<slotResponce> slots;
+            List<WorkSchedule> WorkSchedulesForDoctorPerDay = new List<WorkSchedule>();
+
+
+            List<WorkScheduleByDept> WorkScheduleByDepts = new List<WorkScheduleByDept>();
+
+
+            for (int i = 0; i < Doctors.Count; i++)
+            {
+                WorkScheduleByDept WorkScheduleByDept = new WorkScheduleByDept();
+                WorkScheduleByDept.DoctorId = Doctors[i].Id;
+                WorkScheduleByDept.DoctorName = Doctors[i].FirstName + Doctors[i].LastName;
+                DoctorDaysOfWork = await ScheduleRepository.GetScheduleDaysByDoctor_Id(Doctors[i].Id).ToListAsync();
+
+
+
+
+                for (int Day = 0; Day < DoctorDaysOfWork.Count; Day++)
+                {
+                    WorkSchedule WorkSchedule = new WorkSchedule();
+                    WorkSchedule.DayOfWork = DoctorDaysOfWork[Day];
+                    slotsPerDay = await TimeSlotsRepository.GetSlotsByDayOfWork(DoctorDaysOfWork[Day], Doctors[i].Id).ToListAsync();
+                    slots = slotsPerDay.Select(Sl => new slotResponce()
+
+                    {
+                        slot_Id = Sl.id,
+                        SlotNumber = Sl.slotnumber,
+                        SlotTime = Sl.slot_time
+
+                    }).ToList();
+
+                    WorkSchedule.Slots = slots;
+                    WorkSchedulesForDoctorPerDay.Add(WorkSchedule);
+                }
+
+
+
+                WorkScheduleByDept.WorkSchedules = WorkSchedulesForDoctorPerDay;
+                WorkScheduleByDepts.Add(WorkScheduleByDept);
+
+
+            }
+
+            return WorkScheduleByDepts;
+        }
+
+        }
+    
 }

@@ -23,5 +23,11 @@ namespace SmartHospital.Controllers
 
             return Ok( TimeSlotService.GetBusySlots(DoctorId, StartDate, EndDate));
         }
+
+        [HttpGet("GetSlotsByDepartment/{DepartmentId}")]
+        public async Task<IActionResult> GetTimeSlots(int DepartmentId)
+        {
+            return Ok(await TimeSlotService.GetAllTimeSlotsByDepartmentId(DepartmentId));
+        }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
 using Service.IServices;
+using Service.Responses;
 
 namespace SmartHospital.Controllers
 {
@@ -135,11 +136,7 @@ namespace SmartHospital.Controllers
             return Ok(await DoctorService.UpdatePrescription(PrescriptionDto));
         }
 
-        [HttpGet("GetSchedulesByDepartment_Id/{Department_ID}")]
-        public async Task<IActionResult> GetSchedulesByDepartment_Id([FromRoute] int Department_ID)
-        {
-            return Ok(await DoctorService.GetSchedulesByDepartment_Id(Department_ID));
-        }
+        
 
         [HttpGet("GetDoctorsByDepartment_Id/{Department_ID}")]
         public async Task<IActionResult> GetDoctorsByDepartment_Id([FromRoute] int Department_ID)
@@ -149,17 +146,24 @@ namespace SmartHospital.Controllers
        
 
 
-        [HttpGet(" GetSchedulesByDoctor_Id/{Doctor_ID}")]
-        public async Task<IActionResult> GetSchedulesByDoctor_Id([FromRoute] int Doctor_ID)
+       
+
+      
+
+
+        [HttpPut("ExaminedAppointmet")]
+        public async Task<IActionResult> ExaminedAppointment([FromBody] ExaminedAppointment ExaminedAppointment)
         {
-            return Ok(await DoctorService.GetSchedulesByDoctor_Id(Doctor_ID));
+            await DoctorService.ExaminedApoointment(ExaminedAppointment);
+            return Ok($"Appointment with Id {ExaminedAppointment.AppointmentId} has been Examined");
         }
 
-        [HttpPut("updateSchedule")]
-        public async Task<IActionResult> Update(scheduleDto ScheduleDto)
+        [HttpGet(" GetAppointmentsForTodayByDoctorId/{Doctor_ID}/{Date}")]
+        public async Task<IActionResult> GetAppointmentsForTodayByDoctorId(int Doctor_ID, DateTime Date)
         {
-            return Ok(await DoctorService.UpdateSchedule(ScheduleDto));
+            return Ok(await DoctorService.GetAppointmentsForTodayByDoctorId(Date, Doctor_ID));
         }
+        
     }
       }
 

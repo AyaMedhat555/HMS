@@ -9,6 +9,7 @@ namespace Service.DTO
 {
     public class scheduleDto
     {
+        public int Id { get; set; }
         public int DoctorId { get; set; }
 
         

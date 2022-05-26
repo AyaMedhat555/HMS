@@ -13,7 +13,9 @@ namespace Repository.IRepositories
      
         IQueryable<VitalSign> GetVitalSignesByRangeOfDate(int PatientId ,DateTime StartDate,DateTime EndDate);
 
-         //Task <res> GetVitalSignesByRangeOfDate2(int PatientId, DateTime StartDate, DateTime EndDate);
+
+        IQueryable<VitalSign> GetVitalSignesByRangeOfDateOnly(int PatientId, DateTime StartDate, DateTime EndDate);
+        IQueryable<VitalSign> GetVitalSignesBySpecificDate(int PatientId, DateTime Date);
     }
 
 }

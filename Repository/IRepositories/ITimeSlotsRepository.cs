@@ -24,5 +24,7 @@ namespace Repository.IRepositories
         IQueryable<Appointment> GetReservedAppointments(int doctor_id);
 
         IQueryable<TimeSlot> GetFreeSlots(int doctor_id,TimeSpan ReservedTime);
+        IQueryable<TimeSlot> GetSlotsByDayOfWork(DayOfWeek DayOfWeek, int doctor_id);
+
     }
 }

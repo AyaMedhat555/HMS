@@ -75,26 +75,8 @@ namespace SmartHospital.Controllers
             return Ok(await NurseService.DeleteNurse(id));
         }
 
-        [HttpPost("AddVitalSignes")]
-        public async Task<IActionResult> AddVitalSignes([FromBody] VitalSigneDto VitalSignsDto)
-        {
-
-            return Ok(await NurseService.AddVitalSignes(VitalSignsDto));
-        }
+        
 
 
-        [HttpGet("GetVitalSignesByRangeOfDate/{PatientId}/{StartDate}/{EndDate}")]
-        public async Task<IActionResult> GetVitalSignesByRangeOfDate(int PatientId, DateTime StartDate,DateTime EndDate)
-        {
-            return Ok(await NurseService.GetVitalSignesByRangeOfDate(PatientId, StartDate, EndDate));
-        }
-
-
-
-        //[HttpGet("GetVitalSignesByRangeOfDate2/{PatientId}/{StartDate}/{EndDate}")]
-        //public Task <IActionResult> GetVitalSignesByRangeOfDate2(int PatientId, DateTime StartDate, DateTime EndDate)
-        //{
-        //    return Ok(NurseService.;
-        //}
     }
 }

@@ -130,63 +130,7 @@ namespace Service.Services
         }
 
 
-        public async Task<VitalSign> AddVitalSignes(VitalSigneDto VitalSigneDto)
-
-        {
-            var vitalsign = new VitalSign
-            {
-                Pressure = VitalSigneDto.Pressure,
-                PulseRate = VitalSigneDto.PulseRate,
-                Temperature = VitalSigneDto.Temperature,
-                ECG = VitalSigneDto.ECG,
-                RespirationRate = VitalSigneDto.RespirationRate,
-                vitals_date = VitalSigneDto.vitals_date,
-                NurseId = VitalSigneDto.NurseId,
-                Patientid = VitalSigneDto.PatientId,
-
-                Note =new Note
-                {
-                    Body= VitalSigneDto.NoteDto.Body,
-                    NurseId= VitalSigneDto.NoteDto.NurseId,
-                    CreatedDate= VitalSigneDto.NoteDto.CreatedDate,
-                    Subject = VitalSigneDto.NoteDto.Subject,
-                    IndoorPatientRecordId= VitalSigneDto.NoteDto.IndoorPatientRecordId
-
-
-                }
-
-            };
-            return await VitalSignsRepository.Add(vitalsign);
-        }
-
-        public async Task<IEnumerable<VitalResponce>> GetVitalSignesByRangeOfDate(int PatientId, DateTime StartDate, DateTime EndDate)
-        {
-            return await VitalSignsRepository.GetVitalSignesByRangeOfDate(PatientId, StartDate, EndDate)
-                .Select(r => new VitalResponce()
-            { 
-                NurseName = r.Nurse.FirstName,
-                PatientName = r.Patient.FirstName,
-                Pressure=r.Pressure,
-                VitalsignId = r.Id,   
-                PulseRate = r.PulseRate,
-                Temperature = r.Temperature,
-                ECG = r.ECG,
-                RespirationRate = r.RespirationRate,
-                vitals_date = r.vitals_date,
-                NoteDto = new NoteDto()
-                {
-                    Body = r.Note.Body,
-                    NurseId = r.Note.NurseId,
-                    CreatedDate = r.Note.CreatedDate,
-                    Subject = r.Note.Subject,
-                    IndoorPatientRecordId = r.Note.IndoorPatientRecordId
-
-
-                }
-
-                })
-                .ToListAsync();
-        }
+       
     }
 }
 

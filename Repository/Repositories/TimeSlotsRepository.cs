@@ -44,7 +44,7 @@ namespace Repository.Repositories
 
         //    for (int i = 0; i < (ReservedAppointments.Count-1); i++)
         //    {
-                
+
         //        ReservedTime = new TimeSpan(ReservedAppointments[i]. AppointmentDate.Hour, ReservedAppointments[i].AppointmentDate.Minute, 0);
         //        FreeSlots = _unitOfWork.Context.TimeSlots.Where(T => (T.DoctorId == doctor_id) && (T.slot_time != ReservedTime)).ToList();
         //        AllSlots[i].FreeSlots= FreeSlots;
@@ -60,8 +60,15 @@ namespace Repository.Repositories
 
         public IQueryable<Appointment> GetReservedAppointments(int doctor_id)
         {
-          return _unitOfWork.Context.Appointments.Where(A => A.DoctorId == doctor_id) ;
+            return _unitOfWork.Context.Appointments.Where(A => A.DoctorId == doctor_id);
         }
+
+        public IQueryable<TimeSlot> GetSlotsByDayOfWork(DayOfWeek DayOfWeek, int doctor_id)
+        {
+            return _unitOfWork.Context.TimeSlots.Where(T => (T.Dayofwork == DayOfWeek)&&(T.DoctorId== doctor_id));
+        }
+
+        
     }
 }
 

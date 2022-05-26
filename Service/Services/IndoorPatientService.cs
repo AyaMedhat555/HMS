@@ -58,7 +58,8 @@ namespace Service.Services
                     Age = P.Patient.Age,
                     Image = P.Patient.Image,
                     PhoneNumber = P.Patient.PhoneNumber,
-                    Id = P.Id
+                    Id = P.PatientId,
+                    IndoorPatientId=P.Id
 
                 })
                 .ToListAsync(); 

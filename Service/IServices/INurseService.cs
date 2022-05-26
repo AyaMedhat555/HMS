@@ -20,7 +20,6 @@ namespace Service.IServices
         Task<IEnumerable<NurseDto>> GetNursesBySpecialization(string specialization);
         Task<Nurse> DeleteNurse(int Nurse_id);
         Task<NurseDto> GetNurseByName(String Nursename);
-        Task<VitalSign> AddVitalSignes(VitalSigneDto VitalSignesDto);
-        Task<IEnumerable<VitalResponce>> GetVitalSignesByRangeOfDate(int PatientId, DateTime StartDate, DateTime EndDate);
+        
     }
 }

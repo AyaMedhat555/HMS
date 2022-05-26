@@ -10,8 +10,9 @@ namespace Repository.IRepositories
     public interface IScheduleRepository:IGenericRepository<Schedule>
     {
 
-        IQueryable<Doctor> GetDoctorsByDepartment_Id(int Department_ID);
+        
         IQueryable<Schedule> GetScheduleByDoctor_Id(int Doctor_Id);
+        IQueryable<DayOfWeek> GetScheduleDaysByDoctor_Id(int Doctor_Id);
 
     }
 }

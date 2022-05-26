@@ -12,5 +12,7 @@ namespace Repository.IRepositories
         Task<Doctor> FindByName(String username);
         IQueryable<Doctor> GetDoctorsBySpecialization(string specialization);
         IQueryable<Doctor> GetDoctorsByState(bool state);
+
+        IQueryable<Doctor> GetDoctorsByDepartment_Id(int Department_ID);
     }
 }

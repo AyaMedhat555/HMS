@@ -19,14 +19,16 @@ namespace Repository.Repositories
 
         }
 
-        public IQueryable<Doctor> GetDoctorsByDepartment_Id(int Department_ID)
-        {
-            return _unitOfWork.Context.Doctors.Where(D => D.DepartmentId == Department_ID);
-        }
-
+        
         public IQueryable<Schedule> GetScheduleByDoctor_Id(int Doctor_Id)
         {
-            return _unitOfWork.Context.Schedules.Where(S => S.DoctorId== Doctor_Id);
+            return _unitOfWork.Context.Schedules.Where(S => S.DoctorId == Doctor_Id);
+        }
+
+        public IQueryable<DayOfWeek> GetScheduleDaysByDoctor_Id(int Doctor_Id)
+        {
+           return _unitOfWork.Context.Schedules.Where(S => S.DoctorId == Doctor_Id).Select(S=>S.DayOfWork);
+            
         }
 
         public IQueryable<Schedule> GetSchedulesByDoctorId(int Department_ID)

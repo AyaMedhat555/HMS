@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
 using Repository;
 using Service.DTO;
+using Service.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +28,11 @@ namespace Service.IServices
         Task<IEnumerable<Prescription>> GetAllDoctorToPatientPrescriptions(int Patient_id, int doctor_id);
         Task<IEnumerable<Prescription>> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate);
         Task<IEnumerable<Prescription>> GetDoctorPrescriptionsByDate(int doctor_id, DateTime PrescriptionDate);
-        //Task<IEnumerable<scheduleDto>> GetSchedulesByDoctorId(int Department_ID);
 
-        Task<IEnumerable<ScheduleResponce>> GetSchedulesByDepartment_Id(int Department_ID);
         Task<IEnumerable<Doctor>> GetDoctorsByDepartment_Id(int Department_ID);
-        Task<IEnumerable<Schedule>> GetSchedulesByDoctor_Id(int Doctor_Id);
+        Task ExaminedApoointment(ExaminedAppointment ExaminedAppointment);
 
-        Task<Schedule> UpdateSchedule(scheduleDto ScheduleDto);
+        Task<IEnumerable<AppointmentsForToday>> GetAppointmentsForTodayByDoctorId(DateTime Today, int DoctorId);
 
 
 

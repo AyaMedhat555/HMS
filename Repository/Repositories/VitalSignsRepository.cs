@@ -19,20 +19,28 @@ namespace Repository.Repositories
 
         }
 
-
-
         public IQueryable<VitalSign> GetVitalSignesByRangeOfDate(int PatientId, DateTime StartDate, DateTime EndDate)
         {
            
-
             return _unitOfWork.Context.VitalSigns.Where(
 
                V => (V.Patientid == PatientId) && (V.vitals_date >= StartDate && V.vitals_date <= EndDate)).Include(V => V.Nurse).Include(V=>V.Patient).Include(V=>V.Note);
 
-
-            
         }
 
+        public IQueryable<VitalSign> GetVitalSignesByRangeOfDateOnly(int PatientId, DateTime StartDate, DateTime EndDate)
+        {
+            return _unitOfWork.Context.VitalSigns.Where(
+
+               V => (V.Patientid == PatientId) && (V.vitals_date.Date >= StartDate.Date && V.vitals_date <= EndDate.Date)).Include(V => V.Nurse).Include(V => V.Patient).Include(V => V.Note); 
+        }
+
+        public IQueryable<VitalSign> GetVitalSignesBySpecificDate(int PatientId, DateTime Date)
+        {
+            return _unitOfWork.Context.VitalSigns.Where(
+
+               V => (V.Patientid == PatientId) && (V.vitals_date == Date)).Include(V => V.Nurse).Include(V => V.Patient).Include(V => V.Note);
+        }
     }
     
 }

@@ -38,5 +38,11 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.Doctors.Where(D => D.IsActive == state);
         }
+
+        public IQueryable<Doctor> GetDoctorsByDepartment_Id(int Department_ID)
+        {
+            return _unitOfWork.Context.Doctors.Where(D => D.DepartmentId == Department_ID);
+        }
+
     }
 }

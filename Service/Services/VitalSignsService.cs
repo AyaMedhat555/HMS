@@ -11,53 +11,18 @@ using Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Service.DTO;
 using Microsoft.Extensions.Configuration;
+using Service.Responses;
 
 namespace Service.Services
 {
     public class VitalSignsService : IVitalSignesService
     {
-       
-
         private IVitalSignsRepository VitalSignsRepository { get; }
-
-        
 
         public VitalSignsService(IVitalSignsRepository _VitalSignsRepository)
         {
             VitalSignsRepository = _VitalSignsRepository;
             
-
-        }
-        public async Task<VitalSign> AddVitalSignes(VitalSigneDto VitalSignesDto)
-
-        {
-            var vitalsigns = new VitalSign
-            {
-                Pressure = VitalSignesDto.Pressure,
-                PulseRate = VitalSignesDto.PulseRate,
-                Temperature = VitalSignesDto.Temperature,
-                ECG = VitalSignesDto.ECG,
-                RespirationRate = VitalSignesDto.RespirationRate,
-                vitals_date = VitalSignesDto.vitals_date,
-                NurseId =VitalSignesDto.NurseId,
-
-
-
-            };
-            return await VitalSignsRepository.Add(vitalsigns);
-        }
-        public string Pressure { get; set; }
-        public int PulseRate { get; set; }
-        public float Temperature { get; set; }
-        public byte[]? ECG { get; set; }
-        public float RespirationRate { get; set; }
-        public DateTime vitals_date { get; set; }
-        public Nurse Nurse { get; set; }
-        public int NurseId { get; set; }
-
-        public async Task<VitalSign> UpdateVitalSigns(VitalSign VitalSigns)
-        {
-            return await VitalSignsRepository.Update(VitalSigns);
         }
 
         public async Task<VitalSign> DeleteVitalSigns(int id)
@@ -75,6 +40,120 @@ namespace Service.Services
             return await VitalSignsRepository.GetById(id);
         }
 
-      
+        public async Task<VitalSign> AddVitalSignes(VitalSigneDto VitalSigneDto)
+
+        {
+            var vitalsign = new VitalSign
+            {
+                Pressure = VitalSigneDto.Pressure,
+                PulseRate = VitalSigneDto.PulseRate,
+                Temperature = VitalSigneDto.Temperature,
+                ECG = VitalSigneDto.ECG,
+                RespirationRate = VitalSigneDto.RespirationRate,
+                vitals_date = VitalSigneDto.vitals_date,
+                NurseId = VitalSigneDto.NurseId,
+                Patientid = VitalSigneDto.PatientId,
+
+                Note = new Note
+                {
+                    Body = VitalSigneDto.NoteDto.Body,
+                    NurseId = VitalSigneDto.NoteDto.NurseId,
+                    CreatedDate = VitalSigneDto.NoteDto.CreatedDate,
+                    Subject = VitalSigneDto.NoteDto.Subject,
+                    IndoorPatientRecordId = VitalSigneDto.NoteDto.IndoorPatientRecordId
+
+
+                }
+
+            };
+            return await VitalSignsRepository.Add(vitalsign);
+        }
+
+        public async Task<IEnumerable<VitalResponce>> GetVitalSignesByRangeOfDate(int PatientId, DateTime StartDate, DateTime EndDate)
+        {
+            return await VitalSignsRepository.GetVitalSignesByRangeOfDate(PatientId, StartDate, EndDate)
+                .Select(r => new VitalResponce()
+                {
+                    NurseName = r.Nurse.FirstName,
+                    PatientName = r.Patient.FirstName,
+                    Pressure = r.Pressure,
+                    VitalsignId = r.Id,
+                    PulseRate = r.PulseRate,
+                    Temperature = r.Temperature,
+                    ECG = r.ECG,
+                    RespirationRate = r.RespirationRate,
+                    vitals_date = r.vitals_date,
+                    NoteDto = new NoteDto()
+                    {
+                        Body = r.Note.Body,
+                        NurseId = r.Note.NurseId,
+                        CreatedDate = r.Note.CreatedDate,
+                        Subject = r.Note.Subject,
+                        IndoorPatientRecordId = r.Note.IndoorPatientRecordId
+
+
+                    }
+
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<VitalResponce>> GetVitalSignesByRangeOfDateOnly(int PatientId, DateTime StartDate, DateTime EndDate)
+        {
+            return await VitalSignsRepository.GetVitalSignesByRangeOfDateOnly(PatientId, StartDate, EndDate)
+                .Select(r => new VitalResponce()
+                {
+                    NurseName = r.Nurse.FirstName,
+                    PatientName = r.Patient.FirstName,
+                    Pressure = r.Pressure,
+                    VitalsignId = r.Id,
+                    PulseRate = r.PulseRate,
+                    Temperature = r.Temperature,
+                    ECG = r.ECG,
+                    RespirationRate = r.RespirationRate,
+                    vitals_date = r.vitals_date,
+                    NoteDto = new NoteDto()
+                    {
+                        Body = r.Note.Body,
+                        NurseId = r.Note.NurseId,
+                        CreatedDate = r.Note.CreatedDate,
+                        Subject = r.Note.Subject,
+                        IndoorPatientRecordId = r.Note.IndoorPatientRecordId
+
+
+                    }
+
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<VitalResponce>> GetVitalSignesBySpecificDate(int PatientId, DateTime Date)
+        {
+            return await VitalSignsRepository.GetVitalSignesBySpecificDate(PatientId, Date)
+                .Select(r => new VitalResponce()
+                {
+                    NurseName = r.Nurse.FirstName,
+                    PatientName = r.Patient.FirstName,
+                    Pressure = r.Pressure,
+                    VitalsignId = r.Id,
+                    PulseRate = r.PulseRate,
+                    Temperature = r.Temperature,
+                    ECG = r.ECG,
+                    RespirationRate = r.RespirationRate,
+                    vitals_date = r.vitals_date,
+                    NoteDto = new NoteDto()
+                    {
+                        Body = r.Note.Body,
+                        NurseId = r.Note.NurseId,
+                        CreatedDate = r.Note.CreatedDate,
+                        Subject = r.Note.Subject,
+                        IndoorPatientRecordId = r.Note.IndoorPatientRecordId
+
+
+                    }
+
+                })
+                .ToListAsync();
+        }
     }
 }

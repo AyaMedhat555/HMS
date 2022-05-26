@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using Service.DTO;
+using Service.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace Service.IServices
         Task ReserveRoom(int RoomId);
 
        Task <IEnumerable<RoomDto>> GetFreeRooms();
+       
     }
 }

@@ -24,6 +24,7 @@ namespace Service.IServices
        Task <IEnumerable<FullSlots>> GetFreeTimeSlots(int doctor_id);
 
        IEnumerable<BusySlotResponce> GetBusySlots(int DoctorId,DateTime StartDate ,DateTime EndDate);
+       Task<IEnumerable<WorkScheduleByDept>> GetAllTimeSlotsByDepartmentId(int DepartmentId);
 
 
 
