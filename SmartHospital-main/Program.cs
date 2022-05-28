@@ -51,6 +51,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped< IBedRepository, BedRepository>();
+
 
 builder.Services.AddScoped<IVitalSignsRepository, VitalSignsRepository>();
 builder.Services.AddScoped<IVitalSignesService, VitalSignsService>();

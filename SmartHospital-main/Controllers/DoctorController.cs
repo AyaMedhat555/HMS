@@ -33,18 +33,6 @@ namespace SmartHospital.Controllers
             return Ok("User: "+dto.UserName+" was added successfully!");
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetUserById([FromRoute] int id)
-        //{
-        //    DoctorDto user = await DoctorService.GetDoctorById(id);
-        //    if (user != null)
-        //    {
-        //        return Ok(user);
-        //    }
-        //    return Ok("User not found!");
-
-        //}
-
         [HttpGet("getAllDoctors")]
         public async Task<IActionResult> GetAll()
         {
@@ -94,10 +82,10 @@ namespace SmartHospital.Controllers
         }
 
 
-        [HttpGet("GetDoctorPrescriptions/{id}")]
-        public async Task<IActionResult> GetDoctorPrescriptions([FromRoute] int id)
+        [HttpGet("GetDoctorPrescriptions/{DoctorId}")]
+        public async Task<IActionResult> GetDoctorPrescriptions([FromRoute] int DoctorId)
         {
-            return Ok(await DoctorService.GetAllPrescriptionsByDoctorId(id));
+            return Ok(await DoctorService.GetAllPrescriptionsByDoctorId(DoctorId));
         }
 
         [HttpGet("GetDoctorPrescriptionsForAll")]
@@ -106,10 +94,10 @@ namespace SmartHospital.Controllers
             return Ok(await DoctorService.GetAllPrescriptionsForALL());
         }
 
-        [HttpGet("GetDoctorPrescriptionsForPatient/{id2}")]
-        public async Task<IActionResult> GetDoctorPrescriptionsForPatient([FromRoute] short id2)
+        [HttpGet("GetDoctorPrescriptionsForPatient/{ParientId}")]
+        public async Task<IActionResult> GetDoctorPrescriptionsForPatient([FromRoute] short ParientId)
         {
-            return Ok(await DoctorService.GetAllPrescriptonsForPatient(id2));
+            return Ok(await DoctorService.GetAllPrescriptonsForPatient(ParientId));
         }
 
         [HttpGet(" GetDoctorPrescriptionsForPatient/{patient_id}/{doctor_id}")]
@@ -142,26 +130,6 @@ namespace SmartHospital.Controllers
         public async Task<IActionResult> GetDoctorsByDepartment_Id([FromRoute] int Department_ID)
         {
             return Ok(await DoctorService.GetDoctorsByDepartment_Id(Department_ID));
-        }
-       
-
-
-       
-
-      
-
-
-        [HttpPut("ExaminedAppointmet")]
-        public async Task<IActionResult> ExaminedAppointment([FromBody] ExaminedAppointment ExaminedAppointment)
-        {
-            await DoctorService.ExaminedApoointment(ExaminedAppointment);
-            return Ok($"Appointment with Id {ExaminedAppointment.AppointmentId} has been Examined");
-        }
-
-        [HttpGet(" GetAppointmentsForTodayByDoctorId/{Doctor_ID}/{Date}")]
-        public async Task<IActionResult> GetAppointmentsForTodayByDoctorId(int Doctor_ID, DateTime Date)
-        {
-            return Ok(await DoctorService.GetAppointmentsForTodayByDoctorId(Date, Doctor_ID));
         }
         
     }

@@ -78,6 +78,7 @@ namespace Service.Services
                     ScheduleObjects = schedules.Select(S => new ScheduleObject()
                     {
                         DayOfWork = S.DayOfWork,
+                        ScheduleId=S.Id,
                         StartTime = S.StartTime.ToString(),
                         EndTime = S.EndTime.ToString(),
                         TimePerPatient = S.TimePerPatient.ToString()

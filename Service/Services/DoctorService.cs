@@ -213,6 +213,7 @@ namespace Service.Services
         public async Task ExaminedApoointment(ExaminedAppointment ExaminedAppointment)
         {
             Appointment examinedAppointment =await AppointmentRepository.GetById(ExaminedAppointment.AppointmentId);
+            examinedAppointment.Examined = ExaminedAppointment.Examined;
             AppointmentRepository.Update(examinedAppointment);
         }
 

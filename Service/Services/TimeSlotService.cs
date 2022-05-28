@@ -127,14 +127,15 @@ namespace Service.Services
 
         public async Task<Appointment> MakeAppointment(AppointmentDto appointment, TimeSlotDto timeslotdto)
         {
-           
+
             Appointment appointmentDb = new Appointment()
             {
                 DoctorId = appointment.DoctorId,
                 Complain = appointment.Complain,
                 PatientId = appointment.PatientId,
                 AppointmentType = appointment.AppointmentType,
-                AppointmentDate= appointment.AppointmentDate.Date.Add(TimeSpan.Parse(timeslotdto.slot_time))
+                AppointmentDate = appointment.AppointmentDate.Date.Add(TimeSpan.Parse(timeslotdto.slot_time)),
+                Examined = appointment.Examined
                 //AppointmentDate=  performCalculateOffset(timeslotdto.Dayofwork).Add(TimeSpan.Parse(timeslotdto.slot_time))
 
             };

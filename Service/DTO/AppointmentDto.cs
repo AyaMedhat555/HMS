@@ -19,5 +19,7 @@ namespace Service.DTO
 
         public int DoctorId { get; set; }
 
+        public bool Examined { get; set; }
+
     }
 }

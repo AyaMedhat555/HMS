@@ -39,5 +39,13 @@ namespace SmartHospital.Controllers
             return Ok (await AdminService.GetFreeRooms());
            
         }
+
+
+        [HttpGet("GetFreeBedsByRoomId")]
+        public async Task<IActionResult> GetFreeBedsByRoomId(int RoomId)
+        {
+            return Ok(await AdminService.GetFreeBedsByRoomId(RoomId));
+
+        }
     }
 }

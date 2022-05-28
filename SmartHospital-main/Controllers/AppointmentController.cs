@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
 using Service.IServices;
+using Service.Responses;
 
 namespace SmartHospital.Controllers
 {
@@ -13,12 +14,14 @@ namespace SmartHospital.Controllers
 
         private IScheduleService ScheduleService { get; }
         private ITimeSlotService TimeSlotService { get; }
+        private IDoctorService DoctorService { get; }
 
-       
-        public AppointmentController(IScheduleService _IScheduleService, ITimeSlotService _TimeSlotService)
+
+        public AppointmentController(IScheduleService _IScheduleService, ITimeSlotService _TimeSlotService, IDoctorService _DoctorService)
         {
             ScheduleService = _IScheduleService;
             TimeSlotService = _TimeSlotService;
+            DoctorService = _DoctorService;
         }
 
         [HttpGet("{id}")]
@@ -45,6 +48,30 @@ namespace SmartHospital.Controllers
         {
             var Freeslots =  await TimeSlotService.GetFreeTimeSlots(id);
             return Ok(Freeslots);
+        }
+
+
+        [HttpGet("GetAppointmentsForTodayByDoctorId/{DoctorId}/{Today}")]
+
+        public async Task<IActionResult> GetAppointmentsForTodayByDoctorId(int DoctorId,DateTime Today)
+        {
+            return Ok(await DoctorService.GetAppointmentsForTodayByDoctorId(Today, DoctorId));
+
+        }
+
+
+        [HttpPut("ExaminedAppointment/{AppointmentId}/{Examined}")]
+        public async Task<IActionResult> ExaminedAppointment(int AppointmentId, bool Examined)
+        {
+            ExaminedAppointment ExaminedAppointment = new ExaminedAppointment()
+            {
+                AppointmentId = AppointmentId,
+                 Examined = Examined
+            };
+
+            await DoctorService.ExaminedApoointment(ExaminedAppointment);
+
+            return Ok($"Appointment With Id {ExaminedAppointment.AppointmentId} has been examined");
         }
     } 
 }

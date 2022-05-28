@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-
 #nullable disable
 
 namespace Domain.Migrations
@@ -36,7 +35,6 @@ namespace Domain.Migrations
                 table: "TimeSlots",
                 column: "DoctorId");
         }
-
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

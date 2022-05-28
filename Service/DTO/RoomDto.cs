@@ -18,7 +18,7 @@ namespace Service.DTO
         public int FloorNumber { get; set; }
         public int RoomNumber { get; set; }
         public int  DepartmentId { get; set; }
-        public virtual ICollection<BedDto> Beds { get; set; } = new HashSet<BedDto>();
+        //public virtual ICollection<BedDto> Beds { get; set; } = new HashSet<BedDto>();
 
     }
 }

@@ -13,8 +13,10 @@ namespace Service.IServices
     {
         Task<RoomDto> AddRoom(RoomDto RoomDto);
         Task ReserveRoom(int RoomId);
+        Task ReserveBed(int BedId);
 
        Task <IEnumerable<RoomDto>> GetFreeRooms();
-       
+       Task<IEnumerable<Bed>> GetFreeBedsByRoomId(int RoomId);
+
     }
 }

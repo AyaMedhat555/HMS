@@ -34,7 +34,7 @@ namespace Service.DTO
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? DepartmentId { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string DepartmentName { get; set; }
+        public string? DepartmentName { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool IsActive { get; set; } = true;
     }

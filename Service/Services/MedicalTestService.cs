@@ -220,7 +220,8 @@ namespace Service.Services
                 TestDate = DateTime.Now,
                 DoctorId = lab.DoctorId,
                 PatientId = lab.PatientId,
-                TestId = lab.TestId                
+                TestId = lab.TestId,
+                IndoorPatientRecordId = Test.IndoorPatientRecordId
             };
             await DeleteLabRequest(ReqId);
             return await PatientTestRepository.Add(newTest);

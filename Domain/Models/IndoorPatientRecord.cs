@@ -17,6 +17,8 @@ namespace Domain.Models
         public string? Recommendation { get; set; }
         public Room Room { get; set; }
         public int RoomId { get; set; }
+        public int BedId { get; set; }
+        public Bed Bed { get; set; }
 
         public Doctor OrderdByDoctor { get; set; }
 

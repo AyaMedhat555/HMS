@@ -24,5 +24,6 @@ namespace Service.DTO
         public string EndTime { get; set; }
 
         public string TimePerPatient { get; set; }
+        public int ScheduleId { get; set; }
     }
 }

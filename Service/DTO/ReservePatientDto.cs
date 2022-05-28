@@ -10,6 +10,7 @@ namespace Service.DTO
     {
         public string CauseOfAdmission { get; set; } 
         public int  RoomId { get; set; }
+        public int BedId { get; set; }
         public int DepartmentId { get; set; }
 
         public string OralMedicalHistory { get; set; }

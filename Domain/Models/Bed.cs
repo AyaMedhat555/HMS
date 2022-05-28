@@ -11,6 +11,7 @@ namespace Domain.Models
         public int Id { get; set; }
         public int Number { get; set; }
 
+        public bool Reserved { get; set; }
         public Room Room { get; set; }
         public int RoomId { get; set; }
 

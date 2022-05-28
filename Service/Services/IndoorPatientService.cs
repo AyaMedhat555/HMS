@@ -16,20 +16,21 @@ namespace Service.Services
     public class IndoorPatientService : IIndoorPatientService
     {
         private IDoctorService DoctorService { get; }
+        private IDoctorRepository DoctorRepository { get; }
         private IIndoorPatientRepository IndoorPatientRepository { get; }
+        private IAdminService AdminService { get; }
 
-        public IndoorPatientService(IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository)
+        public IndoorPatientService(IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IDoctorRepository _DoctorRepository, IAdminService _AdminService)
         {
             DoctorService = _DoctorService;
             IndoorPatientRepository = _IndoorPatientRepository;
-
+            DoctorRepository = _DoctorRepository;
+            AdminService = _AdminService;
         }
-
-
 
         public async Task ReservePatient(ReservePatientDto ReservePatientDto)
         {
-            Doctor _OrderdByDoctor = UserMapper.ToDoctor(await DoctorService.GetDoctorById(ReservePatientDto.OrderdByDoctorId));
+            Doctor _OrderdByDoctor = await DoctorRepository.GetById(ReservePatientDto.OrderdByDoctorId);
 
             var NewIndoorPatientRecord = new IndoorPatientRecord
             {
@@ -39,11 +40,11 @@ namespace Service.Services
                 EnterDate = ReservePatientDto.EnterDate,
                 RoomId = ReservePatientDto.RoomId,
                 PatientId = ReservePatientDto.PatientId,
-                OrderdByDoctor = _OrderdByDoctor
-
-
+                OrderdByDoctor = _OrderdByDoctor,
+                BedId= ReservePatientDto.BedId
             };
-
+            await AdminService.ReserveRoom(ReservePatientDto.RoomId);
+            await AdminService.ReserveBed(ReservePatientDto.BedId);
             await IndoorPatientRepository.Add(NewIndoorPatientRecord);
 
         }
