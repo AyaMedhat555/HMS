@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Service.DTO
 {
-    public class TestDetailsDto
+    public abstract class TestDetailsDto
     {
         public int TestParameterId { get; set; }
-        public string CategoricalValue { get; set; }
-        public float NumericalValue { get; set; }
-
-
+        public string? TestParameterName { get; set; }
+        public string? Unit { get; set; }
     }
 }

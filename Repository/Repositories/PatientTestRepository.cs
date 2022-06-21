@@ -22,27 +22,33 @@ namespace Repository.Repositories
         public IQueryable<PatientTest> GetAllDoctorToPatientTests(int Patient_id, int doctor_id)
         {
             return _unitOfWork.Context.PatientTests.Where(
-
-               P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).OrderByDescending(P => P.TestDate);
-
+               P => (P.PatientId == Patient_id) && (P.DoctorId== doctor_id))
+                .Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test)
+                .Include(P => P.Doctor).Include(P => P.Patient).OrderByDescending(P => P.TestDate);
         }
 
         public IQueryable<PatientTest> GetAllPatientsTests()
         {
-            return _unitOfWork.Context.PatientTests.Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test);
+            return _unitOfWork.Context.PatientTests.Include(P => P.CategoricalDetails)
+                .Include(P => P.NumericalDetails).Include(P => P.Test)
+                .Include(P => P.Doctor).Include(P => P.Patient);
         }
 
         public IQueryable<PatientTest> GetAllPatientTestsByDocId(int doctor_id)
         {
             return _unitOfWork.Context.PatientTests.Where(
 
-                P => P.DoctorId == doctor_id).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).OrderByDescending(P => P.TestDate); ;
+                P => P.DoctorId == doctor_id).Include(P => P.CategoricalDetails)
+                .Include(P => P.NumericalDetails).Include(P => P.Test)
+                .Include(P => P.Doctor).Include(P => P.Patient).OrderByDescending(P => P.TestDate); ;
         }
 
         public IQueryable<PatientTest> GetAllPatientTestsForAll()
         {
 
-            return _unitOfWork.Context.PatientTests.Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).OrderByDescending(P => P.TestDate);
+            return _unitOfWork.Context.PatientTests.Include(P => P.CategoricalDetails)
+                .Include(P => P.NumericalDetails).Include(P => P.Test)
+                .Include(P => P.Doctor).Include(P => P.Patient).OrderByDescending(P => P.TestDate);
 
         }
 
@@ -50,7 +56,9 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientTests.Where(
 
-                P => P.PatientId== Patient_id).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).OrderByDescending(P => P.TestDate);
+                P => P.PatientId== Patient_id).Include(P => P.CategoricalDetails)
+                .Include(P => P.NumericalDetails).Include(P => P.Test)
+                .Include(P => P.Doctor).Include(P => P.Patient).OrderByDescending(P => P.TestDate);
 
         }
 
@@ -58,27 +66,32 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.PatientTests.Where(
 
-               P => (P.DoctorId == doctor_id) && (P.TestDate.Date == PatientTestDate.Date)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test);
+               P => (P.DoctorId == doctor_id) && (P.TestDate.Date == PatientTestDate.Date))
+                .Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails)
+                .Include(P => P.Doctor).Include(P => P.Patient).Include(P => P.Test);
 
         }
 
         public IQueryable<PatientTest> GetInDoorPatientTests(int InDoorPatientRecordId)
         {
-            return _unitOfWork.Context.PatientTests.Where(P =>P.IndoorPatientRecordId== InDoorPatientRecordId).Include(P=>P.Test);
+            return _unitOfWork.Context.PatientTests.Where(P =>P.IndoorPatientRecordId== InDoorPatientRecordId)
+                .Include(P=>P.Test).Include(P => P.Doctor).Include(P => P.Patient)
+                .Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails);
         }
 
         public IQueryable<PatientTest> GetPatientTestByDate(int Patient_id, DateTime PatientTestDate)
         {
             return _unitOfWork.Context.PatientTests.Where(
-
-               P => (P.PatientId == Patient_id) && (P.TestDate.Date == PatientTestDate.Date)).Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test);
-
-
+               P => (P.PatientId == Patient_id) && (P.TestDate.Date == PatientTestDate.Date))
+                .Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test)
+                .Include(P => P.Doctor).Include(P => P.Patient);
         }
 
         public async Task<PatientTest> GetPatientTestById(int id)
         {
-            return await _unitOfWork.Context.PatientTests.Include(P => P.CategoricalDetails).Include(P => P.NumericalDetails).Include(P => P.Test).FirstOrDefaultAsync(P => P.PatientTestId == id);
+            return await _unitOfWork.Context.PatientTests.Include(P => P.CategoricalDetails)
+                .Include(P => P.NumericalDetails).Include(P => P.Test)
+                .Include(P => P.Doctor).Include(P => P.Patient).FirstOrDefaultAsync(P => P.PatientTestId == id);
         }
     }
 }

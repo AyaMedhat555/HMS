@@ -7,10 +7,11 @@ namespace SmartHospital.Models.Labs
         [JsonIgnore]
         public int Id { get; set; }
         [JsonIgnore]
-        public PatientTest? PatientTest { get; set; }
+        public PatientTest PatientTest { get; set; }
+        public int PatientTestId { get; set; }
         public int TestParameterId { get; set; }
         [JsonIgnore]
-        public TestParameter? TestParameter { get; set; }
+        public TestParameter TestParameter { get; set; }
         
     }
 }
