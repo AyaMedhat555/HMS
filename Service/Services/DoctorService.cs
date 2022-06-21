@@ -121,7 +121,7 @@ namespace Service.Services
 
         public async Task<DoctorDto> GetDoctorById(int Doctor_id)
         {
-            Doctor doc = await DoctorRepository.GetById(Doctor_id);
+            Doctor doc = await DoctorRepository.GetDoctorById(Doctor_id);
             DoctorDto doc_dto = UserMapper.ToDoctorDto(doc);
             return doc_dto;
         }

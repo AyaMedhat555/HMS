@@ -10,6 +10,7 @@ namespace Repository.IRepositories
     public interface IDoctorRepository: IGenericRepository<Doctor>
     {
         Task<Doctor> FindByName(String username);
+        Task<Doctor> GetDoctorById(int id);
         IQueryable<Doctor> GetDoctorsBySpecialization(string specialization);
         IQueryable<Doctor> GetDoctorsByState(bool state);
 
