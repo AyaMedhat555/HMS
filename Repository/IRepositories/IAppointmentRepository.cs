@@ -11,6 +11,7 @@ namespace Repository.IRepositories
     {
         IQueryable<Appointment> GetAppointmentsByDate(DateTime StartDate, int DoctorId);
         IQueryable<Appointment> GetAppointmentsForTodayByDoctorId(DateTime Today, int DoctorId);
+        IQueryable<Appointment> GetAppointmentsByPatientId( int PatientId);
 
     }
 }

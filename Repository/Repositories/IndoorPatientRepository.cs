@@ -18,6 +18,19 @@ namespace Repository.Repositories
             _unitOfWork = unitOfWork;
         }
 
+        public IQueryable<DateTime?> GetDischargeDatesByPatientId(int PatientId)
+        {
+       
+            return _unitOfWork.Context.IndoorPatients.Where(I => I.PatientId == PatientId).Select(I => I.DischargeDate);
+
+           
+        }
+
+        public IQueryable<int> GetIndoorPatientRecords(int PatientId)
+        {
+            return _unitOfWork.Context.IndoorPatients.Where(I => I.PatientId == PatientId).Select(I=>I.Id);
+        }
+
         public  IQueryable<IndoorPatientRecord> GetInDoorPatientsByDept(int DepartmentId)
         {
             

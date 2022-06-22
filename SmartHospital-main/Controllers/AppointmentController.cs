@@ -16,12 +16,15 @@ namespace SmartHospital.Controllers
         private ITimeSlotService TimeSlotService { get; }
         private IDoctorService DoctorService { get; }
 
+        private IPatientService PatientService { get; }
 
-        public AppointmentController(IScheduleService _IScheduleService, ITimeSlotService _TimeSlotService, IDoctorService _DoctorService)
+
+        public AppointmentController(IScheduleService _IScheduleService, ITimeSlotService _TimeSlotService, IDoctorService _DoctorService, IPatientService _PatientService)
         {
             ScheduleService = _IScheduleService;
             TimeSlotService = _TimeSlotService;
             DoctorService = _DoctorService;
+            PatientService = _PatientService;
         }
 
         [HttpGet("{id}")]
@@ -72,6 +75,14 @@ namespace SmartHospital.Controllers
             await DoctorService.ExaminedApoointment(ExaminedAppointment);
 
             return Ok($"Appointment With Id {ExaminedAppointment.AppointmentId} has been examined");
+        }
+
+
+        [HttpGet("GetAppointmentsByPatientId/{PatientId}")]
+
+        public async Task<IActionResult> GetAppointmentsForTodayByDoctorId(int PatientId)
+        {
+            return Ok(await PatientService.GetAppointmentsByPatientId(PatientId));
         }
     } 
 }

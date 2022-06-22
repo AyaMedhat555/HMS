@@ -10,5 +10,6 @@ namespace Repository.IRepositories
     public interface IRoomRepository : IGenericRepository<Room>
     {
         IQueryable<Room> GetFreeRooms();
+
     }
 }

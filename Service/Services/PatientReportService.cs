@@ -36,7 +36,7 @@ namespace Service.Services
 
         
         
-        public PatientReport AddPatientReport(ReportEntry ReportEntry)
+        public async Task<PatientReport> AddPatientReport(ReportEntry ReportEntry)
         {
             int PatientId = ReportEntry.PatientId;
 
@@ -44,7 +44,7 @@ namespace Service.Services
 
             IndoorPatientRecord CurrentRecord = _IndoorPatientRepository.GetLastRecordBeforeDischarging(PatientId);
             int IndoorPatientId = CurrentRecord.Id;
-            Prescription LastPrescription = _PrescriptionRepository.GetPrescriptionsByInDoorPatient(IndoorPatientId);
+            Prescription LastPrescription =  await _PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientId);
 
 
             List<Prescription> AllPrescriptions = _PrescriptionRepository.GetPrescriptionsByIndoorPatientId(IndoorPatientId).ToList();
@@ -108,18 +108,19 @@ namespace Service.Services
 
             CurrentRecord.Recommendation = ReportEntry.Recommendation;
             CurrentRecord.DischargeDate = ReportEntry.DateOfDischarge;
+            CurrentRecord.Disharged = true;
 
             _IndoorPatientRepository.Update(CurrentRecord);
 
            return PatientReport;
         }
 
-        public PatientReport GetPatientReport(int PatientId, DateTime DateOfDischarge)
+        public async Task < PatientReport > GetPatientReport(int PatientId, DateTime DateOfDischarge)
         {
             IndoorPatientRecord CurrentRecord = _IndoorPatientRepository.GetPatientReport(PatientId, DateOfDischarge);
 
             int IndoorPatientId = CurrentRecord.Id;
-            Prescription LastPrescription = _PrescriptionRepository.GetPrescriptionsByInDoorPatient(IndoorPatientId);
+            Prescription LastPrescription =await _PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientId);
 
 
             List<Prescription> AllPrescriptions = _PrescriptionRepository.GetPrescriptionsByIndoorPatientId(IndoorPatientId).ToList();
@@ -179,7 +180,9 @@ namespace Service.Services
                 LastPrescription = LastPrescription,
                 ListOfMedicineNames = AllMedicines,
                 ScanNames = AllScansNames,
-                TestNames = AllTestsNames
+                TestNames = AllTestsNames,
+                EnterDate= CurrentRecord.EnterDate
+
             };
 
             return PatientReport;

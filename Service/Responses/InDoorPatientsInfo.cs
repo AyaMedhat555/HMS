@@ -17,6 +17,12 @@ namespace Service.Responses
         public string PhoneNumber { get; set; }
         public byte[]? Image { get; set; }
 
+        public string Gender { get; set; }
+
+        public string CauseOfAdmission { get; set; }
+
+        public string OralMedicalHistory { get; set; }
+
 
     }
 }

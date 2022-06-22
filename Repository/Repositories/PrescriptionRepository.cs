@@ -68,7 +68,7 @@ namespace Repository.Repositories
 
         }
 
-        public Prescription GetPrescriptionsByInDoorPatient(int IndoorPatientRecordId)
+        public async Task <Prescription> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId)
         {
             return _unitOfWork.Context.Prescriptions.Where(
 
@@ -81,5 +81,7 @@ namespace Repository.Repositories
 
                   P => P.IndoorPatientRecordId == IndoorPatientRecordId).Include(P => P.PrescriptionItems).Include(P=>P.Doctor);
         }
+
+       
     }
 }

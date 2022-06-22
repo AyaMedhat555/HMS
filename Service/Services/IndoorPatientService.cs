@@ -19,13 +19,15 @@ namespace Service.Services
         private IDoctorRepository DoctorRepository { get; }
         private IIndoorPatientRepository IndoorPatientRepository { get; }
         private IAdminService AdminService { get; }
+        private IPrescriptionRepository PrescriptionRepository { get; }
 
-        public IndoorPatientService(IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IDoctorRepository _DoctorRepository, IAdminService _AdminService)
+        public IndoorPatientService(IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IDoctorRepository _DoctorRepository, IAdminService _AdminService, IPrescriptionRepository _PrescriptionRepository)
         {
             DoctorService = _DoctorService;
             IndoorPatientRepository = _IndoorPatientRepository;
             DoctorRepository = _DoctorRepository;
             AdminService = _AdminService;
+            PrescriptionRepository = _PrescriptionRepository;
         }
 
         public async Task ReservePatient(ReservePatientDto ReservePatientDto)
@@ -60,11 +62,53 @@ namespace Service.Services
                     Image = P.Patient.Image,
                     PhoneNumber = P.Patient.PhoneNumber,
                     Id = P.PatientId,
-                    IndoorPatientId=P.Id
-
+                    IndoorPatientId=P.Id,
+                    Gender=P.Patient.Gender,
+                    CauseOfAdmission=P.CauseOfAdmission,
+                    OralMedicalHistory=P.OralMedicalHistory
                 })
                 .ToListAsync(); 
 
+        }
+
+       
+
+         public async Task<DoctorPrescriptionResponce> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId)
+        {
+ 
+            Prescription P = await PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientRecordId);
+          
+
+            DoctorPrescriptionResponce _DoctorPrescriptionResponce = new DoctorPrescriptionResponce()
+            {
+                DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                Prescription = new Prescription()
+                {
+                    PrescriptionId = P.PrescriptionId,
+                    DoctorId = P.DoctorId,
+                    PatientId = P.PatientId,
+                    Diagnosis = P.Diagnosis,
+                    Prescription_Date = P.Prescription_Date,
+                    re_appointement_date = P.re_appointement_date,
+                    PrescriptionItems = P.PrescriptionItems,
+                    IndoorPatientRecordId = P.IndoorPatientRecordId
+                }
+
+            };
+
+            _DoctorPrescriptionResponce.Department =  PrescriptionRepository.GetAllPrescriptonsByDocId(P.DoctorId).Select(P => P.Doctor.Department.Department_Name).FirstOrDefault();
+
+            return _DoctorPrescriptionResponce;
+        }
+
+        public  async Task<IEnumerable<DateTime?>> GetDischargeDatesByPatientId(int PatientId)
+        {
+           return  IndoorPatientRepository.GetDischargeDatesByPatientId(PatientId);
+        }
+
+        public async Task<IEnumerable<int>> GetIndoorPatientRecords(int PatientId)
+        {
+            return IndoorPatientRepository.GetIndoorPatientRecords(PatientId); ;
         }
     }
 }

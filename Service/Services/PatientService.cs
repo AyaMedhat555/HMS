@@ -6,6 +6,7 @@ using Repository.Repositories;
 using Service.DTO;
 using Service.Helpers;
 using Service.IServices;
+using Service.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,17 +18,18 @@ namespace Service.Services
 {
     public class PatientService : UserService, IPatientService
     {
-
+        private IAppointmentRepository AppointmentRepository { get; }
         private IPatientRepository PatientRepository { get; }
         private  IIndoorPatientRepository IndoorPatientRepository { get; }
         private IDoctorService DoctorService { get; }
 
-        public PatientService(IUserRepository _UserRepository, IPatientRepository _PatientRepository, IConfiguration _Configuration, IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository)
+        public PatientService(IUserRepository _UserRepository, IPatientRepository _PatientRepository, IConfiguration _Configuration, IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IAppointmentRepository _AppointmentRepository)
             : base(_UserRepository, _Configuration)
         {
             PatientRepository = _PatientRepository;
             DoctorService = _DoctorService;
             IndoorPatientRepository = _IndoorPatientRepository;
+            AppointmentRepository = _AppointmentRepository;
         }
 
         public async Task<Patient> AddPatient(PatientDto dto)
@@ -88,6 +90,19 @@ namespace Service.Services
             return patient_dto;
         }
 
-       
+        public async Task<IEnumerable<AppointmentsForToday>> GetAppointmentsByPatientId(int PatientId)
+        {
+            return await AppointmentRepository.GetAppointmentsByPatientId(PatientId).Select(A => new AppointmentsForToday()
+            {
+                PatientName = A.Patient.FirstName + A.Patient.LastName,
+                PatientId = A.PatientId,
+                Age = A.Patient.Age,
+                Complain = A.Complain,
+                Examined = A.Examined,
+                SlotTime = new TimeSpan(A.AppointmentDate.Hour, A.AppointmentDate.Minute, 0),
+                Gender = A.Patient.Gender
+
+            }).ToListAsync();
+        }
     }
 }
