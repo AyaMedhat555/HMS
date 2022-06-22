@@ -117,7 +117,7 @@ namespace Service.Services
 
         public async Task<NurseDto> GetNurseById(int Nurse_id)
         {
-            Nurse nurse = await NurseRepository.GetById(Nurse_id);
+            Nurse nurse = await NurseRepository.GetNurseById(Nurse_id);
             NurseDto nurse_dto = UserMapper.ToNurseDto(nurse);
             return nurse_dto;
         }

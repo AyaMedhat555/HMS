@@ -11,9 +11,8 @@ namespace Service.DTO
     {
         public int PatientTestId { get; set; }
         public int LabRequestId { get; set; }
-        public virtual ICollection<TestDetailsCategorical> CategoricalDetails { get; set; } = new HashSet<TestDetailsCategorical>();
-        public virtual ICollection<TestDetailsNumerical> NumericalDetails { get; set; } = new HashSet<TestDetailsNumerical>();
-
+        public virtual ICollection<CategoricalDetailsDto> CategoricalDetails { get; set; } = new HashSet<CategoricalDetailsDto>();
+        public virtual ICollection<NeumericalDetailsDto> NumericalDetails { get; set; } = new HashSet<NeumericalDetailsDto>();
         public DateTime TestDate { get; set; }
         public int? IndoorPatientRecordId { get; set; }
     }

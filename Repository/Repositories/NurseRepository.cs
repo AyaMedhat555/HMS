@@ -38,6 +38,11 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.Nurses.Where(N => N.IsActive == state);
         }
+
+        public async Task<Nurse> GetNurseById(int id)
+        {
+            return await _unitOfWork.Context.Nurses.Include(N => N.Department).SingleOrDefaultAsync(x => x.Id == id);
+        }
     }
 }
 

@@ -215,8 +215,16 @@ namespace Service.Services
             LabRequest lab = await LabRequestRepository.GetById(ReqId);
             PatientTest newTest = new PatientTest()
             {
-                CategoricalDetails = Test.CategoricalDetails,
-                NumericalDetails = Test.NumericalDetails,
+                CategoricalDetails = Test.CategoricalDetails.Select(d => new TestDetailsCategorical()
+                {
+                    TestParameterId = d.TestParameterId,
+                    MeasuredValue = d.MeasuredValue
+                }).ToList(),
+                NumericalDetails = Test.NumericalDetails.Select(d => new TestDetailsNumerical()
+                {
+                    TestParameterId = d.TestParameterId,
+                    MeasuredValue = d.NumericalValue
+                }).ToList(),
                 TestDate = DateTime.Now,
                 DoctorId = lab.DoctorId,
                 PatientId = lab.PatientId,
@@ -235,8 +243,17 @@ namespace Service.Services
         public async Task<PatientTest> UpdatePatientTest(PatientTestDto Test)
         {
             PatientTest currentTest = await PatientTestRepository.GetById(Test.PatientTestId);
-            currentTest.CategoricalDetails = Test.CategoricalDetails;
-            currentTest.NumericalDetails = Test.NumericalDetails;
+            currentTest.CategoricalDetails = Test.CategoricalDetails.Select(d => new TestDetailsCategorical()
+            {
+                MeasuredValue = d.MeasuredValue,
+                TestParameterId=d.TestParameterId
+            }).ToList();
+
+            currentTest.NumericalDetails = Test.NumericalDetails.Select(d => new TestDetailsNumerical()
+            {
+                TestParameterId = d.TestParameterId,
+                MeasuredValue=d.NumericalValue
+            }).ToList();
             return await PatientTestRepository.Update(currentTest);
         }
 
@@ -245,10 +262,27 @@ namespace Service.Services
             PatientTest patientTest = await PatientTestRepository.GetPatientTestById(Test_id);
             PatientTestResponse pateintTestResponse = new PatientTestResponse()
             {
-                CategoricalDetails = patientTest.CategoricalDetails,
-                NumericalDetails = patientTest.NumericalDetails,
+                CategoricalDetails = patientTest.CategoricalDetails.Select(d => new CategoricalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    MeasuredValue = d.MeasuredValue,
+                    NormalValue = ((TestParameterCategorical)d.TestParameter).Normalvalue,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
+                NumericalDetails = patientTest.NumericalDetails.Select(d => new NeumericalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    NumericalValue = d.MeasuredValue,
+                    Min_Range = ((TestParameterNumerical)d.TestParameter).Min_Range,
+                    Max_Range = ((TestParameterNumerical)d.TestParameter).Max_Range,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
                 DoctorId = patientTest.DoctorId,
                 PatientId = patientTest.PatientId,
+                DoctorName = patientTest.Doctor.FirstName+" "+patientTest.Doctor.LastName,
+                PatientName = patientTest.Patient.FirstName+" "+patientTest.Patient.LastName,
                 TestName = patientTest.Test.Name,
                 PatientTestId = patientTest.PatientTestId,
                 TestDate = patientTest.TestDate
@@ -260,10 +294,27 @@ namespace Service.Services
         {
             return await PatientTestRepository.GetAllPatientTestsForPatient(Patient_id).Select(P => new PatientTestResponse()
             {
-                CategoricalDetails = P.CategoricalDetails,
-                NumericalDetails = P.NumericalDetails,
+                CategoricalDetails = P.CategoricalDetails.Select(d => new CategoricalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    MeasuredValue = d.MeasuredValue,
+                    NormalValue = ((TestParameterCategorical)d.TestParameter).Normalvalue,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
+                NumericalDetails = P.NumericalDetails.Select(d => new NeumericalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    NumericalValue = d.MeasuredValue,
+                    Min_Range = ((TestParameterNumerical)d.TestParameter).Min_Range,
+                    Max_Range = ((TestParameterNumerical)d.TestParameter).Max_Range,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
                 DoctorId = P.DoctorId,
                 PatientId = P.PatientId,
+                DoctorName = P.Doctor.FirstName+" "+P.Doctor.LastName,
+                PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
                 TestDate = P.TestDate
@@ -274,10 +325,27 @@ namespace Service.Services
         {
             return await PatientTestRepository.GetAllPatientTestsByDocId(Doctor_id).Select(P => new PatientTestResponse()
             {
-                CategoricalDetails = P.CategoricalDetails,
-                NumericalDetails = P.NumericalDetails,
+                CategoricalDetails = P.CategoricalDetails.Select(d => new CategoricalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    MeasuredValue = d.MeasuredValue,
+                    NormalValue = ((TestParameterCategorical)d.TestParameter).Normalvalue,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
+                NumericalDetails = P.NumericalDetails.Select(d => new NeumericalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    NumericalValue = d.MeasuredValue,
+                    Min_Range = ((TestParameterNumerical)d.TestParameter).Min_Range,
+                    Max_Range = ((TestParameterNumerical)d.TestParameter).Max_Range,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
                 DoctorId = P.DoctorId,
                 PatientId = P.PatientId,
+                DoctorName = P.Doctor.FirstName+" "+P.Doctor.LastName,
+                PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
                 TestDate = P.TestDate
@@ -288,10 +356,27 @@ namespace Service.Services
         {
             return await PatientTestRepository.GetPatientTestByDate(Patient_id, date).Select(P => new PatientTestResponse()
             {
-                CategoricalDetails = P.CategoricalDetails,
-                NumericalDetails = P.NumericalDetails,
+                CategoricalDetails = P.CategoricalDetails.Select(d => new CategoricalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    MeasuredValue = d.MeasuredValue,
+                    NormalValue = ((TestParameterCategorical)d.TestParameter).Normalvalue,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
+                NumericalDetails = P.NumericalDetails.Select(d => new NeumericalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    NumericalValue = d.MeasuredValue,
+                    Min_Range = ((TestParameterNumerical)d.TestParameter).Min_Range,
+                    Max_Range = ((TestParameterNumerical)d.TestParameter).Max_Range,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
                 DoctorId = P.DoctorId,
                 PatientId = P.PatientId,
+                DoctorName = P.Doctor.FirstName+" "+P.Doctor.LastName,
+                PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
                 TestDate = P.TestDate
@@ -302,10 +387,27 @@ namespace Service.Services
         {
             return await PatientTestRepository.GetDoctorTestsByDate(Doctor_id, date).Select(P => new PatientTestResponse()
             {
-                CategoricalDetails = P.CategoricalDetails,
-                NumericalDetails = P.NumericalDetails,
+                CategoricalDetails = P.CategoricalDetails.Select(d => new CategoricalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    MeasuredValue = d.MeasuredValue,
+                    NormalValue = ((TestParameterCategorical)d.TestParameter).Normalvalue,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
+                NumericalDetails = P.NumericalDetails.Select(d => new NeumericalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    NumericalValue = d.MeasuredValue,
+                    Min_Range = ((TestParameterNumerical)d.TestParameter).Min_Range,
+                    Max_Range = ((TestParameterNumerical)d.TestParameter).Max_Range,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
                 DoctorId = P.DoctorId,
                 PatientId = P.PatientId,
+                DoctorName = P.Doctor.FirstName+" "+P.Doctor.LastName,
+                PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
                 TestDate = P.TestDate
@@ -316,10 +418,27 @@ namespace Service.Services
         {
             return await PatientTestRepository.GetAllPatientsTests().Select(P => new PatientTestResponse()
             {
-                CategoricalDetails = P.CategoricalDetails,
-                NumericalDetails = P.NumericalDetails,
+                CategoricalDetails = P.CategoricalDetails.Select(d => new CategoricalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    MeasuredValue = d.MeasuredValue,
+                    NormalValue = ((TestParameterCategorical)d.TestParameter).Normalvalue,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
+                NumericalDetails = P.NumericalDetails.Select(d => new NeumericalDetailsDto()
+                {
+                    TestParameterId = d.TestParameterId,
+                    NumericalValue = d.MeasuredValue,
+                    Min_Range = ((TestParameterNumerical)d.TestParameter).Min_Range,
+                    Max_Range = ((TestParameterNumerical)d.TestParameter).Max_Range,
+                    TestParameterName = d.TestParameter.TestParameterName,
+                    Unit = d.TestParameter.Unit
+                }).ToList(),
                 DoctorId = P.DoctorId,
                 PatientId = P.PatientId,
+                DoctorName = P.Doctor.FirstName+" "+P.Doctor.LastName,
+                PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
                 TestDate = P.TestDate

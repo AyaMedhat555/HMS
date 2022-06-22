@@ -47,6 +47,9 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
+            newUserDto.DepartmentName = user.Department.Department_Name;
+            newUserDto.DocSpecialization = user.DocSpecialization;
+            newUserDto.DocDegree = user.DocDegree;
             return newUserDto;
         }
 
@@ -162,6 +165,7 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
+            newUserDto.DepartmentName = user.Department.Department_Name;
             newUserDto.NurseDegree = user.NurseDegree;
             newUserDto.NurseSpecialization = user.NurseSpecialization;
             return newUserDto;

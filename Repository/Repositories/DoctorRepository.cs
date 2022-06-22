@@ -44,5 +44,9 @@ namespace Repository.Repositories
             return _unitOfWork.Context.Doctors.Where(D => D.DepartmentId == Department_ID);
         }
 
+        public async Task<Doctor> GetDoctorById(int id)
+        {
+            return await _unitOfWork.Context.Doctors.Include(D => D.Department).SingleOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

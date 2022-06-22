@@ -246,6 +246,8 @@ namespace Service.Services
                 WrittenReport = patientScan.WrittenReport,
                 DoctorId = patientScan.DoctorId,
                 PatientId = patientScan.PatientId,
+                DoctorName = patientScan.Doctor.FirstName+" "+patientScan.Doctor.LastName,
+                PatientName = patientScan.Patient.FirstName+" "+patientScan.Patient.LastName,
                 ScanName = patientScan.Scan.ScanName,
                 PatientScanId = patientScan.PatientScanId,
                 ScanDate = patientScan.ScanDate
@@ -261,6 +263,8 @@ namespace Service.Services
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
+                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
                 ScanDate = S.ScanDate
@@ -275,6 +279,8 @@ namespace Service.Services
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
+                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
                 ScanDate = S.ScanDate
@@ -289,6 +295,8 @@ namespace Service.Services
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
+                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
                 ScanDate = S.ScanDate
@@ -303,6 +311,8 @@ namespace Service.Services
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
+                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
                 ScanDate = S.ScanDate
@@ -317,6 +327,8 @@ namespace Service.Services
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
+                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
                 ScanDate = S.ScanDate

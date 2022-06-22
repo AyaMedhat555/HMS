@@ -1,4 +1,5 @@
-﻿using SmartHospital.Models.Labs;
+﻿using Service.DTO;
+using SmartHospital.Models.Labs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,11 @@ namespace Service.Responses
         public int PatientTestId { get; set; }
         public int PatientId { get; set; }
         public string TestName { get; set; }
+        public string PatientName { get; set; }
+        public string? DoctorName { get; set; }
         public int? DoctorId { get; set; }
-        public virtual ICollection<TestDetailsCategorical> CategoricalDetails { get; set; } = new HashSet<TestDetailsCategorical>();
-        public virtual ICollection<TestDetailsNumerical> NumericalDetails { get; set; } = new HashSet<TestDetailsNumerical>();
-
+        public virtual ICollection<NeumericalDetailsDto> NumericalDetails { get; set; } = new HashSet<NeumericalDetailsDto>();
+        public virtual ICollection<CategoricalDetailsDto> CategoricalDetails { get; set; } = new HashSet<CategoricalDetailsDto>();
         public DateTime TestDate { get; set; }
     }
 }

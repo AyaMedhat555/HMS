@@ -8,9 +8,9 @@ namespace SmartHospital.Models.Labs
         public string TestParameterName { get; set; }
         public string FieldType { get; set; }
         public string InputPattern { get; set; }
-        public string? Unit { get; set; }
+        public string Unit { get; set; }
         [JsonIgnore]
-        public Test? Test { get; set; }
+        public Test Test { get; set; }
 
     }
 }
