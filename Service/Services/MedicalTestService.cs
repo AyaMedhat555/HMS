@@ -30,8 +30,30 @@ namespace Service.Services
         //######################################################################################################
         //TEST
 
-        public async Task<Test> AddTest(Test test)
+        public async Task<Test> AddTest(TestDto testDto)
         {
+            Test test = new Test()
+            {
+                Name = testDto.Name,
+                TestCharge = testDto.TestCharge,
+                NumericalParamters = testDto.NumericalParamters.Select(p => new TestParameterNumerical()
+                {
+                    TestParameterName = p.TestParameterName,
+                    FieldType = p.FieldType,
+                    InputPattern = p.InputPattern,
+                    Unit = p.Unit,
+                    Max_Range = p.Max_Range,
+                    Min_Range = p.Min_Range                    
+                }).ToList(),
+                CategoricalParamters = testDto.CategoricalParamters.Select(p => new TestParameterCategorical()
+                {
+                    TestParameterName = p.TestParameterName,
+                    FieldType = p.FieldType,
+                    InputPattern = p.InputPattern,
+                    Unit = p.Unit,
+                    Normalvalue = p.Normalvalue                   
+                }).ToList()
+            };
             return await TestRepository.Add(test);
         }
         public async Task<Test> DeleteTest(int Test_id)
