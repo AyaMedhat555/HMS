@@ -10,8 +10,9 @@ namespace Service.Responses
 {
     public class DoctorPrescriptionResponce
     {
-        public string DoctorFullName { get; set; }
+        public string DoctorFullName { get; set;}
         public string Department { get; set; }
-        public List<Prescription> Presciptions { get; set; }
+        public List<Prescription>? Presciption { get; set;}
+        public Prescription? Prescription { get; set;}
     }
 }

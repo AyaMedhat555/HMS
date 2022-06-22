@@ -13,7 +13,7 @@ namespace Service.IServices
     {
         Task ReservePatient(ReservePatientDto ReservePatientDto);
         Task<IEnumerable<InDoorPatientsInfo>> GetInDoorPatientsByDept(int DepartmentId);
-        Task<Prescription> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId);
+        Task<DoctorPrescriptionResponce> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId);
         Task <IEnumerable<DateTime?>> GetDischargeDatesByPatientId(int PatientId);
         Task<IEnumerable<int>> GetIndoorPatientRecords(int PatientId);
 

@@ -73,9 +73,32 @@ namespace Service.Services
 
        
 
-         public Task<Prescription> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId)
+         public async Task<DoctorPrescriptionResponce> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId)
         {
-            return PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientRecordId);
+ 
+            Prescription P = await PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientRecordId);
+          
+
+            DoctorPrescriptionResponce _DoctorPrescriptionResponce = new DoctorPrescriptionResponce()
+            {
+                DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                Prescription = new Prescription()
+                {
+                    PrescriptionId = P.PrescriptionId,
+                    DoctorId = P.DoctorId,
+                    PatientId = P.PatientId,
+                    Diagnosis = P.Diagnosis,
+                    Prescription_Date = P.Prescription_Date,
+                    re_appointement_date = P.re_appointement_date,
+                    PrescriptionItems = P.PrescriptionItems,
+                    IndoorPatientRecordId = P.IndoorPatientRecordId
+                }
+
+            };
+
+            _DoctorPrescriptionResponce.Department =  PrescriptionRepository.GetAllPrescriptonsByDocId(P.DoctorId).Select(P => P.Doctor.Department.Department_Name).FirstOrDefault();
+
+            return _DoctorPrescriptionResponce;
         }
 
         public  async Task<IEnumerable<DateTime?>> GetDischargeDatesByPatientId(int PatientId)

@@ -22,12 +22,12 @@ namespace Service.IServices
         Task<IEnumerable<DoctorDto>> GetDoctorsBySpecialization(string specialization);
         Task<Prescription> AddPrescription(PrescriptionDto PrescriptionDto);
         Task<DoctorPrescriptionResponce> GetAllPrescriptionsByDoctorId(int doctor_id);
-        Task<IEnumerable<Prescription>> GetAllPrescriptionsForALL();
+        Task<IEnumerable<DoctorPrescriptionResponce>> GetAllPrescriptionsForALL();
         Task<Prescription> UpdatePrescription(PrescriptionDto PrescriptionDto);
-        Task<IEnumerable<Prescription>> GetAllPrescriptonsForPatient(short Patient_id);
-        Task<IEnumerable<Prescription>> GetAllDoctorToPatientPrescriptions(int Patient_id, int doctor_id);
-        Task<IEnumerable<Prescription>> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate);
-        Task<IEnumerable<Prescription>> GetDoctorPrescriptionsByDate(int doctor_id, DateTime PrescriptionDate);
+        Task<IEnumerable<DoctorPrescriptionResponce>> GetAllPrescriptonsForPatient(short Patient_id);
+        Task<IEnumerable<DoctorPrescriptionResponce>> GetAllDoctorToPatientPrescriptions(int Patient_id, int doctor_id);
+        Task<IEnumerable<DoctorPrescriptionResponce>> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate);
+        Task<DoctorPrescriptionResponce> GetDoctorPrescriptionsByDate(int doctor_id, DateTime PrescriptionDate);
 
         Task<IEnumerable<Doctor>> GetDoctorsByDepartment_Id(int Department_ID);
 

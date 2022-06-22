@@ -156,7 +156,7 @@ namespace Service.Services
 
             DoctorPrescriptionResponce _DoctorPrescriptionResponce = new DoctorPrescriptionResponce();
             List<Prescription> Presciptions = await PrescriptionRepository.GetAllPrescriptonsByDocId(doctor_id).ToListAsync();
-            _DoctorPrescriptionResponce.Presciptions = Presciptions.Select(P =>
+            _DoctorPrescriptionResponce.Presciption = Presciptions.Select(P =>
               new Prescription
               {
                   PrescriptionId = P.PrescriptionId,
@@ -175,29 +175,130 @@ namespace Service.Services
 
         }
 
-        public async Task<IEnumerable<Prescription>> GetAllPrescriptionsForALL()
+        public async Task<IEnumerable<DoctorPrescriptionResponce>> GetAllPrescriptionsForALL()
         {
-            return await PrescriptionRepository.GetAllPrescriptonsForAll().ToListAsync(); 
+            return await PrescriptionRepository.GetAllPrescriptonsForAll().Select(
+                P=> new DoctorPrescriptionResponce()
+                {
+                   Department=P.Doctor.Department.Department_Name,
+                   DoctorFullName=P.Doctor.FirstName+P.Doctor.LastName,
+                   Prescription=new Prescription()
+                   {
+
+                       PrescriptionId = P.PrescriptionId,
+                       DoctorId = P.DoctorId,
+                       PatientId = P.PatientId,
+                       Diagnosis = P.Diagnosis,
+                       Prescription_Date = P.Prescription_Date,
+                       re_appointement_date = P.re_appointement_date,
+                       PrescriptionItems = P.PrescriptionItems,
+                       IndoorPatientRecordId = P.IndoorPatientRecordId
+                   }
+
+                }
+
+                ).ToListAsync(); 
+        }
+        public async  Task<IEnumerable<DoctorPrescriptionResponce>> GetAllPrescriptonsForPatient(short Patient_id)
+        {
+            
+          return await PrescriptionRepository.GetAllPrescriptonsForPatient(Patient_id).Select(
+               P => new DoctorPrescriptionResponce()
+               {
+                   Department = P.Doctor.Department.Department_Name,
+                   DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                   Prescription = new Prescription()
+                   {
+
+                       PrescriptionId = P.PrescriptionId,
+                       DoctorId = P.DoctorId,
+                       PatientId = P.PatientId,
+                       Diagnosis = P.Diagnosis,
+                       Prescription_Date = P.Prescription_Date,
+                       re_appointement_date = P.re_appointement_date,
+                       PrescriptionItems = P.PrescriptionItems,
+                       IndoorPatientRecordId = P.IndoorPatientRecordId
+                   }
+
+               }
+
+               ).ToListAsync();
         }
 
-        public async  Task<IEnumerable<Prescription>> GetAllPrescriptonsForPatient(short Patient_id)
+        public async Task<IEnumerable<DoctorPrescriptionResponce>> GetAllDoctorToPatientPrescriptions(int Patient_id, int doctor_id)
         {
-            return await PrescriptionRepository.GetAllPrescriptonsForPatient(Patient_id).ToListAsync();
+            return
+            await PrescriptionRepository.GetAllDoctorToPatientPrescriptions(Patient_id, doctor_id).Select(
+               P => new DoctorPrescriptionResponce()
+               {
+                   Department = P.Doctor.Department.Department_Name,
+                   DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                   Prescription = new Prescription()
+                   {
+
+                       PrescriptionId = P.PrescriptionId,
+                       DoctorId = P.DoctorId,
+                       PatientId = P.PatientId,
+                       Diagnosis = P.Diagnosis,
+                       Prescription_Date = P.Prescription_Date,
+                       re_appointement_date = P.re_appointement_date,
+                       PrescriptionItems = P.PrescriptionItems,
+                       IndoorPatientRecordId = P.IndoorPatientRecordId
+                   }
+
+               }
+
+               ).ToListAsync();
         }
 
-        public async Task<IEnumerable<Prescription>> GetAllDoctorToPatientPrescriptions(int Patient_id, int doctor_id)
+        public async Task<IEnumerable<DoctorPrescriptionResponce>> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate)
         {
-            return await PrescriptionRepository.GetAllDoctorToPatientPrescriptions(Patient_id, doctor_id).ToListAsync();
+            return 
+            await PrescriptionRepository.GetPatientPrescriptionByDate(Patient_id, PrescriptionDate).Select(
+              P => new DoctorPrescriptionResponce()
+              {
+                  Department = P.Doctor.Department.Department_Name,
+                  DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                  Prescription = new Prescription()
+                  {
+
+                      PrescriptionId = P.PrescriptionId,
+                      DoctorId = P.DoctorId,
+                      PatientId = P.PatientId,
+                      Diagnosis = P.Diagnosis,
+                      Prescription_Date = P.Prescription_Date,
+                      re_appointement_date = P.re_appointement_date,
+                      PrescriptionItems = P.PrescriptionItems,
+                      IndoorPatientRecordId = P.IndoorPatientRecordId
+                  }
+
+              }
+
+              ).ToListAsync();
         }
 
-        public async Task<IEnumerable<Prescription>> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate)
+        public async Task<DoctorPrescriptionResponce> GetDoctorPrescriptionsByDate(int doctor_id, DateTime PrescriptionDate)
         {
-            return await PrescriptionRepository.GetPatientPrescriptionByDate(Patient_id, PrescriptionDate).ToListAsync();
-        }
+            
+            DoctorPrescriptionResponce _DoctorPrescriptionResponce = new DoctorPrescriptionResponce();
+            List<Prescription> Presciptions = await PrescriptionRepository.GetDoctorPrescriptionsByDate(doctor_id, PrescriptionDate).ToListAsync();
+            _DoctorPrescriptionResponce.Presciption = Presciptions.Select(P =>
+              new Prescription
+              {
+                  PrescriptionId = P.PrescriptionId,
+                  DoctorId = P.DoctorId,
+                  PatientId = P.PatientId,
+                  Diagnosis = P.Diagnosis,
+                  Prescription_Date = P.Prescription_Date,
+                  re_appointement_date = P.re_appointement_date,
+                  PrescriptionItems = P.PrescriptionItems,
+                  IndoorPatientRecordId = P.IndoorPatientRecordId
+              }).ToList();
 
-        public async Task<IEnumerable<Prescription>> GetDoctorPrescriptionsByDate(int doctor_id, DateTime PrescriptionDate)
-        {
-            return await PrescriptionRepository.GetDoctorPrescriptionsByDate(doctor_id, PrescriptionDate).ToListAsync();
+            _DoctorPrescriptionResponce.Department = await PrescriptionRepository.GetDoctorPrescriptionsByDate(doctor_id, PrescriptionDate).Select(P => P.Doctor.Department.Department_Name).FirstOrDefaultAsync();
+            _DoctorPrescriptionResponce.DoctorFullName = Presciptions.Select(P => P.Doctor.FirstName).FirstOrDefault() + Presciptions.Select(P => P.Doctor.FirstName).FirstOrDefault();
+            return _DoctorPrescriptionResponce;
+
         }
 
 
