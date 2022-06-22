@@ -23,7 +23,7 @@ namespace SmartHospital.Controllers
         //TEST
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add(Test test)
+        public async Task<IActionResult> Add(TestDto test)
         {
             Console.WriteLine(test.ToString());
             //check if name already used

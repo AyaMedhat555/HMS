@@ -12,7 +12,7 @@ namespace Service.IServices
 {
     public interface IMedicalTestService
     {
-        Task<Test> AddTest(Test test);
+        Task<Test> AddTest(TestDto test);
         Task<Test> DeleteTest(int Test_id);
         Task<Test> UpdateTest(Test test_dto);
         Task<IEnumerable<Test>> GetAllTests();
