@@ -24,14 +24,17 @@ namespace Service.Services
         private IPatientScanRepository _PatientScanRepository { get; }
         private IPrescriptionRepository _PrescriptionRepository { get; }
 
+        private IIndoorPatientService _IndoorPatientService { get; }
 
-        public PatientReportService(IPatientReportRepository PatientReportRepository, IIndoorPatientRepository IndoorPatientRepository, IPatientTestRepository PatientTestRepository, IPatientScanRepository PatientScanRepository , IPrescriptionRepository PrescriptionRepository)
+
+        public PatientReportService(IPatientReportRepository PatientReportRepository, IIndoorPatientRepository IndoorPatientRepository, IPatientTestRepository PatientTestRepository, IPatientScanRepository PatientScanRepository , IPrescriptionRepository PrescriptionRepository, IIndoorPatientService IndoorPatientService)
         {
             _PatientReportRepository = PatientReportRepository;
             _IndoorPatientRepository = IndoorPatientRepository;
             _IPatientTestRepository = PatientTestRepository;
             _PatientScanRepository = PatientScanRepository;
             _PrescriptionRepository = PrescriptionRepository;
+            _IndoorPatientService = IndoorPatientService;
         }
 
         
@@ -44,10 +47,10 @@ namespace Service.Services
 
             IndoorPatientRecord CurrentRecord = _IndoorPatientRepository.GetLastRecordBeforeDischarging(PatientId);
             int IndoorPatientId = CurrentRecord.Id;
-            Prescription LastPrescription =  await _PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientId);
+            DoctorPrescriptionResponce LastPrescription = await _IndoorPatientService.GetLastPrescriptionByIndoorPatientId(IndoorPatientId);
 
 
-            List<Prescription> AllPrescriptions = _PrescriptionRepository.GetPrescriptionsByIndoorPatientId(IndoorPatientId).ToList();
+            List<Prescription> AllPrescriptions = _PrescriptionRepository.GetPrescriptionsByIndoorPatientId(IndoorPatientId, ReportEntry.DateOfDischarge).ToList();
 
 
           List <PrescriptionItem> AllMedicines = new List<PrescriptionItem>();
@@ -120,10 +123,10 @@ namespace Service.Services
             IndoorPatientRecord CurrentRecord = _IndoorPatientRepository.GetPatientReport(PatientId, DateOfDischarge);
 
             int IndoorPatientId = CurrentRecord.Id;
-            Prescription LastPrescription =await _PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientId);
+            DoctorPrescriptionResponce LastPrescription = await _IndoorPatientService.GetLastPrescriptionByIndoorPatientId(IndoorPatientId);
 
 
-            List<Prescription> AllPrescriptions = _PrescriptionRepository.GetPrescriptionsByIndoorPatientId(IndoorPatientId).ToList();
+            List<Prescription> AllPrescriptions = _PrescriptionRepository.GetPrescriptionsByIndoorPatientId(IndoorPatientId, CurrentRecord.DischargeDate).ToList();
 
 
             List<PrescriptionItem> AllMedicines = new List<PrescriptionItem>();

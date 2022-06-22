@@ -208,8 +208,6 @@ namespace Service.Services
         {
 
 
-
-
             List<Doctor> Doctors = await DoctorRepository.GetDoctorsByDepartment_Id(DepartmentId).ToListAsync();
 
             List<TimeSlot> slotsPerDay = new List<TimeSlot>();

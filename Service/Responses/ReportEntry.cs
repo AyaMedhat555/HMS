@@ -9,7 +9,7 @@ namespace Service.Responses
     public class ReportEntry
     {
         public int PatientId { get; set; }
-        public DateTime DateOfDischarge { get; set; }
+        public DateTime? DateOfDischarge { get; set; }
         public string Recommendation { get; set; }
 
         public int? IndoorPatientRecordId { get; set; }

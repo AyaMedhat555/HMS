@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Responses
+namespace Domain.Models
 {
     public class DoctorPrescriptionResponce
     {

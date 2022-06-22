@@ -75,11 +75,11 @@ namespace Repository.Repositories
                 P => P.IndoorPatientRecordId == IndoorPatientRecordId).Include(P => P.PrescriptionItems).Include(P=>P.Doctor).OrderByDescending(P=> P.Prescription_Date).Last() ; 
         }
 
-        public IQueryable<Prescription> GetPrescriptionsByIndoorPatientId(int IndoorPatientRecordId)
+        public IQueryable<Prescription> GetPrescriptionsByIndoorPatientId(int IndoorPatientRecordId,DateTime? DischargedDate)
         {
             return _unitOfWork.Context.Prescriptions.Where(
 
-                  P => P.IndoorPatientRecordId == IndoorPatientRecordId).Include(P => P.PrescriptionItems).Include(P=>P.Doctor);
+                  P =>( P.IndoorPatientRecordId == IndoorPatientRecordId)&&(P.Prescription_Date< DischargedDate)).Include(P => P.PrescriptionItems).Include(P=>P.Doctor);
         }
 
        
