@@ -17,6 +17,7 @@ namespace Service.IServices
 
        Task <IEnumerable<RoomDto>> GetFreeRooms();
        Task<IEnumerable<Bed>> GetFreeBedsByRoomId(int RoomId);
+       Task<IEnumerable<RoomRead>> GetAllRooms();
 
     }
 }

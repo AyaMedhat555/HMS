@@ -21,7 +21,8 @@ namespace Repository.Repositories
 
         public IQueryable<Room> GetFreeRooms()
         {
-             return _unitOfWork.Context.Rooms.Where(R=>R.Reserved== false).Include(R =>R.Beds);
+            
+            return _unitOfWork.Context.Rooms.Where(R => R.Reserved==false).Include(R =>R.Beds);
         }
     }
 }

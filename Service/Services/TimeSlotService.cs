@@ -139,9 +139,9 @@ namespace Service.Services
                 //AppointmentDate=  performCalculateOffset(timeslotdto.Dayofwork).Add(TimeSpan.Parse(timeslotdto.slot_time))
 
             };
-           await AppointmentRepository.Add(appointmentDb);
+            await AppointmentRepository.Add(appointmentDb);
 
-             
+
             //TimeSlot timeslot2 = await TimeSlotsRepository.GetById(timeslotdto.id);
             //timeslot2.Reserved = timeslotdto.Reserved;
             //TimeSlotsRepository.Update(timeslot2);
@@ -156,11 +156,11 @@ namespace Service.Services
             TimeSpan ReservedTime;
             List<FullSlots> AllSlots = new List<FullSlots>();
 
-            for (int i = 0; i <( ReservedAppointments.Count-1); i++)
+            for (int i = 0; i < (ReservedAppointments.Count - 1); i++)
             {
 
                 ReservedTime = new TimeSpan(ReservedAppointments[i].AppointmentDate.Hour, ReservedAppointments[i].AppointmentDate.Minute, 0);
-                List<TimeSlot> FreeSlots =await TimeSlotsRepository.GetFreeSlots(doctor_id, ReservedTime).ToListAsync();
+                List<TimeSlot> FreeSlots = await TimeSlotsRepository.GetFreeSlots(doctor_id, ReservedTime).ToListAsync();
 
                 AllSlots[i].FreeSlots = FreeSlots;
                 AllSlots[i].AppointmentDate = ReservedAppointments[i].AppointmentDate;
@@ -173,7 +173,7 @@ namespace Service.Services
         public IEnumerable<BusySlotResponce> GetBusySlots(int DoctorId, DateTime StartDate, DateTime EndDate)
         {
             List<BusySlotResponce> busySlotResponces = new List<BusySlotResponce>();
-            
+
             List<Appointment> Appointments;
             DateTime Day = new DateTime();
             TimeSpan ReservedSlot;
@@ -181,11 +181,11 @@ namespace Service.Services
             do
             {
 
-               Appointments = AppointmentRepository.GetAppointmentsByDate(StartDate, DoctorId).ToList();
-               List<TimeSpan> ReservedSlots = new List<TimeSpan>();
+                Appointments = AppointmentRepository.GetAppointmentsByDate(StartDate, DoctorId).ToList();
+                List<TimeSpan> ReservedSlots = new List<TimeSpan>();
 
                 BusySlotResponce busySlotResponce = new BusySlotResponce();
-                for (int i=0; i<Appointments.Count; i++)
+                for (int i = 0; i < Appointments.Count; i++)
                 {
                     busySlotResponce.Day = Appointments[0].AppointmentDate.Date;
                     ReservedSlot = new TimeSpan(Appointments[i].AppointmentDate.Hour, Appointments[i].AppointmentDate.Minute, 0);
@@ -197,7 +197,7 @@ namespace Service.Services
                 busySlotResponce.BusySlots = ReservedSlots;
                 busySlotResponces.Add(busySlotResponce);
 
-              StartDate = StartDate.AddDays(1);
+                StartDate = StartDate.AddDays(1);
             }
             while (StartDate <= EndDate);
 
@@ -206,10 +206,11 @@ namespace Service.Services
 
         public async Task<IEnumerable<WorkScheduleByDept>> GetAllTimeSlotsByDepartmentId(int DepartmentId)
         {
-            
-            
-            
-               List<Doctor> Doctors =  await DoctorRepository.GetDoctorsByDepartment_Id(DepartmentId).ToListAsync();
+
+
+
+
+            List<Doctor> Doctors = await DoctorRepository.GetDoctorsByDepartment_Id(DepartmentId).ToListAsync();
 
             List<TimeSlot> slotsPerDay = new List<TimeSlot>();
             List<DayOfWeek> DoctorDaysOfWork = new List<DayOfWeek>();
@@ -259,6 +260,61 @@ namespace Service.Services
             return WorkScheduleByDepts;
         }
 
+        public async Task<WorkScheduleByDept> GetFreeTimeSlotsByDoctorId(int DoctorId)
+        {
+            List<Appointment> ReservedAppointments = await TimeSlotsRepository.GetReservedAppointments(DoctorId).ToListAsync();
+            TimeSpan ReservedTime;
+
+            Doctor Doctor = await DoctorRepository.GetById(DoctorId);
+
+            List<TimeSlot> slotsPerDay = new List<TimeSlot>();
+            List<DayOfWeek> DoctorDaysOfWork = new List<DayOfWeek>();
+            List<slotResponce> slots;
+            List<WorkSchedule> WorkSchedulesForDoctorPerDay = new List<WorkSchedule>();
+            List<TimeSlot> FreeSlots = new List<TimeSlot>();
+
+
+            WorkScheduleByDept _WorkScheduleByDept = new WorkScheduleByDept();
+            _WorkScheduleByDept.DoctorId = Doctor.Id;
+            _WorkScheduleByDept.DoctorName = Doctor.FirstName + Doctor.LastName;
+            DoctorDaysOfWork = await ScheduleRepository.GetScheduleDaysByDoctor_Id(Doctor.Id).ToListAsync();
+
+            for (int i = 0; i < (ReservedAppointments.Count - 1); i++)
+            {
+
+                ReservedTime = new TimeSpan(ReservedAppointments[i].AppointmentDate.Hour, ReservedAppointments[i].AppointmentDate.Minute, 0);
+                FreeSlots = await TimeSlotsRepository.GetFreeSlots(Doctor.Id, ReservedTime).ToListAsync();
+            }
+
+                for (int Day = 0; Day < DoctorDaysOfWork.Count; Day++)
+            {
+                WorkSchedule WorkSchedule = new WorkSchedule();
+                WorkSchedule.DayOfWork = DoctorDaysOfWork[Day];
+
+
+                   slotsPerDay= FreeSlots.Where(F => F.Dayofwork == DoctorDaysOfWork[Day]).ToList();
+
+                   slots = slotsPerDay.Select(Sl => new slotResponce()
+
+                    {
+                        slot_Id = Sl.id,
+                        SlotNumber = Sl.slotnumber,
+                        SlotTime = Sl.slot_time
+
+                    }).ToList();
+
+
+                    WorkSchedule.Slots = slots;
+                    WorkSchedulesForDoctorPerDay.Add(WorkSchedule);
+                }
+            
+
+            _WorkScheduleByDept.WorkSchedules = WorkSchedulesForDoctorPerDay;
+
+
+            return _WorkScheduleByDept;
+
         }
-    
+
+    }
 }

@@ -19,13 +19,15 @@ namespace Service.Services
         private IDoctorRepository DoctorRepository { get; }
         private IIndoorPatientRepository IndoorPatientRepository { get; }
         private IAdminService AdminService { get; }
+        private IPrescriptionRepository PrescriptionRepository { get; }
 
-        public IndoorPatientService(IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IDoctorRepository _DoctorRepository, IAdminService _AdminService)
+        public IndoorPatientService(IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IDoctorRepository _DoctorRepository, IAdminService _AdminService, IPrescriptionRepository _PrescriptionRepository)
         {
             DoctorService = _DoctorService;
             IndoorPatientRepository = _IndoorPatientRepository;
             DoctorRepository = _DoctorRepository;
             AdminService = _AdminService;
+            PrescriptionRepository = _PrescriptionRepository;
         }
 
         public async Task ReservePatient(ReservePatientDto ReservePatientDto)
@@ -60,11 +62,30 @@ namespace Service.Services
                     Image = P.Patient.Image,
                     PhoneNumber = P.Patient.PhoneNumber,
                     Id = P.PatientId,
-                    IndoorPatientId=P.Id
-
+                    IndoorPatientId=P.Id,
+                    Gender=P.Patient.Gender,
+                    CauseOfAdmission=P.CauseOfAdmission,
+                    OralMedicalHistory=P.OralMedicalHistory
                 })
                 .ToListAsync(); 
 
+        }
+
+       
+
+         public Task<Prescription> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId)
+        {
+            return PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientRecordId);
+        }
+
+        public  async Task<IEnumerable<DateTime?>> GetDischargeDatesByPatientId(int PatientId)
+        {
+           return  IndoorPatientRepository.GetDischargeDatesByPatientId(PatientId);
+        }
+
+        public async Task<IEnumerable<int>> GetIndoorPatientRecords(int PatientId)
+        {
+            return IndoorPatientRepository.GetIndoorPatientRecords(PatientId); ;
         }
     }
 }

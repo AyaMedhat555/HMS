@@ -13,6 +13,10 @@ namespace Service.Responses
         public string Recommendation { get; set; }
 
         public int? IndoorPatientRecordId { get; set; }
+
+        public DateTime? EnterDate { get; set; }
+
+
     }
 }
 

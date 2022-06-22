@@ -57,8 +57,6 @@ namespace Service.Services
             return Scans.SingleOrDefault(T => T.ScanName == Scanname);
         }
 
-
-
         //######################################################################################################
         //Scan REQUEST
 
@@ -70,7 +68,8 @@ namespace Service.Services
                 ScanId = scanId,
                 CreatedDtm = DateTime.Now,
                 DoctorId = ScanRequest.DoctorId,
-                PatientId = ScanRequest.PatientId
+                PatientId = ScanRequest.PatientId,
+                IndoorPatientRecordId= ScanRequest.InDoorPatientRecordId
             };
             return await ScanRequestRepository.Add(newScanRequest);
         }

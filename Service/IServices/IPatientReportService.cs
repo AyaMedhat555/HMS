@@ -11,8 +11,8 @@ namespace Service.IServices
 {
     public interface IPatientReportService
     {
-        PatientReport AddPatientReport(ReportEntry ReportEntry);
-        PatientReport GetPatientReport(int PatientId, DateTime DateOfDischarge);
+       Task< PatientReport> AddPatientReport(ReportEntry ReportEntry);
+       Task <PatientReport> GetPatientReport(int PatientId, DateTime DateOfDischarge);
         IEnumerable<PatientScan> GetPatientScan(int IndoorPatientRecordId );
 
 

@@ -15,9 +15,10 @@ namespace Repository.IRepositories
         IQueryable<Prescription> GetAllDoctorToPatientPrescriptions(int Patient_id,int doctor_id);
         IQueryable<Prescription> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate);
         IQueryable<Prescription> GetDoctorPrescriptionsByDate(int doctor_id, DateTime PrescriptionDate);
-        Prescription GetPrescriptionsByInDoorPatient(int IndoorPatientRecordId);
 
         IQueryable<Prescription> GetPrescriptionsByIndoorPatientId(int IndoorPatientRecordId);
+
+        Task<Prescription> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId);
 
     }
 }

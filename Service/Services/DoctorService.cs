@@ -151,9 +151,28 @@ namespace Service.Services
             return await PrescriptionRepository.Add(Prescription);
         }
 
-        public async Task<IEnumerable<Prescription>> GetAllPrescriptionsByDoctorId(int doctor_id)
+        public async Task <DoctorPrescriptionResponce> GetAllPrescriptionsByDoctorId(int doctor_id)
         {
-            return await PrescriptionRepository.GetAllPrescriptonsByDocId(doctor_id).ToListAsync(); 
+
+            DoctorPrescriptionResponce _DoctorPrescriptionResponce = new DoctorPrescriptionResponce();
+            List<Prescription> Presciptions = await PrescriptionRepository.GetAllPrescriptonsByDocId(doctor_id).ToListAsync();
+            _DoctorPrescriptionResponce.Presciptions = Presciptions.Select(P =>
+              new Prescription
+              {
+                  PrescriptionId = P.PrescriptionId,
+                  DoctorId = P.DoctorId,
+                  PatientId = P.PatientId,
+                  Diagnosis = P.Diagnosis,
+                  Prescription_Date = P.Prescription_Date,
+                  re_appointement_date = P.re_appointement_date,
+                  PrescriptionItems = P.PrescriptionItems,
+                  IndoorPatientRecordId = P.IndoorPatientRecordId
+              }).ToList();
+
+            _DoctorPrescriptionResponce.Department = await PrescriptionRepository.GetAllPrescriptonsByDocId(doctor_id).Select(P=> P.Doctor.Department.Department_Name).FirstOrDefaultAsync();
+            _DoctorPrescriptionResponce.DoctorFullName = Presciptions.Select(P => P.Doctor.FirstName).FirstOrDefault() + Presciptions.Select(P => P.Doctor.FirstName).FirstOrDefault();
+            return _DoctorPrescriptionResponce;
+
         }
 
         public async Task<IEnumerable<Prescription>> GetAllPrescriptionsForALL()
@@ -206,9 +225,7 @@ namespace Service.Services
            return await DoctorRepository.GetDoctorsByDepartment_Id(Department_ID).ToListAsync();
         }
 
-       
-
-        
+      
 
         public async Task ExaminedApoointment(ExaminedAppointment ExaminedAppointment)
         {

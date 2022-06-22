@@ -20,6 +20,8 @@ namespace Domain.Models
 
         public int? IndoorPatientRecordId { get; set; }
 
+        public DateTime? EnterDate { get; set; }
+
 
 
 

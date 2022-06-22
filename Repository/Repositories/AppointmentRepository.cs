@@ -24,6 +24,11 @@ namespace Repository.Repositories
            return _unitOfWork.Context.Appointments.Where(A=>(A.AppointmentDate.Date== StartDate.Date)&&(A.DoctorId== DoctorId));
         }
 
+        public IQueryable<Appointment> GetAppointmentsByPatientId(int PatientId)
+        {
+            return _unitOfWork.Context.Appointments.Where(A=>(A.PatientId== PatientId)&&(A.Examined==false));
+        }
+
         public IQueryable<Appointment> GetAppointmentsForTodayByDoctorId(DateTime Today, int DoctorId)
         {
             return _unitOfWork.Context.Appointments.Where(A => (A.AppointmentDate.Date == Today.Date) && (A.DoctorId == DoctorId)).Include(A => A.Patient); 

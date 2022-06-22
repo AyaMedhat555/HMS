@@ -33,6 +33,11 @@ namespace Repository.Repositories
             return _unitOfWork.Context.TimeSlots.Where(T => (T.DoctorId == doctor_id) && (T.slot_time != ReservedTime));
         }
 
+        public IQueryable<TimeSlot> GetFreeSlotsWithDay(DayOfWeek DayOfWeek, int doctor_id, TimeSpan ReservedTime)
+        {
+            return _unitOfWork.Context.TimeSlots.Where(T => (T.DoctorId == doctor_id) && (T.slot_time != ReservedTime)&&(T.Dayofwork== DayOfWeek)) ;
+        }
+
         //public IQueryable<FullSlots> GetFreeTimeSlots(int doctor_id)
         //{
 
