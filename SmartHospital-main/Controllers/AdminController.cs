@@ -55,5 +55,98 @@ namespace SmartHospital.Controllers
             return Ok(await AdminService.GetAllRooms());
 
         }
+
+
+
+        #region ADMIN CRUD
+
+        [HttpPost("admin")]
+        public async Task<IActionResult> AddAdmin([FromBody] AdminDto dto)
+        {
+            Console.WriteLine(dto.ToString());
+            //check if username already used
+            var user = await AdminService.GetUserByName(dto.UserName);
+            if (user != null)
+            {
+                return Ok("Username already taken.");
+            }
+            await AdminService.AddAdmin(dto);
+            return Ok("User: "+dto.UserName+" was added successfully!");
+        }
+
+        [HttpDelete("deleteAdmin")]
+        public async Task<IActionResult> DeleteAdmin(int id)
+        {
+            return Ok(await AdminService.DeleteAdmin(id));
+        }
+
+        [HttpPut("updateAdmin")]
+        public async Task<IActionResult> UpdateAdmin(AdminDto userDto)
+        {
+            return Ok(await AdminService.UpdateAdmin(userDto));
+        }
+
+        [HttpGet("admin/{id}")]
+        public async Task<IActionResult> GetAdminById([FromRoute] int id)
+        {
+            AdminDto user = await AdminService.GetAdminById(id);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            return Ok("User not found!");
+        }
+
+        [HttpGet("getAllAdmins")]
+        public async Task<IActionResult> GetAllAdmins()
+        {
+            return Ok(await AdminService.GetAllAdmins());
+        }
+        #endregion
+
+        #region RECEPTIONIST CRUD
+        [HttpPost("receptionist")]
+        public async Task<IActionResult> AddReceptionist([FromBody] ReceptionistDto dto)
+        {
+            Console.WriteLine(dto.ToString());
+            //check if username already used
+            var user = await AdminService.GetUserByName(dto.UserName);
+            if (user != null)
+            {
+                return Ok("Username already taken.");
+            }
+            await AdminService.AddReceptionist(dto);
+            return Ok("User: "+dto.UserName+" was added successfully!");
+        }
+
+        [HttpDelete("deleteReceptionist")]
+        public async Task<IActionResult> DeleteReceptionist(int id)
+        {
+            return Ok(await AdminService.DeleteReceptionist(id));
+        }
+
+        [HttpPut("updateReceptionist")]
+        public async Task<IActionResult> UpdateReceptionist(ReceptionistDto userDto)
+        {
+            return Ok(await AdminService.UpdateReceptionist(userDto));
+        }
+
+        [HttpGet("receptionist/{id}")]
+        public async Task<IActionResult> GetReceptionistById([FromRoute] int id)
+        {
+            ReceptionistDto user = await AdminService.GetReceptionistById(id);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            return Ok("User not found!");
+        }
+
+        [HttpGet("getAllReceptionists")]
+        public async Task<IActionResult> GetAllReceptionists()
+        {
+            return Ok(await AdminService.GetAllReceptionists());
+        }
+        #endregion
     }
 }

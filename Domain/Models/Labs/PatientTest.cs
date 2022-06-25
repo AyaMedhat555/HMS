@@ -15,7 +15,7 @@ namespace SmartHospital.Models.Labs
         public virtual ICollection<TestDetailsNumerical> NumericalDetails { get; set; } = new HashSet<TestDetailsNumerical>();
 
         public DateTime TestDate { get; set; }
-
-       public int?  IndoorPatientRecordId { get; set; }
+        public IndoorPatientRecord? IndoorPatientRecord { get; set; }
+        public int?  IndoorPatientRecordId { get; set; }
     }
 }

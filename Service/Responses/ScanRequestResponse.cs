@@ -16,5 +16,6 @@ namespace Service.Responses
         public int? DoctorId { get; set; }
         public string PatientName { get; set; }
         public string DoctorName { get; set; }
+        public int? IndoorPatientRecordId { get; set; }
     }
 }

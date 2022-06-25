@@ -20,7 +20,7 @@ namespace Domain.Models.Labs
         [JsonIgnore]
         public Doctor? Doctor { get; set; }
         public int? DoctorId { get; set; }
-         
+        public IndoorPatientRecord? IndoorPatientRecord { get; set; }
         public int? IndoorPatientRecordId { get; set; }
     }
 }

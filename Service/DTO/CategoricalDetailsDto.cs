@@ -9,6 +9,6 @@ namespace Service.DTO
     public class CategoricalDetailsDto : TestDetailsDto
     {
         public string MeasuredValue { get; set; }
-        public string NormalValue { get; set; }
+        public string? NormalValue { get; set; }
     }
 }

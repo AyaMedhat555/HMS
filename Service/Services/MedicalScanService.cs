@@ -69,7 +69,7 @@ namespace Service.Services
                 CreatedDtm = DateTime.Now,
                 DoctorId = ScanRequest.DoctorId,
                 PatientId = ScanRequest.PatientId,
-                IndoorPatientRecordId= ScanRequest.InDoorPatientRecordId
+                IndoorPatientRecordId= ScanRequest.IndoorPatientRecordId
             };
             return await ScanRequestRepository.Add(newScanRequest);
         }
@@ -87,7 +87,8 @@ namespace Service.Services
                 ScanId = scanId,
                 CreatedDtm = DateTime.Now,
                 DoctorId = ScanRequest.DoctorId,
-                PatientId = ScanRequest.PatientId
+                PatientId = ScanRequest.PatientId,
+                IndoorPatientRecordId= ScanRequest.IndoorPatientRecordId
             };
             return await ScanRequestRepository.Update(newScanRequest);
         }
@@ -104,7 +105,8 @@ namespace Service.Services
                 DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName,
                 PatientName = scanRequest.Patient.FirstName+" "+scanRequest.Patient.LastName,
                 DoctorId = scanRequest.DoctorId,
-                PatientId = scanRequest.PatientId
+                PatientId = scanRequest.PatientId,
+                IndoorPatientRecordId= scanRequest.IndoorPatientRecordId
             };
             return scanRequestResponse;
         }
@@ -120,7 +122,8 @@ namespace Service.Services
                 DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
-                PatientId = S.PatientId
+                PatientId = S.PatientId,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -135,7 +138,8 @@ namespace Service.Services
                 DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
-                PatientId = S.PatientId
+                PatientId = S.PatientId,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -150,7 +154,8 @@ namespace Service.Services
                 DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
-                PatientId = S.PatientId
+                PatientId = S.PatientId,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -165,7 +170,8 @@ namespace Service.Services
                 DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
-                PatientId = S.PatientId
+                PatientId = S.PatientId,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -180,7 +186,8 @@ namespace Service.Services
                 DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
-                PatientId = S.PatientId
+                PatientId = S.PatientId,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -192,7 +199,8 @@ namespace Service.Services
                 ScanId = scans.Where(p => p.ScanName == S.ScanName).Select(T => T.Id).SingleOrDefault(),
                 CreatedDtm = DateTime.Now,
                 DoctorId = S.DoctorId,
-                PatientId = S.PatientId
+                PatientId = S.PatientId,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToList();
             foreach(ScanRequest scanRequest in scanRequests)
             {
@@ -250,7 +258,8 @@ namespace Service.Services
                 PatientName = patientScan.Patient.FirstName+" "+patientScan.Patient.LastName,
                 ScanName = patientScan.Scan.ScanName,
                 PatientScanId = patientScan.PatientScanId,
-                ScanDate = patientScan.ScanDate
+                ScanDate = patientScan.ScanDate,
+                IndoorPatientRecordId= patientScan.IndoorPatientRecordId
             };
             return pateintScanResponse;
         }
@@ -267,7 +276,8 @@ namespace Service.Services
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
-                ScanDate = S.ScanDate
+                ScanDate = S.ScanDate,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -283,7 +293,8 @@ namespace Service.Services
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
-                ScanDate = S.ScanDate
+                ScanDate = S.ScanDate,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -299,7 +310,8 @@ namespace Service.Services
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
-                ScanDate = S.ScanDate
+                ScanDate = S.ScanDate,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -315,7 +327,8 @@ namespace Service.Services
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
-                ScanDate = S.ScanDate
+                ScanDate = S.ScanDate,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -331,7 +344,8 @@ namespace Service.Services
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
-                ScanDate = S.ScanDate
+                ScanDate = S.ScanDate,
+                IndoorPatientRecordId= S.IndoorPatientRecordId
             }).ToListAsync();
         }
 

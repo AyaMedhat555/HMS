@@ -11,20 +11,25 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Repository.IRepositories;
 using Service.Responses;
+using Microsoft.Extensions.Configuration;
+using Service.Helpers;
 
 namespace Service.Services
 {
-    public class  AdminService : IAdminService
+    public class  AdminService : UserService, IAdminService
     {
 
         private  IRoomRepository RoomRepository { get; }
         private  IBedRepository BedRepository { get; }
+        private  IUserRepository UserRepository { get; }
 
-     
-        public AdminService(IRoomRepository _IRoomRepository, IBedRepository _BedRepository)
+
+        public AdminService(IUserRepository _UserRepository, IRoomRepository _IRoomRepository, IBedRepository _BedRepository, IConfiguration _Configuration)
+            : base(_UserRepository, _Configuration)
         {
             RoomRepository = _IRoomRepository;
             BedRepository = _BedRepository;
+            UserRepository = _UserRepository;
 
 
         }
@@ -180,5 +185,113 @@ namespace Service.Services
             return RoomsRead;
 
         }
+
+        #region ADMIN CRUD 
+        public async Task<Admin> AddAdmin(AdminDto dto)
+        {
+            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            Admin admin = UserMapper.ToAdmin(dto);
+            admin.PasswordHash = passwordHash;
+            admin.PasswordSalt = passwordSalt;
+            return (Admin)await UserRepository.Add(admin);
+        }
+
+        public async Task<Admin> DeleteAdmin(int Admin_id)
+        {
+            return (Admin)await UserRepository.Delete(Admin_id);
+        }
+
+        public async Task<Admin> UpdateAdmin(AdminDto dto)
+        {
+            Admin currentAdmin = (Admin)await UserRepository.GetById(dto.Id);
+            currentAdmin = UserMapper.UpdateAdmin(dto, currentAdmin);
+            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            currentAdmin.PasswordHash = passwordHash;
+            currentAdmin.PasswordSalt = passwordSalt;
+            return (Admin)await UserRepository.Update(currentAdmin);
+        }
+
+
+        public async Task<AdminDto> GetAdminById(int Admin_id)
+        {
+            Admin admin = (Admin)await UserRepository.GetById(Admin_id);
+            AdminDto admin_dto = UserMapper.ToAdminDto(admin);
+            return admin_dto;
+        }
+
+        public async Task<IEnumerable<AdminDto>> GetAllAdmins()
+        {
+            return await UserRepository.GetAll().OfType<Admin>()
+                .Select(u => new AdminDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                UserName = u.UserName,
+                Mail = u.Mail,
+                NationalId = u.NationalId,
+                Image = u.Image,
+                Gender = u.Gender,
+                PhoneNumber = u.PhoneNumber,
+                DepartmentName = u.Department.Department_Name,
+                CreatedDtm = u.CreatedDtm,
+                IsActive = u.IsActive
+            }).ToListAsync();
+        }
+
+        #endregion
+
+        #region RECEPTIONIST CRUD
+        public async Task<Receptionist> AddReceptionist(ReceptionistDto dto)
+        {
+            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            Receptionist receptionist = UserMapper.ToReceptionist(dto);
+            receptionist.PasswordHash = passwordHash;
+            receptionist.PasswordSalt = passwordSalt;
+            return (Receptionist)await UserRepository.Add(receptionist);
+        }
+
+        public async Task<Receptionist> DeleteReceptionist(int Receptionist_id)
+        {
+            return (Receptionist)await UserRepository.Delete(Receptionist_id);
+        }
+
+        public async Task<Receptionist> UpdateReceptionist(ReceptionistDto dto)
+        {
+            Receptionist currentReceptionist = (Receptionist)await UserRepository.GetById(dto.Id);
+            currentReceptionist = UserMapper.UpdateReceptionist(dto, currentReceptionist);
+            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            currentReceptionist.PasswordHash = passwordHash;
+            currentReceptionist.PasswordSalt = passwordSalt;
+            return (Receptionist)await UserRepository.Update(currentReceptionist);
+        }
+
+
+        public async Task<ReceptionistDto> GetReceptionistById(int Receptionist_id)
+        {
+            Receptionist receptionist = (Receptionist)await UserRepository.GetById(Receptionist_id);
+            ReceptionistDto receptionist_dto = UserMapper.ToReceptionistDto(receptionist);
+            return receptionist_dto;
+        }
+
+        public async Task<IEnumerable<ReceptionistDto>> GetAllReceptionists()
+        {
+            return await UserRepository.GetAll().OfType<Admin>().Select(u => new ReceptionistDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                UserName = u.UserName,
+                Mail = u.Mail,
+                NationalId = u.NationalId,
+                Image = u.Image,
+                Gender = u.Gender,
+                PhoneNumber = u.PhoneNumber,
+                DepartmentName = u.Department.Department_Name,
+                CreatedDtm = u.CreatedDtm,
+                IsActive = u.IsActive
+            }).ToListAsync();
+        }
+        #endregion
     }
 }

@@ -94,7 +94,8 @@ namespace Service.Services
                 TestId = testId,
                 CreatedDtm = DateTime.Now,
                 DoctorId = labRequest.DoctorId,
-                PatientId = labRequest.PatientId
+                PatientId = labRequest.PatientId,
+                IndoorPatientRecordId = labRequest.IndoorPatientRecordId
             };
             return await LabRequestRepository.Add(newLabRequest);
         }
@@ -130,7 +131,8 @@ namespace Service.Services
                 DoctorName = labRequest.Doctor.FirstName+" "+labRequest.Doctor.LastName,
                 PatientName = labRequest.Patient.FirstName+" "+labRequest.Patient.LastName,
                 DoctorId = labRequest.DoctorId,
-                PatientId = labRequest.PatientId
+                PatientId = labRequest.PatientId,
+                IndoorPatientRecordId = labRequest.IndoorPatientRecordId
             };
             return labRequestResponse;
         }
@@ -146,7 +148,8 @@ namespace Service.Services
                 DoctorName = L.Doctor.FirstName+" "+L.Doctor.LastName,
                 PatientName = L.Patient.FirstName+" "+L.Patient.LastName,
                 DoctorId = L.DoctorId,
-                PatientId = L.PatientId
+                PatientId = L.PatientId,
+                IndoorPatientRecordId = L.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -161,7 +164,8 @@ namespace Service.Services
                 DoctorName = L.Doctor.FirstName+" "+L.Doctor.LastName,
                 PatientName = L.Patient.FirstName+" "+L.Patient.LastName,
                 DoctorId = L.DoctorId,
-                PatientId = L.PatientId
+                PatientId = L.PatientId,
+                IndoorPatientRecordId = L.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -176,7 +180,8 @@ namespace Service.Services
                 DoctorName = L.Doctor.FirstName+" "+L.Doctor.LastName,
                 PatientName = L.Patient.FirstName+" "+L.Patient.LastName,
                 DoctorId = L.DoctorId,
-                PatientId = L.PatientId
+                PatientId = L.PatientId,
+                IndoorPatientRecordId = L.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -191,7 +196,8 @@ namespace Service.Services
                 DoctorName = L.Doctor.FirstName+" "+L.Doctor.LastName,
                 PatientName = L.Patient.FirstName+" "+L.Patient.LastName,
                 DoctorId = L.DoctorId,
-                PatientId = L.PatientId
+                PatientId = L.PatientId,
+                IndoorPatientRecordId = L.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -206,7 +212,8 @@ namespace Service.Services
                 DoctorName = L.Doctor.FirstName+" "+L.Doctor.LastName,
                 PatientName = L.Patient.FirstName+" "+L.Patient.LastName,
                 DoctorId = L.DoctorId,
-                PatientId = L.PatientId
+                PatientId = L.PatientId,
+                IndoorPatientRecordId = L.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -218,7 +225,8 @@ namespace Service.Services
                 TestId = tests.Where(t => t.Name == S.LabName).Select(t => t.Id).SingleOrDefault(),
                 CreatedDtm = DateTime.Now,
                 DoctorId = S.DoctorId,
-                PatientId = S.PatientId
+                PatientId = S.PatientId,
+                IndoorPatientRecordId = S.IndoorPatientRecordId
             }).ToList();
             foreach (LabRequest labRequest in labRequests)
             {
@@ -251,7 +259,7 @@ namespace Service.Services
                 DoctorId = lab.DoctorId,
                 PatientId = lab.PatientId,
                 TestId = lab.TestId,
-                IndoorPatientRecordId = Test.IndoorPatientRecordId
+                IndoorPatientRecordId = lab.IndoorPatientRecordId
             };
             await DeleteLabRequest(ReqId);
             return await PatientTestRepository.Add(newTest);
@@ -307,7 +315,8 @@ namespace Service.Services
                 PatientName = patientTest.Patient.FirstName+" "+patientTest.Patient.LastName,
                 TestName = patientTest.Test.Name,
                 PatientTestId = patientTest.PatientTestId,
-                TestDate = patientTest.TestDate
+                TestDate = patientTest.TestDate,
+                IndoorPatientRecordId = patientTest.IndoorPatientRecordId
             };
             return pateintTestResponse;
         }
@@ -339,7 +348,8 @@ namespace Service.Services
                 PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
-                TestDate = P.TestDate
+                TestDate = P.TestDate,
+                IndoorPatientRecordId = P.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -370,7 +380,8 @@ namespace Service.Services
                 PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
-                TestDate = P.TestDate
+                TestDate = P.TestDate,
+                IndoorPatientRecordId = P.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -401,7 +412,8 @@ namespace Service.Services
                 PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
-                TestDate = P.TestDate
+                TestDate = P.TestDate,
+                IndoorPatientRecordId = P.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -432,7 +444,8 @@ namespace Service.Services
                 PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
-                TestDate = P.TestDate
+                TestDate = P.TestDate,
+                IndoorPatientRecordId = P.IndoorPatientRecordId
             }).ToListAsync();
         }
 
@@ -463,7 +476,8 @@ namespace Service.Services
                 PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
                 TestName = P.Test.Name,
                 PatientTestId = P.PatientTestId,
-                TestDate = P.TestDate
+                TestDate = P.TestDate,
+                IndoorPatientRecordId = P.IndoorPatientRecordId
             }).ToListAsync();
         }
     }
