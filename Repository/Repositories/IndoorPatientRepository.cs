@@ -34,8 +34,13 @@ namespace Repository.Repositories
         public  IQueryable<IndoorPatientRecord> GetInDoorPatientsByDept(int? DepartmentId)
         {
             
-            return  _unitOfWork.Context.IndoorPatients.Where(I => (I.DepartmentId == DepartmentId) && (I.Disharged==false)).Include(I=>I.Patient).Include(I=>I.Room).Include(I=>I.Bed);
+            return _unitOfWork.Context.IndoorPatients.Where(I => (I.DepartmentId == DepartmentId) && (I.Disharged==false)).Include(I=>I.Patient).Include(I=>I.Room).Include(I=>I.Bed);
             
+        }
+
+        public IQueryable<IndoorPatientRecord> GetInDoorRecordsByPatientId(int PatientId)
+        {
+            return _unitOfWork.Context.IndoorPatients.Where(I => (I.PatientId == PatientId)).Include(I=>I.Room).Include(I=>I.Bed); 
         }
 
         public IndoorPatientRecord GetLastRecordBeforeDischarging(int PatientId)

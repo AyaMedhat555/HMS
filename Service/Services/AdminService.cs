@@ -16,32 +16,24 @@ namespace Service.Services
 {
     public class  AdminService : IAdminService
     {
-
         private  IRoomRepository RoomRepository { get; }
         private  IBedRepository BedRepository { get; }
 
-     
         public AdminService(IRoomRepository _IRoomRepository, IBedRepository _BedRepository)
         {
             RoomRepository = _IRoomRepository;
             BedRepository = _BedRepository;
-
-
         }
         
-
         public async Task ReserveRoom(int RoomId)
         {
            Room room=  await RoomRepository.GetById(RoomId);
-
            List<Bed> FreeBeds = new List<Bed>(); 
           FreeBeds = await BedRepository.GetFreeBedsByRoomId(RoomId).ToListAsync();
 
             if (FreeBeds.Count == 0) 
             room.Reserved = true;
            await RoomRepository.Update(room);
-
-
 
         }
 
@@ -50,7 +42,6 @@ namespace Service.Services
             Bed bed = await BedRepository.GetById(BedId);
             bed.Reserved = true;
            await BedRepository.Update(bed);
-
         }
 
         public async Task <IEnumerable<RoomDto>> GetFreeRooms()
@@ -63,13 +54,7 @@ namespace Service.Services
                 FloorNumber = R.FloorNumber,
                 DepartmentId = R.DepartmentId,
                 RoomNumber = R.RoomNumber,
-                RoomType = R.RoomType,
-                //Beds = R.Beds.Select(B => new BedDto()
-                //{
-                    
-                //    Number = B.Number
-                //}).ToList(),
-
+                RoomType = R.RoomType,           
             }
                 ) .ToListAsync();
         }
@@ -111,7 +96,6 @@ namespace Service.Services
         {
              return await BedRepository.GetFreeBedsByRoomId(RoomId).ToListAsync();
         }
-
         public async Task<IEnumerable<RoomRead>> GetAllRooms()
         {
             //AdminService adminService = new AdminService();
@@ -132,16 +116,7 @@ namespace Service.Services
                 RoomsRead.Add(roomRead);
 
             }
-            //    NumberOf_allBeds = R.NumberOfBeds,
-            //    FloorNumber = R.FloorNumber,
-            //    NumberOf_freeBeds = BedRepository.GetFreeBedsByRoomId(R.Id).ToList().Count(),
-            //    RoomNumber = R.RoomNumber,
-            //    RoomType = R.RoomType
-
-            //}) .ToList();
-
-            
-            
+              
             return RoomsRead;
 
         }

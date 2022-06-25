@@ -16,6 +16,7 @@ namespace Service.IServices
         Task<DoctorPrescriptionResponce> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId);
         Task <IEnumerable<DateTime?>> GetDischargeDatesByPatientId(int PatientId);
         Task<IEnumerable<int>> GetIndoorPatientRecords(int PatientId);
+        Task<IEnumerable<PatientRecordResponce>> GetInDoorRecordsByPatientId(int PatientId);
 
 
     }

@@ -115,5 +115,29 @@ namespace Service.Services
         {
             return IndoorPatientRepository.GetIndoorPatientRecords(PatientId); ;
         }
+
+        public async Task<IEnumerable<PatientRecordResponce>> GetInDoorRecordsByPatientId(int PatientId)
+        {
+           List<PatientRecordResponce> patientRecordResponces= new List<PatientRecordResponce>();
+            IndoorPatientRepository.GetInDoorRecordsByPatientId(PatientId)
+                .Select(I => new PatientRecordResponce()
+                {
+                    DiscahrgeDate=I.DischargeDate,
+                    ScanIds=I.Scans.Select(S=>S.ScanId).ToList(),
+                    LabIds=I.Tests.Select(T=>T.TestId).ToList(),
+                    PrescriptionIds=I.Prescriptions.Select(P=>P.PrescriptionId).ToList(),
+                    BedNumber=I.Bed.Number,
+                    RoomNumber=I.Room.RoomNumber,
+                    RoomType=I.Room.RoomType,
+                    EnterDate=I.EnterDate,
+                    FloorNumber=I.Room.FloorNumber,
+                    PatientRecordId=I.Id
+
+                }).ToList();
+
+            return patientRecordResponces;
+        }
+
+       
     }
 }

@@ -127,5 +127,11 @@ namespace SmartHospital.Controllers
         {
             return Ok(IndoorPatientService.GetIndoorPatientRecords(PatientId));
         }
+
+        [HttpGet("GetIndoorPatientRecordsByPatientId/{PatientId}")]
+        public async Task<IActionResult> GetIndoorPatientRecordsByPatientId(int PatientId)
+        {
+            return Ok(IndoorPatientService.GetInDoorRecordsByPatientId(PatientId));
+        }
     }
 }
