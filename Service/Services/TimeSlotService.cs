@@ -213,8 +213,7 @@ namespace Service.Services
             List<TimeSlot> slotsPerDay = new List<TimeSlot>();
             List<DayOfWeek> DoctorDaysOfWork = new List<DayOfWeek>();
             List<slotResponce> slots;
-            List<WorkSchedule> WorkSchedulesForDoctorPerDay = new List<WorkSchedule>();
-
+            List<WorkSchedule> WorkSchedulesForDoctorPerDay;
 
             List<WorkScheduleByDept> WorkScheduleByDepts = new List<WorkScheduleByDept>();
 
@@ -222,16 +221,16 @@ namespace Service.Services
             for (int i = 0; i < Doctors.Count; i++)
             {
                 WorkScheduleByDept WorkScheduleByDept = new WorkScheduleByDept();
+                WorkSchedulesForDoctorPerDay = new List<WorkSchedule>();
                 WorkScheduleByDept.DoctorId = Doctors[i].Id;
                 WorkScheduleByDept.DoctorName = Doctors[i].FirstName + Doctors[i].LastName;
                 DoctorDaysOfWork = await ScheduleRepository.GetScheduleDaysByDoctor_Id(Doctors[i].Id).ToListAsync();
 
 
-
-
                 for (int Day = 0; Day < DoctorDaysOfWork.Count; Day++)
                 {
                     WorkSchedule WorkSchedule = new WorkSchedule();
+                    
                     WorkSchedule.DayOfWork = DoctorDaysOfWork[Day];
                     slotsPerDay = await TimeSlotsRepository.GetSlotsByDayOfWork(DoctorDaysOfWork[Day], Doctors[i].Id).ToListAsync();
                     slots = slotsPerDay.Select(Sl => new slotResponce()
@@ -245,10 +244,7 @@ namespace Service.Services
 
                     WorkSchedule.Slots = slots;
                     WorkSchedulesForDoctorPerDay.Add(WorkSchedule);
-                }
-
-
-
+                };
                 WorkScheduleByDept.WorkSchedules = WorkSchedulesForDoctorPerDay;
                 WorkScheduleByDepts.Add(WorkScheduleByDept);
 

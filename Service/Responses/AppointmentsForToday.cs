@@ -15,6 +15,10 @@ namespace Service.Responses
         public string Gender { get; set; }
         public string Complain { get; set; }
         public bool Examined { get; set; }
+        public DateTime AppointmentDate { get; set; }
+        public string DoctorName { get; set; }
+
+
 
 
     }

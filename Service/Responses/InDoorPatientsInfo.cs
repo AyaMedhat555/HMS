@@ -23,6 +23,13 @@ namespace Service.Responses
 
         public string OralMedicalHistory { get; set; }
 
+        public DateTime? EnterDate  { get; set; }
+        public int Room_Number { get; set; }
+        public int BedNumber { get; set; }
+        public int Floor_Number { get; set; }
+
+
+
 
     }
 }

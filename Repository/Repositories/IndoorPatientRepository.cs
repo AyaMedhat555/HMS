@@ -31,10 +31,10 @@ namespace Repository.Repositories
             return _unitOfWork.Context.IndoorPatients.Where(I => I.PatientId == PatientId).Select(I=>I.Id);
         }
 
-        public  IQueryable<IndoorPatientRecord> GetInDoorPatientsByDept(int DepartmentId)
+        public  IQueryable<IndoorPatientRecord> GetInDoorPatientsByDept(int? DepartmentId)
         {
             
-            return  _unitOfWork.Context.IndoorPatients.Where(I => (I.DepartmentId == DepartmentId) && (I.Disharged==false)).Include(I=>I.Patient);
+            return  _unitOfWork.Context.IndoorPatients.Where(I => (I.DepartmentId == DepartmentId) && (I.Disharged==false)).Include(I=>I.Patient).Include(I=>I.Room).Include(I=>I.Bed);
             
         }
 

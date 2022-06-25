@@ -28,42 +28,7 @@ namespace Service.Services
 
 
         }
-        //public async Task<RoomDto> AddRoom(RoomDto RoomDto)
-        //{
-        //    List<BedDto> BedsDto = (List<BedDto>)RoomDto.Beds;
-
-        //    List<Bed> Beds = new List<Bed>();
-
-        //     foreach( var BedDto in BedsDto)
-        //    {
-
-        //        Beds.Add(new Bed()
-        //        {
-        //            Number = BedDto.Number
-
-
-        //        });
-        //    }
-
-        //    var Room = new Room()
-        //    {
-        //        RoomCharges = RoomDto.RoomCharges,
-        //        RoomType = RoomDto.RoomType,
-        //        RoomNumber = RoomDto.RoomNumber,
-
-        //        DepartmentId = RoomDto.DepartmentId,
-        //        FloorNumber = RoomDto.FloorNumber,
-        //        NumberOfBeds = RoomDto.NumberOfBeds,
-        //        Beds = Beds
-
-
-
-        //    };
-
-        //    await RoomRepository.Add(Room);
-
-        //   return RoomDto;
-        //}
+        
 
         public async Task ReserveRoom(int RoomId)
         {

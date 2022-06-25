@@ -65,7 +65,12 @@ namespace Service.Services
                     IndoorPatientId=P.Id,
                     Gender=P.Patient.Gender,
                     CauseOfAdmission=P.CauseOfAdmission,
-                    OralMedicalHistory=P.OralMedicalHistory
+                    OralMedicalHistory=P.OralMedicalHistory,
+                    BedNumber=P.Bed.Number,
+                    Room_Number=P.Room.RoomNumber,
+                    Floor_Number=P.Room.FloorNumber,
+                    EnterDate=P.EnterDate
+                    
                 })
                 .ToListAsync(); 
 

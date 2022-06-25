@@ -18,6 +18,7 @@ namespace Service.IServices
         Task<Patient> DeletePatient(int Patient_id);
         Task<PatientDto> GetPatientByName(String Patientname);
         Task<IEnumerable<AppointmentsForToday>> GetAppointmentsByPatientId(int PatientId);
+        Task CancelAppointment(int PatientId,DateTime AppointmentDate);
 
         //  Task<IEnumerable<InDoorPatientGetter>> GetAllInDoorPatients(bool In);
     }

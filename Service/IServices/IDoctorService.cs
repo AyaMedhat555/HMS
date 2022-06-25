@@ -36,6 +36,8 @@ namespace Service.IServices
 
         Task<IEnumerable<AppointmentsForToday>> GetAppointmentsForTodayByDoctorId(DateTime Today, int DoctorId);
 
+        Task<AppointmentDetails> GetAppointmentsDetailsByDoctorId(int DoctorId,DateTime Today);
+
 
     }
 }

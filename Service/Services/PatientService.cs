@@ -100,9 +100,19 @@ namespace Service.Services
                 Complain = A.Complain,
                 Examined = A.Examined,
                 SlotTime = new TimeSpan(A.AppointmentDate.Hour, A.AppointmentDate.Minute, 0),
-                Gender = A.Patient.Gender
+                Gender = A.Patient.Gender,
+                AppointmentDate=A.AppointmentDate,
+                DoctorName=A.Doctor.FirstName+A.Doctor.LastName
 
             }).ToListAsync();
         }
+
+        public  async Task CancelAppointment(int PatientId, DateTime AppointmentDate)
+        {
+            var _Appointment = await AppointmentRepository.CancelAppointment(PatientId, AppointmentDate);
+           await AppointmentRepository.Delete(_Appointment.Id);
+        }
+
+        
     }
 }

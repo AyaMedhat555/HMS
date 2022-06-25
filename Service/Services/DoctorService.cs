@@ -22,14 +22,16 @@ namespace Service.Services
         private IPrescriptionRepository PrescriptionRepository { get; }
         private IScheduleRepository ScheduleRepository { get; }
         private IAppointmentRepository AppointmentRepository { get; }
+        private IIndoorPatientRepository IndoorPatientRepository { get; }
 
-        public DoctorService(IUserRepository _UserRepository, IConfiguration _Configuration, IDoctorRepository _DoctorRepository, IPrescriptionRepository _PrescriptionRepository, IScheduleRepository _ScheduleRepository, IAppointmentRepository _AppointmentRepository)
+        public DoctorService(IUserRepository _UserRepository, IConfiguration _Configuration, IDoctorRepository _DoctorRepository, IPrescriptionRepository _PrescriptionRepository, IScheduleRepository _ScheduleRepository, IAppointmentRepository _AppointmentRepository, IIndoorPatientRepository _IndoorPatientRepository)
             : base(_UserRepository, _Configuration)
         {
             DoctorRepository = _DoctorRepository;
             PrescriptionRepository = _PrescriptionRepository;
             ScheduleRepository = _ScheduleRepository;
             AppointmentRepository = _AppointmentRepository;
+            IndoorPatientRepository = _IndoorPatientRepository;
         }
 
         public async Task<Doctor> AddDoctor(DoctorDto dto)
@@ -350,6 +352,17 @@ namespace Service.Services
             }).ToListAsync();
         }
 
-       
+        public async Task<AppointmentDetails> GetAppointmentsDetailsByDoctorId(int DoctorId,DateTime Today)
+        {
+           Doctor _Doctor=await DoctorRepository.GetDoctorById(DoctorId);
+            int? DeptId = _Doctor.DepartmentId;
+
+
+            AppointmentDetails _AppointmentDetails = new AppointmentDetails();
+            _AppointmentDetails.NumberOfTodayAppointment = AppointmentRepository.GetAppointmentsForTodayByDoctorId(Today, DoctorId).Count();
+            _AppointmentDetails.NumberOfAllAppointments = AppointmentRepository.GetAllAppointmentsByDoctorId(DoctorId).Count();
+            _AppointmentDetails.NumberOfInDoorPatients = IndoorPatientRepository.GetInDoorPatientsByDept(DeptId).Count();
+            return _AppointmentDetails;
+        }
     }
 }
