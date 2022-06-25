@@ -14,6 +14,7 @@ namespace Service.IServices
        Task< PatientReport> AddPatientReport(ReportEntry ReportEntry);
        Task <PatientReport> GetPatientReport(int PatientId, DateTime DateOfDischarge);
         IEnumerable<PatientScan> GetPatientScan(int IndoorPatientRecordId );
+        
 
 
     }

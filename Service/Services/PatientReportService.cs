@@ -112,6 +112,8 @@ namespace Service.Services
             CurrentRecord.Recommendation = ReportEntry.Recommendation;
             CurrentRecord.DischargeDate = ReportEntry.DateOfDischarge;
             CurrentRecord.Disharged = true;
+            CurrentRecord.Room.Reserved = false;
+            CurrentRecord.Bed.Reserved = false;
 
             _IndoorPatientRepository.Update(CurrentRecord);
 

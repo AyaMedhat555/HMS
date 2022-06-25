@@ -80,9 +80,24 @@ namespace SmartHospital.Controllers
 
         [HttpGet("GetAppointmentsByPatientId/{PatientId}")]
 
-        public async Task<IActionResult> GetAppointmentsForTodayByDoctorId(int PatientId)
+        public async Task<IActionResult> GetAppointmentsForTodayByPatientId(int PatientId)
         {
             return Ok(await PatientService.GetAppointmentsByPatientId(PatientId));
+        }
+
+        [HttpDelete("CancelAppointment/{PatientId}/{AppointmentDate}")]
+
+        public async Task<IActionResult> CancelAppointment(int PatientId,DateTime AppointmentDate)
+        {
+            await PatientService.CancelAppointment(PatientId, AppointmentDate);
+            return Ok($"Appointment with Date {AppointmentDate} has been canceled");
+        }
+
+        [HttpGet("GetAppointmentsDetailsByDoctorId/{DoctorId}/{Today}")]
+
+        public async Task<IActionResult> GetAppointmentsDetailsByDoctorId(int DoctorId,DateTime Today)
+        {
+            return Ok(await DoctorService.GetAppointmentsDetailsByDoctorId(DoctorId, Today));
         }
     } 
 }

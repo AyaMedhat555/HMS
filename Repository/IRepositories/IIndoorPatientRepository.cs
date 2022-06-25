@@ -9,7 +9,7 @@ namespace Repository.IRepositories
 {
     public interface IIndoorPatientRepository : IGenericRepository<IndoorPatientRecord>
     {
-       IQueryable <IndoorPatientRecord> GetInDoorPatientsByDept(int DepartmentId);
+       IQueryable <IndoorPatientRecord> GetInDoorPatientsByDept(int? DepartmentId);
 
         IndoorPatientRecord GetLastRecordBeforeDischarging(int PatientId);
 
