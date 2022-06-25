@@ -119,7 +119,7 @@ namespace Service.Services
         public async Task<IEnumerable<PatientRecordResponce>> GetInDoorRecordsByPatientId(int PatientId)
         {
            List<PatientRecordResponce> patientRecordResponces= new List<PatientRecordResponce>();
-            IndoorPatientRepository.GetInDoorRecordsByPatientId(PatientId)
+            patientRecordResponces= await IndoorPatientRepository.GetInDoorRecordsByPatientId(PatientId)
                 .Select(I => new PatientRecordResponce()
                 {
                     DiscahrgeDate=I.DischargeDate,
@@ -133,7 +133,7 @@ namespace Service.Services
                     FloorNumber=I.Room.FloorNumber,
                     PatientRecordId=I.Id
 
-                }).ToList();
+                }).ToListAsync();
 
             return patientRecordResponces;
         }
