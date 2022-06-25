@@ -28,6 +28,7 @@ namespace Domain.Context
                 .HasValue<Patient>("Patient")
                 .HasValue<Nurse>("Nurse")
                 .HasValue<Admin>("Admin")
+                .HasValue<Receptionist>("Receptionist")
                 .HasValue<Doctor>("Doctor");
 
             builder.Entity<TestParameter>()

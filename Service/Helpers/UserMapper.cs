@@ -250,5 +250,62 @@ namespace Service.Helpers
             return newUser;
         }
 
+
+        public static Receptionist ToReceptionist(ReceptionistDto userDto)
+        {
+            Receptionist newUser = new Receptionist();
+            newUser.Id = userDto.Id;
+            newUser.PhoneNumber = userDto.PhoneNumber;
+            newUser.UserName = userDto.UserName;
+            newUser.BloodType = userDto.BloodType;
+            newUser.Age = userDto.Age;
+            newUser.FirstName = userDto.FirstName;
+            newUser.LastName = userDto.LastName;
+            newUser.Address = userDto.Address;
+            newUser.NationalId = userDto.NationalId;
+            newUser.Gender = userDto.Gender;
+            newUser.Image = userDto.Image;
+            newUser.DepartmentId = userDto.DepartmentId;
+            newUser.Mail = userDto.Mail;
+            return newUser;
+        }
+
+        public static ReceptionistDto ToReceptionistDto(Receptionist user)
+        {
+            ReceptionistDto newUserDto = new ReceptionistDto();
+            newUserDto.Id = user.Id;
+            newUserDto.PhoneNumber = user.PhoneNumber;
+            newUserDto.UserName = user.UserName;
+            newUserDto.BloodType = user.BloodType;
+            newUserDto.Age = user.Age;
+            newUserDto.FirstName = user.FirstName;
+            newUserDto.LastName = user.LastName;
+            newUserDto.Address = user.Address;
+            newUserDto.NationalId = user.NationalId;
+            newUserDto.Gender = user.Gender;
+            newUserDto.Image = user.Image;
+            newUserDto.Mail = user.Mail;
+            newUserDto.DepartmentId = user.DepartmentId;
+            return newUserDto;
+        }
+
+        public static Receptionist UpdateReceptionist(ReceptionistDto userDto, Receptionist newUser)
+        {
+            newUser.Id = userDto.Id;
+            newUser.PhoneNumber = userDto.PhoneNumber;
+            newUser.UserName = userDto.UserName;
+            newUser.BloodType = userDto.BloodType;
+            newUser.Age = userDto.Age;
+            newUser.FirstName = userDto.FirstName;
+            newUser.LastName = userDto.LastName;
+            newUser.Address = userDto.Address;
+            newUser.NationalId = userDto.NationalId;
+            newUser.Gender = userDto.Gender;
+            newUser.Image = userDto.Image;
+            newUser.DepartmentId = userDto.DepartmentId;
+            newUser.Mail = userDto.Mail;
+            return newUser;
+        }
+
     }
 }

@@ -19,5 +19,6 @@ namespace Service.Responses
         public virtual ICollection<NeumericalDetailsDto> NumericalDetails { get; set; } = new HashSet<NeumericalDetailsDto>();
         public virtual ICollection<CategoricalDetailsDto> CategoricalDetails { get; set; } = new HashSet<CategoricalDetailsDto>();
         public DateTime TestDate { get; set; }
+        public int? IndoorPatientRecordId { get; set; }
     }
 }
