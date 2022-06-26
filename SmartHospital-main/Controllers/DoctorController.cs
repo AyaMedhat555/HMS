@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Service.DTO;
+using Service.DTO.Users;
 using Service.IServices;
 using Service.Responses;
 

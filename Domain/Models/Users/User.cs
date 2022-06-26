@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace Domain.Models
+namespace Domain.Models.Users
 {
     public abstract class User
     {
         public int Id { get; set; }
         public DateTime CreatedDtm { get; set; }
         public string FirstName { get; set; }
-        public string LastName { get; set; }  
+        public string LastName { get; set; }
         public int Age { get; set; }
         public string NationalId { get; set; }
         public byte[]? Image { get; set; }

@@ -33,7 +33,12 @@ namespace Repository.Repositories
 
         public async Task<TEntity> GetById(int id)
         {
-            return await _unitOfWork.Context.Set<TEntity>().FindAsync(id);
+            TEntity entity =  await _unitOfWork.Context.Set<TEntity>().FindAsync(id);
+            if(entity is not null)
+            {
+                return entity;
+            }
+            return null;
         }
 
         public async Task<TEntity> Update(TEntity entity)

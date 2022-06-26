@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.DTO
+namespace Service.DTO.Labs
 {
     public class LabRequestDto
     {
@@ -13,6 +13,6 @@ namespace Service.DTO
         public DateTime CreatedDtm { get; set; }
         public int PatientId { get; set; }
         public int? DoctorId { get; set; }
-       public int? IndoorPatientRecordId { get; set; }
+        public int? IndoorPatientRecordId { get; set; }
     }
 }

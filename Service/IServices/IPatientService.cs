@@ -1,5 +1,5 @@
-﻿using Domain.Models;
-using Service.DTO;
+﻿using Domain.Models.Users;
+using Service.DTO.Users;
 using Service.Responses;
 using System;
 using System.Collections.Generic;

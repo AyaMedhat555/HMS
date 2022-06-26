@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.DTO
+namespace Service.DTO.Labs
 {
-    public class AdminDto: UserDto
+    public class CategoricalParamterDto : TestParameterDto
     {
+        public string Normalvalue { get; set; }
     }
 }

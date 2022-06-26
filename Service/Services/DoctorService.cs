@@ -1,9 +1,10 @@
 ﻿using Domain.Models;
+using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repository;
 using Repository.IRepositories;
-using Service.DTO;
+using Service.DTO.Users;
 using Service.Helpers;
 using Service.IServices;
 using Service.Responses;
@@ -36,10 +37,13 @@ namespace Service.Services
 
         public async Task<Doctor> AddDoctor(DoctorDto dto)
         {
-            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             Doctor doctor = UserMapper.ToDoctor(dto);
-            doctor.PasswordHash = passwordHash;
-            doctor.PasswordSalt = passwordSalt;
+            if(dto.Password != null)
+            {
+                CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                doctor.PasswordHash = passwordHash;
+                doctor.PasswordSalt = passwordSalt;
+            }
             return await DoctorRepository.Add(doctor);
         }
 
@@ -50,89 +54,52 @@ namespace Service.Services
 
         public async Task<IEnumerable<DoctorDto>> GetAllDoctors()
         {
-            return await DoctorRepository.GetAll().Select(u => new DoctorDto
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                UserName = u.UserName,
-                Mail = u.Mail,
-                NationalId = u.NationalId,
-                Image = u.Image,
-                Gender = u.Gender,
-                PhoneNumber = u.PhoneNumber,
-                DepartmentName = u.Department.Department_Name,
-                DocSpecialization = u.DocSpecialization,
-                DocDegree = u.DocDegree,
-                CreatedDtm = u.CreatedDtm,
-                IsActive = u.IsActive
-            }).ToListAsync();
+            return await DoctorRepository.GetAllDoctors().Select(u => UserMapper.ToDoctorDto(u)).ToListAsync();
         }
 
         public async Task<IEnumerable<DoctorDto>> GetDoctorsByState(bool state)
         {
-            return await DoctorRepository.GetDoctorsByState(state).Select(u => new DoctorDto
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                UserName = u.UserName,
-                Mail = u.Mail,
-                NationalId = u.NationalId,
-                Image = u.Image,
-                Gender = u.Gender,
-                PhoneNumber = u.PhoneNumber,
-                DepartmentName = u.Department.Department_Name,
-                DocSpecialization = u.DocSpecialization,
-                DocDegree = u.DocDegree,
-                CreatedDtm = u.CreatedDtm,
-                IsActive = u.IsActive
-            }).ToListAsync();
+            return await DoctorRepository.GetDoctorsByState(state).Select(u => UserMapper.ToDoctorDto(u)).ToListAsync();
         }
 
         public async Task<IEnumerable<DoctorDto>> GetDoctorsBySpecialization(string specialization)
         {
-            return await DoctorRepository.GetDoctorsBySpecialization(specialization).Select(u => new DoctorDto
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                UserName = u.UserName,
-                Mail = u.Mail,
-                NationalId = u.NationalId,
-                Image = u.Image,
-                Gender = u.Gender,
-                PhoneNumber = u.PhoneNumber,
-                DepartmentName = u.Department.Department_Name,
-                DocSpecialization = u.DocSpecialization,
-                DocDegree = u.DocDegree,
-                CreatedDtm = u.CreatedDtm,
-                IsActive = u.IsActive
-            }).ToListAsync();
+            return await DoctorRepository.GetDoctorsBySpecialization(specialization).Select(u => UserMapper.ToDoctorDto(u)).ToListAsync();
         }
 
         public async Task<Doctor> UpdateDoctor(DoctorDto dto)
         {
             Doctor currentDoctor = await DoctorRepository.GetById(dto.Id);
             currentDoctor = UserMapper.UpdateDoctor(dto, currentDoctor);
-            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            currentDoctor.PasswordHash = passwordHash;
-            currentDoctor.PasswordSalt = passwordSalt;
+            if (dto.Password != null)
+            {
+                CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                currentDoctor.PasswordHash = passwordHash;
+                currentDoctor.PasswordSalt = passwordSalt;
+            }
             return await DoctorRepository.Update(currentDoctor);
         }
 
         public async Task<DoctorDto> GetDoctorById(int Doctor_id)
         {
             Doctor doc = await DoctorRepository.GetDoctorById(Doctor_id);
-            DoctorDto doc_dto = UserMapper.ToDoctorDto(doc);
-            return doc_dto;
+            if (doc != null)
+            {
+                DoctorDto doc_dto = UserMapper.ToDoctorDto(doc);
+                return doc_dto;
+            }
+            return null;
         }
 
         public async Task<DoctorDto> GetDoctorByName(string Doctorname)
         {
             Doctor doc = await DoctorRepository.FindByName(Doctorname);
-            DoctorDto doc_dto = UserMapper.ToDoctorDto(doc);
-            return doc_dto;
+            if (doc != null)
+            {
+                DoctorDto doc_dto = UserMapper.ToDoctorDto(doc);
+                return doc_dto;
+            }
+            return null;
         }
 
 

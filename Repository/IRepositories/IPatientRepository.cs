@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,9 @@ namespace Repository.IRepositories
 {
     public interface IPatientRepository : IGenericRepository<Patient>
     {
+        Task<Patient> GetPatientById(int id);
         Task<Patient> FindByName(String username);
-        // IQueryable<IndoorPatient> GetAllInDoorPatients(int Department_Id);
+        IQueryable<Patient> GetAllPatients();
         
     }
 }

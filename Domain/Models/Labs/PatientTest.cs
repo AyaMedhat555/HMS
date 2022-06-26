@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
+using Domain.Models.Users;
 
-namespace SmartHospital.Models.Labs
+namespace Domain.Models.Labs
 {
     public class PatientTest
     {
@@ -16,6 +17,6 @@ namespace SmartHospital.Models.Labs
 
         public DateTime TestDate { get; set; }
         public IndoorPatientRecord? IndoorPatientRecord { get; set; }
-        public int?  IndoorPatientRecordId { get; set; }
+        public int? IndoorPatientRecordId { get; set; }
     }
 }

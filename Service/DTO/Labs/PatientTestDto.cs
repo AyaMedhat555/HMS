@@ -1,11 +1,11 @@
-﻿using SmartHospital.Models.Labs;
+﻿using Domain.Models.Labs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.DTO
+namespace Service.DTO.Labs
 {
     public class PatientTestDto
     {

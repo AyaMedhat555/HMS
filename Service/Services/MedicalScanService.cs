@@ -1,7 +1,7 @@
 ﻿using Domain.Models.Labs;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
-using Service.DTO;
+using Service.DTO.Labs;
 using Service.IServices;
 using Service.Responses;
 using System;
@@ -102,12 +102,15 @@ namespace Service.Services
                 ScanName = scanRequest.Scan.ScanName,
                 ScanId = scanRequest.Scan.Id,
                 CreatedDtm = scanRequest.CreatedDtm,
-                DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName,
                 PatientName = scanRequest.Patient.FirstName+" "+scanRequest.Patient.LastName,
                 DoctorId = scanRequest.DoctorId,
                 PatientId = scanRequest.PatientId,
                 IndoorPatientRecordId= scanRequest.IndoorPatientRecordId
             };
+            if(scanRequest.Doctor != null)
+            {
+                scanRequestResponse.DoctorName = scanRequest.Doctor.FirstName+" "+scanRequest.Doctor.LastName;
+            }
             return scanRequestResponse;
         }
 

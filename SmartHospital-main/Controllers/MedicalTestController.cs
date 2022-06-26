@@ -1,9 +1,8 @@
 ﻿using Domain.Models.Labs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Service.DTO;
+using Service.DTO.Labs;
 using Service.IServices;
-using SmartHospital.Models.Labs;
 
 namespace SmartHospital.Controllers
 {

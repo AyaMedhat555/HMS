@@ -1,11 +1,8 @@
-﻿
-using Domain.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repository.IRepositories;
 using Service.IServices;
-using Service.DTO;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,6 +10,8 @@ using System.Security.Cryptography;
 using Repository;
 using Service.Helpers;
 using Service.Responses;
+using Domain.Models.Users;
+using Service.DTO.Users;
 
 namespace Service.Services
 {
@@ -34,7 +33,7 @@ namespace Service.Services
             newUser.PasswordSalt = passwordSalt;
             newUser.PhoneNumber = user.PhoneNumber;
             newUser.UserName = user.UserName;
-            newUser.BloodType = user.BloodType;
+            newUser.BloodType = user.BloodType == null ? "" : user.BloodType;
             newUser.Age = user.Age;
             newUser.FirstName = user.FirstName;
             newUser.LastName = user.LastName;
@@ -60,19 +59,6 @@ namespace Service.Services
                 Mail = u.Mail,
                 PhoneNumber = u.PhoneNumber,
             }).ToListAsync();
-        }
-
-        public async Task<IEnumerable<UserDto>> GetAllNurses()
-        {
-            var nurses = await _userRepository.GetAll().Select(u => new UserDto
-            {
-                
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Mail = u.Mail,
-                PhoneNumber = u.PhoneNumber
-            }).Where(u => u.Role == "Nurse").ToListAsync();
-            return nurses;
         }
 
         public async Task<User> GetUserById(int id)

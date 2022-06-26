@@ -1,5 +1,5 @@
-﻿using Service.DTO;
-using SmartHospital.Models.Labs;
+﻿using Service.DTO.Labs;
+using Domain.Models.Labs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

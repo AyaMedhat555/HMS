@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +13,7 @@ namespace Repository.IRepositories
         Task<Nurse> GetNurseById(int id);
         IQueryable<Nurse> GetNursesBySpecialization(string specialization);
         IQueryable<Nurse> GetNursesByState(bool state);
+        IQueryable<Nurse> GetAllNurses();
+
     }
 }

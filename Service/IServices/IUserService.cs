@@ -1,8 +1,7 @@
-﻿
-using Domain.Models;
-using Service.DTO;
-using Repository;
+﻿using Repository;
 using Service.Responses;
+using Domain.Models.Users;
+using Service.DTO.Users;
 
 namespace Service.IServices
 {
@@ -11,7 +10,6 @@ namespace Service.IServices
         Task<User> AddUser(UserDto user);
         Task<User> UpdateUser(User user);
         Task<IEnumerable<UserDto>> GetAllUsers();
-        Task<IEnumerable<UserDto>> GetAllNurses();
         Task<User> GetUserById(int id);
         Task<User> DeleteUser(int id);
         Task<LoginResponse> Login(LoginRequest logInUser);

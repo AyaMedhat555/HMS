@@ -1,4 +1,4 @@
-﻿namespace SmartHospital.Models.Labs
+﻿namespace Domain.Models.Labs
 {
     public class Test
     {

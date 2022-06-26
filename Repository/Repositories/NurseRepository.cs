@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
@@ -42,6 +42,11 @@ namespace Repository.Repositories
         public async Task<Nurse> GetNurseById(int id)
         {
             return await _unitOfWork.Context.Nurses.Include(N => N.Department).SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public IQueryable<Nurse> GetAllNurses()
+        {
+            return _unitOfWork.Context.Nurses.Include(N => N.Department);
         }
     }
 }

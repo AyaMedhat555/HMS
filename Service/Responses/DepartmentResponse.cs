@@ -1,4 +1,4 @@
-﻿using Service.DTO;
+﻿using Service.DTO.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;

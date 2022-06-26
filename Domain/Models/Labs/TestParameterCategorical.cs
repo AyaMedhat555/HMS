@@ -1,6 +1,6 @@
-﻿namespace SmartHospital.Models.Labs
+﻿namespace Domain.Models.Labs
 {
-    public class TestParameterCategorical: TestParameter
+    public class TestParameterCategorical : TestParameter
     {
         public string Normalvalue { get; set; }
     }

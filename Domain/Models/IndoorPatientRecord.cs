@@ -1,7 +1,7 @@
 ﻿
 
 using Domain.Models.Labs;
-using SmartHospital.Models.Labs;
+using Domain.Models.Users;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models

@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
@@ -38,6 +38,11 @@ namespace Repository.Repositories
         public IQueryable<Nurse> GetAllNurses()
         {
             return _unitOfWork.Context.Set<Nurse>();
+        }
+
+        public IQueryable<User> GetAllUsers()
+        {
+            return _unitOfWork.Context.Users.Include(u => u.Department);
         }
     }
 }

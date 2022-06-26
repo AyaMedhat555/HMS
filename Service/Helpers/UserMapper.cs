@@ -1,5 +1,5 @@
-﻿using Domain.Models;
-using Service.DTO;
+﻿using Domain.Models.Users;
+using Service.DTO.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +28,8 @@ namespace Service.Helpers
             newUser.Mail = userDto.Mail;
             newUser.DocDegree = userDto.DocDegree;
             newUser.DocSpecialization = userDto.DocSpecialization;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 
@@ -47,9 +49,14 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
-            newUserDto.DepartmentName = user.Department.Department_Name;
+            if (user.Department != null)
+            {
+                newUserDto.DepartmentName = user.Department.Department_Name;
+            };
             newUserDto.DocSpecialization = user.DocSpecialization;
             newUserDto.DocDegree = user.DocDegree;
+            newUserDto.IsActive = user.IsActive;
+            newUserDto.CreatedDtm = user.CreatedDtm;
             return newUserDto;
         }
 
@@ -70,6 +77,8 @@ namespace Service.Helpers
             newUser.Mail = userDto.Mail;
             newUser.DocDegree = userDto.DocDegree;
             newUser.DocSpecialization = userDto.DocSpecialization;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 
@@ -89,6 +98,8 @@ namespace Service.Helpers
             newUser.Image = userDto.Image;
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 
@@ -108,6 +119,12 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
+            if (user.Department != null)
+            {
+                newUserDto.DepartmentName = user.Department.Department_Name;
+            };
+            newUserDto.IsActive = user.IsActive;
+            newUserDto.CreatedDtm = user.CreatedDtm;
             return newUserDto;
         }
 
@@ -126,6 +143,8 @@ namespace Service.Helpers
             newUser.Image = userDto.Image;
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
         public static Nurse ToNurse(NurseDto userDto)
@@ -146,6 +165,8 @@ namespace Service.Helpers
             newUser.Mail = userDto.Mail;
             newUser.NurseSpecialization = userDto.NurseSpecialization;
             newUser.NurseDegree = userDto.NurseDegree;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 
@@ -165,9 +186,14 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
-            newUserDto.DepartmentName = user.Department.Department_Name;
+            if(user.Department != null)
+            {
+                newUserDto.DepartmentName = user.Department.Department_Name;
+            };
             newUserDto.NurseDegree = user.NurseDegree;
             newUserDto.NurseSpecialization = user.NurseSpecialization;
+            newUserDto.IsActive = user.IsActive;
+            newUserDto.CreatedDtm = user.CreatedDtm;
             return newUserDto;
         }
 
@@ -188,6 +214,8 @@ namespace Service.Helpers
             newUser.Mail = userDto.Mail;
             newUser.NurseDegree = userDto.NurseDegree;
             newUser.NurseSpecialization = userDto.NurseSpecialization;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 
@@ -209,6 +237,8 @@ namespace Service.Helpers
             newUser.Image = userDto.Image;
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 
@@ -228,7 +258,13 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
+            if (user.Department != null)
+            {
+                newUserDto.DepartmentName = user.Department.Department_Name;
+            };
             newUserDto.BloodType = user.BloodType;
+            newUserDto.IsActive = user.IsActive;
+            newUserDto.CreatedDtm = user.CreatedDtm;
             return newUserDto;
         }
 
@@ -247,6 +283,8 @@ namespace Service.Helpers
             newUser.Image = userDto.Image;
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 
@@ -267,6 +305,8 @@ namespace Service.Helpers
             newUser.Image = userDto.Image;
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 
@@ -286,6 +326,12 @@ namespace Service.Helpers
             newUserDto.Image = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
+            if (user.Department != null)
+            {
+                newUserDto.DepartmentName = user.Department.Department_Name;
+            };
+            newUserDto.IsActive = user.IsActive;
+            newUserDto.CreatedDtm = user.CreatedDtm;
             return newUserDto;
         }
 
@@ -304,6 +350,8 @@ namespace Service.Helpers
             newUser.Image = userDto.Image;
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
+            newUser.CreatedDtm = userDto.CreatedDtm;
+            newUser.IsActive = userDto.IsActive;
             return newUser;
         }
 

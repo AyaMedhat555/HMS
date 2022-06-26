@@ -1,6 +1,5 @@
-﻿
-using Domain.Models;
-using Service.DTO;
+﻿using Domain.Models.Users;
+using Service.DTO.Users;
 
 namespace Service.Helpers
 {

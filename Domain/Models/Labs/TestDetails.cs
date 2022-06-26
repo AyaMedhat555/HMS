@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SmartHospital.Models.Labs
+namespace Domain.Models.Labs
 {
     public abstract class TestDetails
     {
@@ -12,6 +12,6 @@ namespace SmartHospital.Models.Labs
         public int TestParameterId { get; set; }
         [JsonIgnore]
         public TestParameter TestParameter { get; set; }
-        
+
     }
 }

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Repository;
-using Repository.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using Service.DTO;
 using Microsoft.Extensions.Configuration;

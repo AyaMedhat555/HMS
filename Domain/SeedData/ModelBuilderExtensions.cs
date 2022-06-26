@@ -1,6 +1,7 @@
 ﻿using Domain.Models;
+using Domain.Models.Labs;
+using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
-using SmartHospital.Models.Labs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -151,7 +152,7 @@ namespace Domain.SeedData
                     NationalId = "27030351876321",
                     BloodType = "B+"
                 ,
-                    Role = "patient",
+                    Role = "Patient",
                     PasswordHash = firstPatientHash,
                     PasswordSalt = firstPatientSalt,
                     IsActive = true
@@ -176,7 +177,7 @@ namespace Domain.SeedData
                     NationalId = "27030351876321",
                     BloodType = "O+"
                 ,
-                    Role = "patient",
+                    Role = "Patient",
                     PasswordHash = secondPatientHash,
                     PasswordSalt = secondPatientSalt,
                     IsActive = true
@@ -200,7 +201,7 @@ namespace Domain.SeedData
                     NationalId = "27030351876321",
                     BloodType = "O-"
                 ,
-                    Role = "patient",
+                    Role = "Patient",
                     PasswordHash = thirdPatientHash,
                     PasswordSalt = thirdPatientSalt,
                     IsActive = true
@@ -286,6 +287,61 @@ namespace Domain.SeedData
             #endregion
 
             #region scans seed
+            modelBuilder.Entity<Scan>().HasData(
+                new Scan { Id = 1, ScanCharge = 100, ScanName = "Angiography" },
+                new Scan { Id = 2, ScanCharge = 100, ScanName = "CT" },
+                new Scan { Id = 3, ScanCharge = 100, ScanName = "Echocardiogram" },
+                new Scan { Id = 4, ScanCharge = 100, ScanName = "Electrocardiogram (ECG)" },
+                new Scan { Id = 5, ScanCharge = 100, ScanName = "MRI scan" },
+                new Scan { Id = 6, ScanCharge = 100, ScanName = "PET scan" },
+                new Scan { Id = 7, ScanCharge = 100, ScanName = "Ultrasound scan" },
+                new Scan { Id = 8, ScanCharge = 100, ScanName = "X-ray" });
+            #endregion
+
+            #region rooms seed
+            modelBuilder.Entity<Room>().HasData(
+                new Room { Id = 1, RoomNumber = 1, FloorNumber = 1, NumberOfBeds = 4, RoomCharges = 120, RoomType = "common", DepartmentId = 1, Reserved = false },
+                new Room { Id = 2, RoomNumber = 2, FloorNumber = 1, NumberOfBeds = 2, RoomCharges = 140, RoomType = "common", DepartmentId = 1, Reserved = false },
+                new Room { Id = 3, RoomNumber = 3, FloorNumber = 1, NumberOfBeds = 1, RoomCharges = 200, RoomType = "suite", DepartmentId = 1, Reserved = false },
+                new Room { Id = 4, RoomNumber = 4, FloorNumber = 2, NumberOfBeds = 4, RoomCharges = 120, RoomType = "common", DepartmentId = 1, Reserved = false },
+                new Room { Id = 5, RoomNumber = 5, FloorNumber = 2, NumberOfBeds = 4, RoomCharges = 120, RoomType = "common", DepartmentId = 2, Reserved = false },
+                new Room { Id = 6, RoomNumber = 6, FloorNumber = 2, NumberOfBeds = 4, RoomCharges = 120, RoomType = "common", DepartmentId = 2, Reserved = false },
+                new Room { Id = 7, RoomNumber = 7, FloorNumber = 3, NumberOfBeds = 1, RoomCharges = 200, RoomType = "suite", DepartmentId = 2, Reserved = false },
+                new Room { Id = 8, RoomNumber = 8, FloorNumber = 3, NumberOfBeds = 2, RoomCharges = 140, RoomType = "common", DepartmentId = 1, Reserved = false });
+
+            modelBuilder.Entity<Bed>().HasData(
+                new Bed { Id =1, Number = 1, RoomId = 1, Reserved = false },
+                new Bed { Id =2, Number = 2, RoomId = 1, Reserved = false },
+                new Bed { Id =3, Number = 3, RoomId = 1, Reserved = false },
+                new Bed { Id =4, Number = 4, RoomId = 1, Reserved = false },
+
+                new Bed { Id =5, Number = 1, RoomId = 2, Reserved = false },
+                new Bed { Id =6, Number = 2, RoomId = 2, Reserved = false },
+
+                new Bed { Id =7, Number = 1, RoomId = 3, Reserved = false },
+
+                new Bed { Id =8, Number = 1, RoomId = 4, Reserved = false },
+                new Bed { Id =9, Number = 2, RoomId = 4, Reserved = false },
+                new Bed { Id =10, Number = 3, RoomId = 4, Reserved = false },
+                new Bed { Id =11, Number = 4, RoomId = 4, Reserved = false },
+
+                new Bed { Id =12, Number = 1, RoomId = 5, Reserved = false },
+                new Bed { Id =13, Number = 2, RoomId = 5, Reserved = false },
+                new Bed { Id =14, Number = 3, RoomId = 5, Reserved = false },
+                new Bed { Id =15, Number = 4, RoomId = 5, Reserved = false },
+
+                new Bed { Id =16, Number = 1, RoomId = 6, Reserved = false },
+                new Bed { Id =17, Number = 2, RoomId = 6, Reserved = false },
+                new Bed { Id =18, Number = 3, RoomId = 6, Reserved = false },
+                new Bed { Id =19, Number = 4, RoomId = 6, Reserved = false },
+
+                new Bed { Id =20, Number = 1, RoomId = 7, Reserved = false },
+
+                new Bed { Id =21, Number = 1, RoomId = 8, Reserved = false },
+                new Bed { Id =22, Number = 2, RoomId = 8, Reserved = false });
+
+
+
             #endregion
 
         }

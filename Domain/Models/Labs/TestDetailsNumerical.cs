@@ -1,8 +1,8 @@
-﻿namespace SmartHospital.Models.Labs
+﻿namespace Domain.Models.Labs
 {
-    public class TestDetailsNumerical:TestDetails
+    public class TestDetailsNumerical : TestDetails
     {
-    // public  TestParameterNumerical TestParameterNumerical { get; set; }
+        // public  TestParameterNumerical TestParameterNumerical { get; set; }
         public float MeasuredValue { get; set; }
     }
 }

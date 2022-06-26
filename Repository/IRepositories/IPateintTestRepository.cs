@@ -1,4 +1,4 @@
-﻿using SmartHospital.Models.Labs;
+﻿using Domain.Models.Labs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

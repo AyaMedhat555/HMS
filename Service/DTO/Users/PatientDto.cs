@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.DTO
+namespace Service.DTO.Users
 {
-    public class CategoricalParamterDto : TestParameterDto
+    public class PatientDto : UserDto
     {
-        public string Normalvalue { get; set; }
+
     }
 }

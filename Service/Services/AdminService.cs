@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository;
-using Repository.IRepositories;
 using Service.Responses;
 using Microsoft.Extensions.Configuration;
 using Service.Helpers;
+using Domain.Models.Users;
+using Service.DTO.Users;
 
 namespace Service.Services
 {
@@ -132,10 +133,13 @@ namespace Service.Services
         #region ADMIN CRUD 
         public async Task<Admin> AddAdmin(AdminDto dto)
         {
-            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             Admin admin = UserMapper.ToAdmin(dto);
-            admin.PasswordHash = passwordHash;
-            admin.PasswordSalt = passwordSalt;
+            if (dto.Password != null)
+            {
+                CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                admin.PasswordHash = passwordHash;
+                admin.PasswordSalt = passwordSalt;
+            }
             return (Admin)await UserRepository.Add(admin);
         }
 
@@ -148,9 +152,12 @@ namespace Service.Services
         {
             Admin currentAdmin = (Admin)await UserRepository.GetById(dto.Id);
             currentAdmin = UserMapper.UpdateAdmin(dto, currentAdmin);
-            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            currentAdmin.PasswordHash = passwordHash;
-            currentAdmin.PasswordSalt = passwordSalt;
+            if (dto.Password != null)
+            {
+                CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                currentAdmin.PasswordHash = passwordHash;
+                currentAdmin.PasswordSalt = passwordSalt;
+            }
             return (Admin)await UserRepository.Update(currentAdmin);
         }
 
@@ -158,28 +165,18 @@ namespace Service.Services
         public async Task<AdminDto> GetAdminById(int Admin_id)
         {
             Admin admin = (Admin)await UserRepository.GetById(Admin_id);
-            AdminDto admin_dto = UserMapper.ToAdminDto(admin);
-            return admin_dto;
+            if(admin != null)
+            {
+                AdminDto admin_dto = UserMapper.ToAdminDto(admin);
+                return admin_dto;
+            }
+            return null;
         }
 
         public async Task<IEnumerable<AdminDto>> GetAllAdmins()
         {
             return await UserRepository.GetAll().OfType<Admin>()
-                .Select(u => new AdminDto
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                UserName = u.UserName,
-                Mail = u.Mail,
-                NationalId = u.NationalId,
-                Image = u.Image,
-                Gender = u.Gender,
-                PhoneNumber = u.PhoneNumber,
-                DepartmentName = u.Department.Department_Name,
-                CreatedDtm = u.CreatedDtm,
-                IsActive = u.IsActive
-            }).ToListAsync();
+                .Select(u => UserMapper.ToAdminDto(u)).ToListAsync();
         }
 
         #endregion
@@ -187,10 +184,13 @@ namespace Service.Services
         #region RECEPTIONIST CRUD
         public async Task<Receptionist> AddReceptionist(ReceptionistDto dto)
         {
-            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             Receptionist receptionist = UserMapper.ToReceptionist(dto);
-            receptionist.PasswordHash = passwordHash;
-            receptionist.PasswordSalt = passwordSalt;
+            if(dto.Password != null)
+            {
+                CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                receptionist.PasswordHash = passwordHash;
+                receptionist.PasswordSalt = passwordSalt;
+            }
             return (Receptionist)await UserRepository.Add(receptionist);
         }
 
@@ -203,9 +203,12 @@ namespace Service.Services
         {
             Receptionist currentReceptionist = (Receptionist)await UserRepository.GetById(dto.Id);
             currentReceptionist = UserMapper.UpdateReceptionist(dto, currentReceptionist);
-            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            currentReceptionist.PasswordHash = passwordHash;
-            currentReceptionist.PasswordSalt = passwordSalt;
+            if (dto.Password != null)
+            {
+                CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                currentReceptionist.PasswordHash = passwordHash;
+                currentReceptionist.PasswordSalt = passwordSalt;
+            }
             return (Receptionist)await UserRepository.Update(currentReceptionist);
         }
 
@@ -213,27 +216,17 @@ namespace Service.Services
         public async Task<ReceptionistDto> GetReceptionistById(int Receptionist_id)
         {
             Receptionist receptionist = (Receptionist)await UserRepository.GetById(Receptionist_id);
-            ReceptionistDto receptionist_dto = UserMapper.ToReceptionistDto(receptionist);
-            return receptionist_dto;
+            if(receptionist != null)
+            {
+                ReceptionistDto receptionist_dto = UserMapper.ToReceptionistDto(receptionist);
+                return receptionist_dto;
+            }
+            return null;
         }
 
         public async Task<IEnumerable<ReceptionistDto>> GetAllReceptionists()
         {
-            return await UserRepository.GetAll().OfType<Admin>().Select(u => new ReceptionistDto
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                UserName = u.UserName,
-                Mail = u.Mail,
-                NationalId = u.NationalId,
-                Image = u.Image,
-                Gender = u.Gender,
-                PhoneNumber = u.PhoneNumber,
-                DepartmentName = u.Department.Department_Name,
-                CreatedDtm = u.CreatedDtm,
-                IsActive = u.IsActive
-            }).ToListAsync();
+            return await UserRepository.GetAll().OfType<Receptionist>().Select(u => UserMapper.ToReceptionistDto(u)).ToListAsync();
         }
         #endregion
     }

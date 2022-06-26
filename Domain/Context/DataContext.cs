@@ -1,9 +1,9 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Domain.Models;
-using Domain.Models;
-using SmartHospital.Models.Labs;
 using Domain.Models.Labs;
+using Domain.Models.Users;
+using Domain.SeedData;
 
 namespace Domain.Context
 {
@@ -42,7 +42,7 @@ namespace Domain.Context
                 .HasDiscriminator<string>("Type")
                 .HasValue<TestDetailsCategorical>("Categorical")
                 .HasValue<TestDetailsNumerical>("Numerical");
-
+            ModelBuilderExtensions.Seed(builder);
 
 
             //seed data to test login against

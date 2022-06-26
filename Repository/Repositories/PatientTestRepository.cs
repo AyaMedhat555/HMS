@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Models.Labs;
+using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
-using SmartHospital.Models.Labs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

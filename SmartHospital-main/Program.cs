@@ -9,7 +9,6 @@ using Repository.Repositories;
 using Repository.UnitOfWorks;
 using Service.IServices;
 using Service.Services;
-using SmartHospital.Models.Labs;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);

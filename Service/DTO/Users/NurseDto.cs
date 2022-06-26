@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Service.DTO
+namespace Service.DTO.Users
 {
-    public class NurseDto:UserDto
+    public class NurseDto : UserDto
     {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? NurseNotes { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace Domain.Models
+﻿using Domain.Models.Users;
+
+namespace Domain.Models
 {
     public class Bill
     {

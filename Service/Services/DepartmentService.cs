@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
-using Service.DTO;
+using Service.DTO.Users;
 using Service.Helpers;
 using Service.IServices;
 using Service.Responses;
@@ -43,7 +43,7 @@ namespace Service.Services
             {
                 DepartmentId = d.Id,
                 DepartmentName = d.Department_Name,
-                DepartmentLocation = d.Location,
+                DepartmentLocation = d.Location == null ? "" : d.Location,
                 IsActive = d.IsActive
             }).ToListAsync();
         }

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.DTO
+namespace Service.DTO.Users
 {
-    public class PatientDto : UserDto
+    public class AdminDto : UserDto
     {
-        public string BloodType { get; set; }
     }
 }

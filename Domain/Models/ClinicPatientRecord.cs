@@ -1,4 +1,6 @@
 ﻿
+using Domain.Models.Users;
+
 namespace Domain.Models
 {
     public class ClinicPatientRecord:PatientRecord

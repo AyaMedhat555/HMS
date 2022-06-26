@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Service.DTO;
 using Service.IServices;
 using Repository;
+using Service.DTO.Users;
 
 namespace SmartHospital.Controllers
 {

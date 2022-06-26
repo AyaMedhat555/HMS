@@ -1,16 +1,15 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repository.IRepositories;
 using Repository.Repositories;
-using Service.DTO;
+using Service.DTO.Users;
 using Service.Helpers;
 using Service.IServices;
 using Service.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,11 +33,14 @@ namespace Service.Services
 
         public async Task<Patient> AddPatient(PatientDto dto)
         {
-            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            Patient doctor = UserMapper.ToPatient(dto);
-            doctor.PasswordHash = passwordHash;
-            doctor.PasswordSalt = passwordSalt;
-            return await PatientRepository.Add(doctor);
+            Patient patient = UserMapper.ToPatient(dto);
+            if(dto.Password != null)
+            {
+                CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                patient.PasswordHash = passwordHash;
+                patient.PasswordSalt = passwordSalt;
+            }
+            return await PatientRepository.Add(patient);
         }
 
         public async Task<Patient> DeletePatient(int Patient_id)
@@ -70,24 +72,35 @@ namespace Service.Services
         {
             Patient currentPatient = await PatientRepository.GetById(dto.Id);
             currentPatient = UserMapper.UpdatePatient(dto, currentPatient);
-            CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            currentPatient.PasswordHash = passwordHash;
-            currentPatient.PasswordSalt = passwordSalt;
+            if(dto.Password != null)
+            {
+                CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                currentPatient.PasswordHash = passwordHash;
+                currentPatient.PasswordSalt = passwordSalt;
+            }
             return await PatientRepository.Update(currentPatient);
         }
 
         public async Task<PatientDto> GetPatientById(int Patient_id)
         {
             Patient patient = await PatientRepository.GetById(Patient_id);
-            PatientDto patient_dto = UserMapper.ToPatientDto(patient);
-            return patient_dto;
+            if(patient != null)
+            {
+                PatientDto patient_dto = UserMapper.ToPatientDto(patient);
+                return patient_dto;
+            }
+            return null;
         }
 
         public async Task<PatientDto> GetPatientByName(string Patientname)
         {
             Patient patient = await PatientRepository.FindByName(Patientname);
-            PatientDto patient_dto = UserMapper.ToPatientDto(patient);
-            return patient_dto;
+            if (patient != null)
+            {
+                PatientDto patient_dto = UserMapper.ToPatientDto(patient);
+                return patient_dto;
+            }
+            return null;
         }
 
         public async Task<IEnumerable<AppointmentsForToday>> GetAppointmentsByPatientId(int PatientId)

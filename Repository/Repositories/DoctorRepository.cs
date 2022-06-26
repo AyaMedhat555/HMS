@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
@@ -21,7 +21,7 @@ namespace Repository.Repositories
 
         public async Task<Doctor> FindByName(String username)
         {
-            var user = await _unitOfWork.Context.Doctors.SingleOrDefaultAsync(x => x.UserName == username);
+            var user = await _unitOfWork.Context.Doctors.Include(D => D.Department).SingleOrDefaultAsync(x => x.UserName == username);
             if (user == null || user.UserName != username)
             {
                 return null;
@@ -31,22 +31,27 @@ namespace Repository.Repositories
 
         public IQueryable<Doctor> GetDoctorsBySpecialization(string specialization)
         {
-            return _unitOfWork.Context.Doctors.Where(D => D.DocSpecialization == specialization);
+            return _unitOfWork.Context.Doctors.Where(D => D.DocSpecialization == specialization).Include(D => D.Department);
         }
 
         public IQueryable<Doctor> GetDoctorsByState(bool state)
         {
-            return _unitOfWork.Context.Doctors.Where(D => D.IsActive == state);
+            return _unitOfWork.Context.Doctors.Where(D => D.IsActive == state).Include(D => D.Department);
         }
 
         public IQueryable<Doctor> GetDoctorsByDepartment_Id(int Department_ID)
         {
-            return _unitOfWork.Context.Doctors.Where(D => D.DepartmentId == Department_ID);
+            return _unitOfWork.Context.Doctors.Where(D => D.DepartmentId == Department_ID).Include(D => D.Department);
         }
 
         public async Task<Doctor> GetDoctorById(int id)
         {
             return await _unitOfWork.Context.Doctors.Include(D => D.Department).SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public IQueryable<Doctor> GetAllDoctors()
+        {
+            return _unitOfWork.Context.Doctors.Include(D => D.Department);
         }
     }
 }

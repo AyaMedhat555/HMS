@@ -3,7 +3,6 @@ using Domain.Models.Labs;
 using Repository.IRepositories;
 using Service.IServices;
 using Service.Responses;
-using SmartHospital.Models.Labs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

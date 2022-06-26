@@ -1,6 +1,6 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Users;
 using Repository.Repositories;
-using Service.DTO;
+using Service.DTO.Users;
 using Service.Responses;
 using System;
 using System.Collections.Generic;

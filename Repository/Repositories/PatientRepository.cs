@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
@@ -27,6 +27,16 @@ namespace Repository.Repositories
                 return null;
             }
             return user;
+        }
+
+        public async Task<Patient> GetPatientById(int id)
+        {
+            return await _unitOfWork.Context.Patients.Include(P => P.Department).SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public IQueryable<Patient> GetAllPatients()
+        {
+            return _unitOfWork.Context.Patients.Include(P => P.Department);
         }
 
         //public IQueryable<IndoorPatient> GetAllInDoorPatients(int Department_Id)
