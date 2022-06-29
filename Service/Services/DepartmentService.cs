@@ -227,5 +227,10 @@ namespace Service.Services
             };
             return departmentResponse;
         }
+
+        public async Task<IEnumerable<Department>> GetClinicalDepartments()
+        {
+           return await _departmentRepository.GetClinicalDepartments().ToListAsync();
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace Repository.IRepositories
         Task<Department> GetEmpsById(int id);
         Task<Department> GetPatientsByName(String name);
         Task<Department> GetPatientsById(int id);
+        IQueryable<Department> GetClinicalDepartments();
+
     }
 }

@@ -4,6 +4,7 @@ using Domain.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220628181002_update-doctor")]
+    partial class updatedoctor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Appointments", (string)null);
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("Domain.Models.Bed", b =>
@@ -83,7 +85,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Beds", (string)null);
+                    b.ToTable("Beds");
 
                     b.HasData(
                         new
@@ -284,7 +286,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("PrescriptionId");
 
-                    b.ToTable("ClinicPatients", (string)null);
+                    b.ToTable("ClinicPatients");
                 });
 
             modelBuilder.Entity("Domain.Models.Department", b =>
@@ -310,7 +312,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Department");
 
                     b.HasData(
                         new
@@ -453,7 +455,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("IndoorPatients", (string)null);
+                    b.ToTable("IndoorPatients");
                 });
 
             modelBuilder.Entity("Domain.Models.Labs.LabRequest", b =>
@@ -489,7 +491,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("LabRequests", (string)null);
+                    b.ToTable("LabRequests");
                 });
 
             modelBuilder.Entity("Domain.Models.Labs.PatientScan", b =>
@@ -532,7 +534,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ScanId");
 
-                    b.ToTable("PatientScans", (string)null);
+                    b.ToTable("PatientScans");
                 });
 
             modelBuilder.Entity("Domain.Models.Labs.PatientTest", b =>
@@ -568,7 +570,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("PatientTest", (string)null);
+                    b.ToTable("PatientTest");
                 });
 
             modelBuilder.Entity("Domain.Models.Labs.Scan", b =>
@@ -588,7 +590,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Scan", (string)null);
+                    b.ToTable("Scan");
 
                     b.HasData(
                         new
@@ -674,7 +676,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("ScanId");
 
-                    b.ToTable("ScanRequests", (string)null);
+                    b.ToTable("ScanRequests");
                 });
 
             modelBuilder.Entity("Domain.Models.Labs.Test", b =>
@@ -694,7 +696,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tests", (string)null);
+                    b.ToTable("Tests");
 
                     b.HasData(
                         new
@@ -883,7 +885,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("NurseId");
 
-                    b.ToTable("Notes", (string)null);
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("Domain.Models.Prescription", b =>
@@ -920,7 +922,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Prescriptions", (string)null);
+                    b.ToTable("Prescriptions");
                 });
 
             modelBuilder.Entity("Domain.Models.PrescriptionItem", b =>
@@ -962,7 +964,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("PrescriptionId");
 
-                    b.ToTable("PrescriptionItems", (string)null);
+                    b.ToTable("PrescriptionItems");
                 });
 
             modelBuilder.Entity("Domain.Models.Room", b =>
@@ -999,7 +1001,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
 
                     b.HasData(
                         new
@@ -1119,7 +1121,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("Schedules", (string)null);
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("Domain.Models.TimeSlot", b =>
@@ -1149,7 +1151,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("TimeSlots", (string)null);
+                    b.ToTable("TimeSlots");
                 });
 
             modelBuilder.Entity("Domain.Models.Users.User", b =>
@@ -1278,7 +1280,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("Patientid");
 
-                    b.ToTable("VitalSigns", (string)null);
+                    b.ToTable("VitalSigns");
                 });
 
             modelBuilder.Entity("Domain.Models.Labs.TestDetailsCategorical", b =>

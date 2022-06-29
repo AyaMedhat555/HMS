@@ -331,5 +331,10 @@ namespace Service.Services
             _AppointmentDetails.NumberOfInDoorPatients = IndoorPatientRepository.GetInDoorPatientsByDept(DeptId).Count();
             return _AppointmentDetails;
         }
+
+        public Task<Prescription> GetPrescriptionById(int PrescriptionId)
+        {
+           return PrescriptionRepository.GetPrescriptionById(PrescriptionId);
+        }
     }
 }

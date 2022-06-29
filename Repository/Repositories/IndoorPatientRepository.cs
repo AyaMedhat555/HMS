@@ -26,9 +26,19 @@ namespace Repository.Repositories
            
         }
 
+        public IQueryable<IndoorPatientRecord> GetDischargedPatients()
+        {
+            return _unitOfWork.Context.IndoorPatients.Where(I => I.Disharged == true);
+        }
+
         public IQueryable<int> GetIndoorPatientRecords(int PatientId)
         {
             return _unitOfWork.Context.IndoorPatients.Where(I => I.PatientId == PatientId).Select(I=>I.Id);
+        }
+
+        public IQueryable<IndoorPatientRecord> GetInDoorPatients()
+        {
+            return _unitOfWork.Context.IndoorPatients.Where(I => I.Disharged == false);
         }
 
         public  IQueryable<IndoorPatientRecord> GetInDoorPatientsByDept(int? DepartmentId)
@@ -43,11 +53,11 @@ namespace Repository.Repositories
             return _unitOfWork.Context.IndoorPatients.Where(I => (I.PatientId == PatientId)).Include(I=>I.Room).Include(I=>I.Bed); 
         }
 
-        public IndoorPatientRecord GetLastRecordBeforeDischarging(int PatientId)
+        public async Task < IndoorPatientRecord> GetLastRecordBeforeDischarging(int PatientId)
         {
-            return _unitOfWork.Context.IndoorPatients.Include(I=>I.Scans).Include(I=>I.Tests)
+            return await _unitOfWork.Context.IndoorPatients.Include(I=>I.Scans).Include(I=>I.Tests)
                 .Include(I=>I.Prescriptions).OrderByDescending( I=>I.Id)
-                .Last(I => (I.PatientId == PatientId) && (I.Disharged == false)); 
+                .LastAsync(I => (I.PatientId == PatientId) && (I.Disharged == false)); 
         }
 
         public IndoorPatientRecord GetPatientReport(int PatientId, DateTime DateOfDischarge)

@@ -36,6 +36,8 @@ namespace Service.Helpers
             newUser.DocSpecialization = userDto.DocSpecialization;
             newUser.CreatedDtm = userDto.CreatedDtm;
             newUser.IsActive = userDto.IsActive;
+            newUser.clinicalDoctor = userDto.clinicalDoctor;
+
             return newUser;
         }
 
@@ -63,6 +65,7 @@ namespace Service.Helpers
             newUserDto.DocDegree = user.DocDegree;
             newUserDto.IsActive = user.IsActive;
             newUserDto.CreatedDtm = user.CreatedDtm;
+            newUserDto.clinicalDoctor = user.clinicalDoctor;
             return newUserDto;
         }
 
@@ -91,6 +94,7 @@ namespace Service.Helpers
             newUser.DocSpecialization = userDto.DocSpecialization;
             newUser.CreatedDtm = userDto.CreatedDtm;
             newUser.IsActive = userDto.IsActive;
+            newUser.clinicalDoctor = userDto.clinicalDoctor;
             return newUser;
         }
 

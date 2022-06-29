@@ -11,13 +11,18 @@ namespace Repository.IRepositories
     {
        IQueryable <IndoorPatientRecord> GetInDoorPatientsByDept(int? DepartmentId);
 
-        IndoorPatientRecord GetLastRecordBeforeDischarging(int PatientId);
+       Task< IndoorPatientRecord> GetLastRecordBeforeDischarging(int PatientId);
 
         IndoorPatientRecord GetPatientReport(int PatientId, DateTime DateOfDischarge);
 
         IQueryable<DateTime?> GetDischargeDatesByPatientId(int PatientId);
         IQueryable<int> GetIndoorPatientRecords(int PatientId);
+        IQueryable<IndoorPatientRecord> GetInDoorPatients();
+        IQueryable<IndoorPatientRecord> GetDischargedPatients();
+
         IQueryable<IndoorPatientRecord> GetInDoorRecordsByPatientId(int PatientId);
+       
+
 
 
 

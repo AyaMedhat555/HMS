@@ -42,7 +42,7 @@ namespace SmartHospital.Controllers
         [HttpPost("AddPatientReport")]
         public async Task<IActionResult> AddPatientReport([FromBody] ReportEntry ReportEntry)
         {
-            return Ok( PatientReportService.AddPatientReport(ReportEntry));
+            return Ok( await PatientReportService.AddPatientReport(ReportEntry));
         }
 
         [HttpGet("{id}")]

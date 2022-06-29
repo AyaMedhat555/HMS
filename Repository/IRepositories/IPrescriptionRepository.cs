@@ -20,5 +20,8 @@ namespace Repository.IRepositories
 
         Task<Prescription> GetLastPrescriptionByIndoorPatientId(int IndoorPatientRecordId);
 
+        Task<Prescription> GetPrescriptionById(int PrescriptionId);
+
+
     }
 }

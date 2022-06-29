@@ -38,6 +38,9 @@ builder.Services.AddDbContext<DataContext>(options => options
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddScoped<IReceptionistRepository, ReceptionistRepository>();
+
+
 builder.Services.AddScoped<IPatientReportService, PatientReportService>();
 builder.Services.AddScoped<IPatientReportRepository,PatientReportRepository>();
 

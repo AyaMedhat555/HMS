@@ -20,6 +20,7 @@ namespace Service.IServices
         Task<DepartmentResponse> GetDepartmentPatientsByName(string name);
         Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsEmps();
         Task<IEnumerable<DepartmentResponse>> GetAllDepartmentsPatients();
-        
+        Task<IEnumerable<Department>> GetClinicalDepartments();
+
     }
 }

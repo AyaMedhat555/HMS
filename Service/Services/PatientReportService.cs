@@ -25,8 +25,11 @@ namespace Service.Services
 
         private IIndoorPatientService _IndoorPatientService { get; }
 
+        private IBedRepository _BedRepository { get; }
+        private IAdminService   _AdminService { get; }
 
-        public PatientReportService(IPatientReportRepository PatientReportRepository, IIndoorPatientRepository IndoorPatientRepository, IPatientTestRepository PatientTestRepository, IPatientScanRepository PatientScanRepository , IPrescriptionRepository PrescriptionRepository, IIndoorPatientService IndoorPatientService)
+
+        public PatientReportService(IPatientReportRepository PatientReportRepository, IIndoorPatientRepository IndoorPatientRepository, IPatientTestRepository PatientTestRepository, IPatientScanRepository PatientScanRepository, IPrescriptionRepository PrescriptionRepository, IIndoorPatientService IndoorPatientService, IBedRepository BedRepository, IAdminService adminService)
         {
             _PatientReportRepository = PatientReportRepository;
             _IndoorPatientRepository = IndoorPatientRepository;
@@ -34,17 +37,18 @@ namespace Service.Services
             _PatientScanRepository = PatientScanRepository;
             _PrescriptionRepository = PrescriptionRepository;
             _IndoorPatientService = IndoorPatientService;
+            _BedRepository = BedRepository;
+            _AdminService = adminService;
+
         }
 
-        
-        
         public async Task<PatientReport> AddPatientReport(ReportEntry ReportEntry)
         {
             int PatientId = ReportEntry.PatientId;
 
             
 
-            IndoorPatientRecord CurrentRecord = _IndoorPatientRepository.GetLastRecordBeforeDischarging(PatientId);
+            IndoorPatientRecord CurrentRecord = await _IndoorPatientRepository.GetLastRecordBeforeDischarging(PatientId);
             int IndoorPatientId = CurrentRecord.Id;
             DoctorPrescriptionResponce LastPrescription = await _IndoorPatientService.GetLastPrescriptionByIndoorPatientId(IndoorPatientId);
 
@@ -111,8 +115,12 @@ namespace Service.Services
             CurrentRecord.Recommendation = ReportEntry.Recommendation;
             CurrentRecord.DischargeDate = ReportEntry.DateOfDischarge;
             CurrentRecord.Disharged = true;
-            CurrentRecord.Room.Reserved = false;
-            CurrentRecord.Bed.Reserved = false;
+            Bed bed = await _BedRepository.GetById(CurrentRecord.BedId);
+            bed.Reserved = false;
+            _BedRepository.Update(bed);
+            
+
+            _AdminService.ReserveRoom(CurrentRecord.RoomId);
 
             _IndoorPatientRepository.Update(CurrentRecord);
 
@@ -202,19 +210,5 @@ namespace Service.Services
     }
 }
 
-//IndoorPatientRecord CurrentRecord = _IndoorPatientRepository.GetPatientReport(PatientId, DateOfDischarge);
-
-//Prescription LastPrescription = CurrentRecord.Prescriptions.Last();
 
 
-//List<Prescription> AllPrescriptions = CurrentRecord.Prescriptions.ToList();
-
-
-//List<PrescriptionItem> AllMedicines = new List<PrescriptionItem>();
-
-//for (int i = 0; i < AllPrescriptions.Count; i++)
-//{
-//    PrescriptionItem PrescriptionItem = new PrescriptionItem();
-//    PrescriptionItem = (PrescriptionItem)AllPrescriptions[i].PrescriptionItems;
-//    AllMedicines.Add(PrescriptionItem);
-//}
