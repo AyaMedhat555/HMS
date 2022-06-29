@@ -82,6 +82,7 @@ namespace Domain.Context
         public DbSet<PatientTest> PatientTests { get; set; }
         public DbSet<ScanRequest> ScanRequests { get; set; }
         public DbSet<PatientScan> PatientScans { get; set; }
+        public DbSet<ScanImage> ScanImages { get; set; }
 
 
 
@@ -93,7 +94,6 @@ namespace Domain.Context
 
         //public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        //public DbSet<Room> Rooms { get; set; }
         //public DbSet<BloodElement> Bloods { get; set; }
         //public DbSet<Donner> Donners { get; set; }
         //public DbSet<BloodBank> BloodBanks { get; set; }

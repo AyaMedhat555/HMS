@@ -288,10 +288,9 @@ namespace Service.Services
 
         public async Task<PatientTestResponse> GetPatientTestById(int Test_id)
         {
-            PatientTest patientTest = await PatientTestRepository.GetPatientTestById(Test_id);
-            PatientTestResponse pateintTestResponse = new PatientTestResponse()
+            List<PatientTestResponse> responses =  await PatientTestRepository.GetAllPatientsTests().Where(P => P.PatientTestId == Test_id).Select(P => new PatientTestResponse()
             {
-                CategoricalDetails = patientTest.CategoricalDetails.Select(d => new CategoricalDetailsDto()
+                CategoricalDetails = P.CategoricalDetails.Select(d => new CategoricalDetailsDto()
                 {
                     TestParameterId = d.TestParameterId,
                     MeasuredValue = d.MeasuredValue,
@@ -299,7 +298,7 @@ namespace Service.Services
                     TestParameterName = d.TestParameter.TestParameterName,
                     Unit = d.TestParameter.Unit
                 }).ToList(),
-                NumericalDetails = patientTest.NumericalDetails.Select(d => new NeumericalDetailsDto()
+                NumericalDetails = P.NumericalDetails.Select(d => new NeumericalDetailsDto()
                 {
                     TestParameterId = d.TestParameterId,
                     NumericalValue = d.MeasuredValue,
@@ -308,16 +307,17 @@ namespace Service.Services
                     TestParameterName = d.TestParameter.TestParameterName,
                     Unit = d.TestParameter.Unit
                 }).ToList(),
-                DoctorId = patientTest.DoctorId,
-                PatientId = patientTest.PatientId,
-                DoctorName = patientTest.Doctor.FirstName+" "+patientTest.Doctor.LastName,
-                PatientName = patientTest.Patient.FirstName+" "+patientTest.Patient.LastName,
-                TestName = patientTest.Test.Name,
-                PatientTestId = patientTest.PatientTestId,
-                TestDate = patientTest.TestDate,
-                IndoorPatientRecordId = patientTest.IndoorPatientRecordId
-            };
-            return pateintTestResponse;
+                DoctorId = P.DoctorId,
+                PatientId = P.PatientId,
+                DoctorName = P.Doctor.FirstName+" "+P.Doctor.LastName,
+                PatientName = P.Patient.FirstName+" "+P.Patient.LastName,
+                TestName = P.Test.Name,
+                PatientTestId = P.PatientTestId,
+                TestDate = P.TestDate,
+                IndoorPatientRecordId = P.IndoorPatientRecordId
+            }).ToListAsync();
+            PatientTestResponse patientTestResponse = responses.FirstOrDefault();
+            return patientTestResponse;
         }
 
         public async Task<IEnumerable<PatientTestResponse>> GetPatientTestsByPatientId(int Patient_id)

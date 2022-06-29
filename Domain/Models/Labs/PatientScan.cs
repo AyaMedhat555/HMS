@@ -10,7 +10,7 @@ namespace Domain.Models.Labs
     public class PatientScan
     {
         public int PatientScanId { get; set; }
-        public byte[]? Image { get; set; }
+        public virtual ICollection<ScanImage> ScanImages { get; set; } = new HashSet<ScanImage>();
         public string WrittenReport { get; set; } 
         public Patient Patient { get; set; }
         public int PatientId { get; set; }

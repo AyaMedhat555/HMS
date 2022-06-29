@@ -12,6 +12,7 @@ using Service.Helpers;
 using Service.Responses;
 using Domain.Models.Users;
 using Service.DTO.Users;
+using System.Drawing.Imaging;
 
 namespace Service.Services
 {
@@ -40,7 +41,13 @@ namespace Service.Services
             newUser.Address = user.Address;
             newUser.NationalId = user.NationalId;
             newUser.Gender = user.Gender;
-            newUser.Image = user.Image;
+            if (user.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(user.Image);
+                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(user.ImageName));
+                File.WriteAllBytes(filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.Mail = user.Mail;
             return await _userRepository.Add(newUser);
         }

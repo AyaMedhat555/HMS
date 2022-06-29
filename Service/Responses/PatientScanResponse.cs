@@ -14,7 +14,7 @@ namespace Service.Responses
         public string PatientName { get; set; }
         public string? DoctorName { get; set; }
         public int? DoctorId { get; set; }
-        public byte[]? Image { get; set; }
+        public virtual ICollection<String> ScanImages { get; set; } = new HashSet<String>();
         public string WrittenReport { get; set; }
         public DateTime ScanDate { get; set; }
         public int? IndoorPatientRecordId { get; set; }

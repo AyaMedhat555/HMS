@@ -16,5 +16,6 @@ namespace Service.IServices
         Task<User> GetUserByName(String username);
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
         bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
+        //string UploadImage(UserDto dto);
     }
 }
