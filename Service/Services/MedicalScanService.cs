@@ -226,7 +226,7 @@ namespace Service.Services
                 ScanImages = Scan.ScanImages.Select(s => new ScanImage()
                 {
                     Content = Convert.FromBase64String(s.Content),
-                    Path = ("wwwroot/ScanImages/" + Path.GetFileName(DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + Guid.NewGuid().ToString("N" + ".jpg"))),
+                    Path = ("wwwroot/ScanImages/" + Path.GetFileName(DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + Guid.NewGuid().ToString("N") + ".jpg")),
                     PatientScanId = Scan.PatientScanId
                 }).ToList(),
                 WrittenReport = Scan.WrittenReport,
