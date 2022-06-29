@@ -19,19 +19,21 @@ namespace Service.IServices
 
        Task <IEnumerable<RoomDto>> GetFreeRooms();
        Task<IEnumerable<Bed>> GetFreeBedsByRoomId(int RoomId);
-       Task<IEnumerable<RoomRead>> GetAllRooms();
-
+        Task<IEnumerable<RoomRead>> GetAllRooms();
         Task<Admin> AddAdmin(AdminDto admin_dto);
         Task<Admin> DeleteAdmin(int admin_id);
         Task<Admin> UpdateAdmin(AdminDto admin_dto);
         Task<IEnumerable<AdminDto>> GetAllAdmins();
         Task<AdminDto> GetAdminById(int admin_id);
-
         Task<Receptionist> AddReceptionist(ReceptionistDto receptionist_dto);
         Task<Receptionist> DeleteReceptionist(int receptionist_id);
         Task<Receptionist> UpdateReceptionist(ReceptionistDto receptionist_dto);
         Task<IEnumerable<ReceptionistDto>> GetAllReceptionists();
         Task<ReceptionistDto> GetReceptionistById(int receptionist_id);
+        Task<Numbers> GetNumbers(DateTime Today);
+        Task<IEnumerable<Appointment>> AppointmentsPerMonthByDeptId(int DeptId, int Month);
+        Task <int> GetNumberOfIndoorPatientsbyDeptId(int? DeptId);
+
 
     }
 }

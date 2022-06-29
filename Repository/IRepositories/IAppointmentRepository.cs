@@ -14,7 +14,9 @@ namespace Repository.IRepositories
         IQueryable<Appointment> GetAppointmentsByPatientId( int PatientId);
         Task <Appointment> CancelAppointment(int PatientId ,DateTime AppointmentDate);
         IQueryable<Appointment> GetAllAppointmentsByDoctorId(int DoctorId);
-
+        IQueryable<Appointment> GetTodayAppointments(DateTime Today);
+        IQueryable<Appointment> GetAllAppointments();
+        IQueryable<Appointment> AppointmentsPerMonthByDeptId(int DeptId,int Month);
 
     }
 }

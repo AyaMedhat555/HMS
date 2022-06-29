@@ -22,18 +22,52 @@ namespace Service.Services
         private  IRoomRepository RoomRepository { get; }
         private  IBedRepository BedRepository { get; }
         private  IUserRepository UserRepository { get; }
+        private  IAppointmentRepository AppointmentRepository { get; }
+        private  IIndoorPatientRepository IndoorPatientRepository { get; }
+        private  IReceptionistRepository ReceptionistRepository { get; }
+        private  IDoctorRepository DoctorRepository { get; }
+        private  INurseRepository NurseRepository { get; }
 
 
-        public AdminService(IUserRepository _UserRepository, IRoomRepository _IRoomRepository, IBedRepository _BedRepository, IConfiguration _Configuration)
+
+        public AdminService(IUserRepository _UserRepository, IRoomRepository _IRoomRepository, IBedRepository _BedRepository, IConfiguration _Configuration, IAppointmentRepository _AppointmentRepository, IIndoorPatientRepository _IndoorPatientRepository, IReceptionistRepository _ReceptionistRepository
+         ,IDoctorRepository _DoctorRepository, INurseRepository _NurseRepository)
             : base(_UserRepository, _Configuration)
         {
             RoomRepository = _IRoomRepository;
             BedRepository = _BedRepository;
             UserRepository = _UserRepository;
-
-
+            AppointmentRepository = _AppointmentRepository;
+            IndoorPatientRepository = _IndoorPatientRepository;
+            ReceptionistRepository = _ReceptionistRepository;
+            DoctorRepository = _DoctorRepository;
+            NurseRepository = _NurseRepository;
         }
-        
+        public async Task<Numbers> GetNumbers(DateTime Today)
+        {
+             Numbers numbers = new Numbers()
+            {
+                NumberOfAllAppointments = AppointmentRepository.GetAll().Count(),
+                NumberOfTodayAppointments = AppointmentRepository.GetTodayAppointments(Today).Count(),
+                NumberOfReceptionist = ReceptionistRepository.GetAll().Count(),
+                NumberOfDoctors = DoctorRepository.GetAllDoctors().Count(),
+                NumberOfInPatients = IndoorPatientRepository.GetInDoorPatients().Count(),
+                NumberOfOutPatients = IndoorPatientRepository.GetDischargedPatients().Count(),
+                NumberOfNurses= NurseRepository.GetAll().Count()
+            }  ;
+
+            return  numbers;
+        }
+
+        public async Task<int> GetNumberOfIndoorPatientsbyDeptId(int? DeptId)
+        {
+             return IndoorPatientRepository.GetInDoorPatientsByDept(DeptId).Count();
+        }
+
+        public async Task <IEnumerable<Appointment>> AppointmentsPerMonthByDeptId(int DeptId, int Month)
+        {
+            return  AppointmentRepository.AppointmentsPerMonthByDeptId(DeptId,Month);
+        }
         public async Task ReserveRoom(int RoomId)
         {
            Room room=  await RoomRepository.GetById(RoomId);
@@ -107,7 +141,7 @@ namespace Service.Services
         }
         public async Task<IEnumerable<RoomRead>> GetAllRooms()
         {
-            //AdminService adminService = new AdminService();
+           
 
             List<Room> Rooms = RoomRepository.GetAll().ToList();
             List<RoomRead> RoomsRead = new List<RoomRead>();
@@ -182,26 +216,26 @@ namespace Service.Services
         #endregion
 
         #region RECEPTIONIST CRUD
-        public async Task<Receptionist> AddReceptionist(ReceptionistDto dto)
+        public async Task<Domain.Models.Users.Receptionist> AddReceptionist(ReceptionistDto dto)
         {
-            Receptionist receptionist = UserMapper.ToReceptionist(dto);
+            Domain.Models.Users.Receptionist receptionist = UserMapper.ToReceptionist(dto);
             if(dto.Password != null)
             {
                 CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
                 receptionist.PasswordHash = passwordHash;
                 receptionist.PasswordSalt = passwordSalt;
             }
-            return (Receptionist)await UserRepository.Add(receptionist);
+            return (Domain.Models.Users.Receptionist)await UserRepository.Add(receptionist);
         }
 
-        public async Task<Receptionist> DeleteReceptionist(int Receptionist_id)
+        public async Task<Domain.Models.Users.Receptionist> DeleteReceptionist(int Receptionist_id)
         {
-            return (Receptionist)await UserRepository.Delete(Receptionist_id);
+            return (Domain.Models.Users.Receptionist)await UserRepository.Delete(Receptionist_id);
         }
 
-        public async Task<Receptionist> UpdateReceptionist(ReceptionistDto dto)
+        public async Task<Domain.Models.Users.Receptionist> UpdateReceptionist(ReceptionistDto dto)
         {
-            Receptionist currentReceptionist = (Receptionist)await UserRepository.GetById(dto.Id);
+            Domain.Models.Users.Receptionist currentReceptionist = (Domain.Models.Users.Receptionist)await UserRepository.GetById(dto.Id);
             currentReceptionist = UserMapper.UpdateReceptionist(dto, currentReceptionist);
             if (dto.Password != null)
             {
@@ -209,13 +243,13 @@ namespace Service.Services
                 currentReceptionist.PasswordHash = passwordHash;
                 currentReceptionist.PasswordSalt = passwordSalt;
             }
-            return (Receptionist)await UserRepository.Update(currentReceptionist);
+            return (Domain.Models.Users.Receptionist)await UserRepository.Update(currentReceptionist);
         }
 
 
         public async Task<ReceptionistDto> GetReceptionistById(int Receptionist_id)
         {
-            Receptionist receptionist = (Receptionist)await UserRepository.GetById(Receptionist_id);
+            Domain.Models.Users.Receptionist receptionist = (Domain.Models.Users.Receptionist)await UserRepository.GetById(Receptionist_id);
             if(receptionist != null)
             {
                 ReceptionistDto receptionist_dto = UserMapper.ToReceptionistDto(receptionist);
@@ -228,6 +262,12 @@ namespace Service.Services
         {
             return await UserRepository.GetAll().OfType<Receptionist>().Select(u => UserMapper.ToReceptionistDto(u)).ToListAsync();
         }
+
+       
+
+
+
+
         #endregion
     }
 }

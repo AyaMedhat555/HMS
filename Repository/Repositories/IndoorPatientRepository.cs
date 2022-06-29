@@ -26,9 +26,19 @@ namespace Repository.Repositories
            
         }
 
+        public IQueryable<IndoorPatientRecord> GetDischargedPatients()
+        {
+            return _unitOfWork.Context.IndoorPatients.Where(I => I.Disharged == true);
+        }
+
         public IQueryable<int> GetIndoorPatientRecords(int PatientId)
         {
             return _unitOfWork.Context.IndoorPatients.Where(I => I.PatientId == PatientId).Select(I=>I.Id);
+        }
+
+        public IQueryable<IndoorPatientRecord> GetInDoorPatients()
+        {
+            return _unitOfWork.Context.IndoorPatients.Where(I => I.Disharged == false);
         }
 
         public  IQueryable<IndoorPatientRecord> GetInDoorPatientsByDept(int? DepartmentId)

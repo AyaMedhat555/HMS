@@ -57,6 +57,26 @@ namespace SmartHospital.Controllers
 
         }
 
+        [HttpGet("GetNumbers/{Today}")]
+        public async Task<IActionResult> GetNumbers(DateTime Today)
+        {
+            return Ok(await AdminService.GetNumbers(Today));
+
+        }
+
+        [HttpGet("GetAppointmentsPerMonthByDeptId/{DeptId}/{Month}")]
+        public async Task<IActionResult> GetAppointmentsPerMonthByDeptId(int DeptId,int Month)
+        {
+            return Ok(await AdminService.AppointmentsPerMonthByDeptId(DeptId,Month));
+
+        }
+
+        [HttpGet("GetNumberOfIndoorPatientsbyDeptId/{DeptId}")]
+        public async Task<IActionResult> GetIndoorPatientsByDeptId(int DeptId)
+        {
+            return Ok(await AdminService.GetNumberOfIndoorPatientsbyDeptId(DeptId));
+
+        }
 
 
         #region ADMIN CRUD

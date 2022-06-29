@@ -210,19 +210,5 @@ namespace Service.Services
     }
 }
 
-//IndoorPatientRecord CurrentRecord = _IndoorPatientRepository.GetPatientReport(PatientId, DateOfDischarge);
-
-//Prescription LastPrescription = CurrentRecord.Prescriptions.Last();
 
 
-//List<Prescription> AllPrescriptions = CurrentRecord.Prescriptions.ToList();
-
-
-//List<PrescriptionItem> AllMedicines = new List<PrescriptionItem>();
-
-//for (int i = 0; i < AllPrescriptions.Count; i++)
-//{
-//    PrescriptionItem PrescriptionItem = new PrescriptionItem();
-//    PrescriptionItem = (PrescriptionItem)AllPrescriptions[i].PrescriptionItems;
-//    AllMedicines.Add(PrescriptionItem);
-//}

@@ -11,6 +11,7 @@ namespace Domain.Models
         public virtual ICollection<Nurse> Nurses { get; set; } = new HashSet<Nurse>();
         public virtual ICollection<Patient> Patients { get; set; } = new HashSet<Patient>();
         public bool IsActive { get; set; }
+        public bool clinicalDepartment { get; set; }
 
     }
 }

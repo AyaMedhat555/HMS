@@ -13,5 +13,8 @@ namespace Service.DTO.Users
         public string DocDegree { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string DocSpecialization { get; set; }
+
+        public bool clinicalDoctor { get; set; }
+
     }
 }

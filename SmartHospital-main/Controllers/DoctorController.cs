@@ -142,7 +142,13 @@ namespace SmartHospital.Controllers
         {
             return Ok(await DoctorService.GetDoctorsByDepartment_Id(Department_ID));
         }
-        
+
+        [HttpGet("GetPrescription/{Prescription_ID}")]
+        public async Task<IActionResult> GetPrescriptionId( int Prescription_ID)
+        {
+            return Ok(await DoctorService.GetPrescriptionById(Prescription_ID));
+        }
+
     }
       }
 

@@ -17,7 +17,12 @@ namespace Repository.IRepositories
 
         IQueryable<DateTime?> GetDischargeDatesByPatientId(int PatientId);
         IQueryable<int> GetIndoorPatientRecords(int PatientId);
+        IQueryable<IndoorPatientRecord> GetInDoorPatients();
+        IQueryable<IndoorPatientRecord> GetDischargedPatients();
+
         IQueryable<IndoorPatientRecord> GetInDoorRecordsByPatientId(int PatientId);
+       
+
 
 
 

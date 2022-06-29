@@ -75,6 +75,11 @@ namespace SmartHospital.Controllers
             return Ok(await _departmentService.GetDepartmentEmpsByName(name));
         }
 
+        [HttpGet("GetAllClinicalDept")]
+        public async Task<IActionResult> GetAllClinicalDept()
+        {
+            return Ok(await _departmentService.GetClinicalDepartments());
+        }
 
     }
 }

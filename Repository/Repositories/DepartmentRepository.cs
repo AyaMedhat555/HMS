@@ -18,6 +18,11 @@ namespace Repository.Repositories
             _unitOfWork = unitOfWork;
         }
 
+        public IQueryable<Department> GetClinicalDepartments()
+        {
+            return  _unitOfWork.Context.Department.Where(D=>D.clinicalDepartment==true);
+        }
+
         public async Task<Department> GetEmpsById(int id)
         {
             return await _unitOfWork.Context.Department.Include(D => D.Doctors).Include(D => D.Nurses).SingleOrDefaultAsync(D => D.Id == id);

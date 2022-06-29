@@ -116,7 +116,6 @@ namespace Service.Services
         {
             return IndoorPatientRepository.GetIndoorPatientRecords(PatientId); ;
         }
-
         public async Task<IEnumerable<PatientRecordResponce>> GetInDoorRecordsByPatientId(int PatientId)
         {
            List<PatientRecordResponce> patientRecordResponces= new List<PatientRecordResponce>();
@@ -124,9 +123,9 @@ namespace Service.Services
                 .Select(I => new PatientRecordResponce()
                 {
                     DiscahrgeDate=I.DischargeDate,
-                    ScanIds=I.Scans.Select(S=>S.ScanId).ToList(),
-                    LabIds=I.Tests.Select(T=>T.TestId).ToList(),
-                    PrescriptionIds=I.Prescriptions.Select(P=>P.PrescriptionId).ToList(),
+                    patientscans=I.Scans.ToList(),
+                    patientTests=I.Tests.ToList(),
+                    prescriptions=I.Prescriptions.ToList(),
                     BedNumber=I.Bed.Number,
                     RoomNumber=I.Room.RoomNumber,
                     RoomType=I.Room.RoomType,
