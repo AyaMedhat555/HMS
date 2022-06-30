@@ -26,8 +26,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -84,8 +84,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -114,8 +114,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -165,8 +165,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -191,8 +191,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -246,8 +246,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -277,8 +277,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -329,8 +329,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -357,8 +357,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;
@@ -408,8 +408,8 @@ namespace Service.Helpers
             if (userDto.Image != null)
             {
                 Byte[] bytes = Convert.FromBase64String(userDto.Image);
-                string filePath = ("wwwroot/UserImages/" + Path.GetFileName(userDto.UserName));
-                File.WriteAllBytes(filePath, bytes);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
                 newUser.Image = filePath;
             }
             newUser.DepartmentId = userDto.DepartmentId;

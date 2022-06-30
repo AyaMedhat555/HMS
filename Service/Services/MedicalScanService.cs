@@ -226,7 +226,7 @@ namespace Service.Services
                 ScanImages = Scan.ScanImages.Select(s => new ScanImage()
                 {
                     Content = Convert.FromBase64String(s.Content),
-                    Path = ("wwwroot/ScanImages/" + Path.GetFileName(DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + Guid.NewGuid().ToString("N") + ".jpg")),
+                    Path = ("ScanImages/" + Path.GetFileName(DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + Guid.NewGuid().ToString("N") + ".jpg")),
                     PatientScanId = Scan.PatientScanId
                 }).ToList(),
                 WrittenReport = Scan.WrittenReport,
@@ -238,7 +238,7 @@ namespace Service.Services
             };
             foreach(var img in newScan.ScanImages)
             {
-                File.WriteAllBytes(img.Path, img.Content);
+                File.WriteAllBytes("wwwroot/" + img.Path, img.Content);
             }
             await DeleteScanRequest(ReqId);
             return await PatientScanRepository.Add(newScan);
