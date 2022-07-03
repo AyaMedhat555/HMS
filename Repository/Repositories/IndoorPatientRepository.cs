@@ -56,7 +56,7 @@ namespace Repository.Repositories
         public async Task < IndoorPatientRecord> GetLastRecordBeforeDischarging(int PatientId)
         {
             return await _unitOfWork.Context.IndoorPatients.Include(I=>I.Scans).Include(I=>I.Tests)
-                .Include(I=>I.Prescriptions).OrderByDescending( I=>I.Id)
+                .Include(I=>I.Prescriptions).Include(I => I.Bill).OrderByDescending( I=>I.Id)
                 .LastAsync(I => (I.PatientId == PatientId) && (I.Disharged == false)); 
         }
 

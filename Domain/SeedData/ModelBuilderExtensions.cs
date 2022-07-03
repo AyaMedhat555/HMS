@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using Domain.Models.Labs;
+using Domain.Models.Pharmacy;
 using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -340,6 +341,12 @@ namespace Domain.SeedData
 
 
 
+            #endregion
+
+            #region Pharmacy seed
+            //modelBuilder.Entity<Medicine>().HasData(
+            //    new Medicine { MedicineId = 1, }
+            //    )
             #endregion
 
         }

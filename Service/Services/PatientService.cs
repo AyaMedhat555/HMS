@@ -1,8 +1,10 @@
-﻿using Domain.Models.Users;
+﻿using Domain.Models;
+using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repository.IRepositories;
 using Repository.Repositories;
+using Service.DTO;
 using Service.DTO.Users;
 using Service.Helpers;
 using Service.IServices;
@@ -21,14 +23,18 @@ namespace Service.Services
         private IPatientRepository PatientRepository { get; }
         private  IIndoorPatientRepository IndoorPatientRepository { get; }
         private IDoctorService DoctorService { get; }
+        private IBillRepository BillRepository { get; }
 
-        public PatientService(IUserRepository _UserRepository, IPatientRepository _PatientRepository, IConfiguration _Configuration, IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IAppointmentRepository _AppointmentRepository)
+        public PatientService(IUserRepository _UserRepository, IPatientRepository _PatientRepository, IConfiguration _Configuration
+            , IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository
+            , IAppointmentRepository _AppointmentRepository, IBillRepository _BillRepository)
             : base(_UserRepository, _Configuration)
         {
             PatientRepository = _PatientRepository;
             DoctorService = _DoctorService;
             IndoorPatientRepository = _IndoorPatientRepository;
             AppointmentRepository = _AppointmentRepository;
+            BillRepository = _BillRepository;
         }
 
         public async Task<Patient> AddPatient(PatientDto dto)
@@ -126,6 +132,24 @@ namespace Service.Services
            await AppointmentRepository.Delete(_Appointment.Id);
         }
 
-        
+        public async Task<BillDto> GetPatientBill(int Patient_id)
+        {
+            IndoorPatientRecord currRecord = await IndoorPatientRepository.GetLastRecordBeforeDischarging(Patient_id);
+            if(currRecord != null)
+            {
+                BillDto billDto = new BillDto()
+                {
+                    Id = currRecord.Bill.Id,
+                    AppointmentsCharges = currRecord.Bill.AppointmentsCharges,
+                    IndoorPatientRecordID = currRecord.Bill.IndoorPatientRecordID,
+                    PrescriptionCharges = currRecord.Bill.PrescriptionCharges,
+                    RoomCharges = currRecord.Bill.RoomCharges,
+                    ScansCharges = currRecord.Bill.ScansCharges,
+                    TestCharges = currRecord.Bill.TestCharges
+                };
+                return billDto;
+            }
+            return null;
+        }
     }
 }

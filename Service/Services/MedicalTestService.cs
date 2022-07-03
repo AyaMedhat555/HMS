@@ -1,4 +1,5 @@
-﻿using Domain.Models.Labs;
+﻿using Domain.Models;
+using Domain.Models.Labs;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Service.DTO.Labs;
@@ -17,12 +18,18 @@ namespace Service.Services
         private IGenericRepository<Test> TestRepository { get; }
         private IPatientTestRepository PatientTestRepository { get; }
         private ILabRequestRepository LabRequestRepository { get; }
+        private IIndoorPatientRepository IndoorPatientRepository { get; }
+        private IBillRepository BillRepository { get; }
 
-        public MedicalTestService(IGenericRepository<Test> testRepository, IPatientTestRepository patientTestRepository, ILabRequestRepository labRequestRepository)
+        public MedicalTestService(IGenericRepository<Test> testRepository, IPatientTestRepository patientTestRepository
+            , ILabRequestRepository labRequestRepository, IIndoorPatientRepository indoorPatientRepository
+            , IBillRepository billRepository)
         {
             TestRepository=testRepository;
             PatientTestRepository=patientTestRepository;
             LabRequestRepository=labRequestRepository;
+            IndoorPatientRepository=indoorPatientRepository;
+            BillRepository=billRepository;
         }
 
 
@@ -59,9 +66,32 @@ namespace Service.Services
         {
             return await TestRepository.Delete(Test_id);
         }
-        public async Task<Test> UpdateTest(Test test_dto)
+        public async Task<Test> UpdateTest(TestDto test_dto)
         {
-            return await TestRepository.Update(test_dto);
+            var currTest = await GetTestById(test_dto.Id);
+            if (currTest != null)
+            {
+                currTest.Name = test_dto.Name;
+                currTest.TestCharge = test_dto.TestCharge;
+                currTest.CategoricalParamters = test_dto.CategoricalParamters.Select(p => new TestParameterCategorical()
+                {
+                    TestParameterName = p.TestParameterName,
+                    FieldType = p.FieldType,
+                    InputPattern = p.InputPattern,
+                    Unit = p.Unit,
+                    Normalvalue = p.Normalvalue
+                }).ToList();
+                currTest.NumericalParamters = test_dto.NumericalParamters.Select(p => new TestParameterNumerical()
+                {
+                    TestParameterName = p.TestParameterName,
+                    FieldType = p.FieldType,
+                    InputPattern = p.InputPattern,
+                    Unit = p.Unit,
+                    Max_Range = p.Max_Range,
+                    Min_Range = p.Min_Range
+                }).ToList();
+            }
+            return await TestRepository.Update(currTest);
         }
         public async Task<IEnumerable<Test>> GetAllTests()
         {
@@ -238,7 +268,7 @@ namespace Service.Services
         //######################################################################################################
         //PATIENT TEST
 
-        public async Task<PatientTest> AddPatientTest(PatientTestDto Test)
+        public async Task<PatientTestDto> AddPatientTest(PatientTestDto Test)
         {
             int ReqId = Test.LabRequestId;
             LabRequest lab = await LabRequestRepository.GetById(ReqId);
@@ -260,8 +290,17 @@ namespace Service.Services
                 TestId = lab.TestId,
                 IndoorPatientRecordId = lab.IndoorPatientRecordId
             };
+            IndoorPatientRecord currRecord = await IndoorPatientRepository.GetLastRecordBeforeDischarging(lab.PatientId);
+            LabRequest labWithTest = await LabRequestRepository.GetLabRequestById(ReqId);
+            if (currRecord != null)
+            {
+                Bill bill = currRecord.Bill;
+                bill.TestCharges += labWithTest.Test.TestCharge;
+                await BillRepository.Update(bill);
+            };
             await DeleteLabRequest(ReqId);
-            return await PatientTestRepository.Add(newTest);
+            await PatientTestRepository.Add(newTest);
+            return Test;
         }
 
         public async Task<PatientTest> DeletePatientTest(int Test_id)

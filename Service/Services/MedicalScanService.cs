@@ -1,4 +1,5 @@
-﻿using Domain.Models.Labs;
+﻿using Domain.Models;
+using Domain.Models.Labs;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Service.DTO.Labs;
@@ -17,12 +18,18 @@ namespace Service.Services
         private IGenericRepository<Scan> ScanRepository { get; }
         private IPatientScanRepository PatientScanRepository { get; }
         private IScanRequestRepository ScanRequestRepository { get; }
+        private IIndoorPatientRepository IndoorPatientRepository { get; }
+        private IBillRepository BillRepository { get; }
 
-        public MedicalScanService(IGenericRepository<Scan> scanRepository, IPatientScanRepository patientScanRepository, IScanRequestRepository scanRequestRepository)
+        public MedicalScanService(IGenericRepository<Scan> scanRepository, IPatientScanRepository patientScanRepository
+            , IScanRequestRepository scanRequestRepository, IIndoorPatientRepository indoorPatientRepository
+            , IBillRepository billRepository)
         {
             ScanRepository=scanRepository;
             PatientScanRepository=patientScanRepository;
             ScanRequestRepository=scanRequestRepository;
+            IndoorPatientRepository=indoorPatientRepository;
+            BillRepository=billRepository;
         }
 
 
@@ -217,7 +224,7 @@ namespace Service.Services
         //######################################################################################################
         //PATIENT Scan
 
-        public async Task<PatientScan> AddPatientScan(PatientScanDto Scan)
+        public async Task<PatientScanDto> AddPatientScan(PatientScanDto Scan)
         {
             int ReqId = Scan.ScanRequestId;
             ScanRequest scanRequest = await ScanRequestRepository.GetById(ReqId);
@@ -240,8 +247,17 @@ namespace Service.Services
             {
                 File.WriteAllBytes("wwwroot/" + img.Path, img.Content);
             }
+            ScanRequest scanRequestWithScan = await ScanRequestRepository.GetScanRequestById(ReqId);
+            IndoorPatientRecord currRecord = await IndoorPatientRepository.GetLastRecordBeforeDischarging(scanRequestWithScan.PatientId);
+            if (currRecord != null)
+            {
+                Bill bill = currRecord.Bill;
+                bill.ScansCharges += scanRequestWithScan.Scan.ScanCharge;
+                await BillRepository.Update(bill);
+            };
             await DeleteScanRequest(ReqId);
-            return await PatientScanRepository.Add(newScan);
+            await PatientScanRepository.Add(newScan);
+            return Scan;
         }
 
         public async Task<PatientScan> DeletePatientScan(int Scan_id)

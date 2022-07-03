@@ -1,6 +1,8 @@
-﻿using Domain.Models.Users;
+﻿using Domain.Models;
+using Domain.Models.Users;
 using Service.DTO.Users;
 using Service.Responses;
+using Service.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,8 @@ namespace Service.IServices
         Task<PatientDto> GetPatientByName(String Patientname);
         Task<IEnumerable<AppointmentsForToday>> GetAppointmentsByPatientId(int PatientId);
         Task CancelAppointment(int PatientId,DateTime AppointmentDate);
+        Task<BillDto> GetPatientBill(int Patient_id);
+
 
         //  Task<IEnumerable<InDoorPatientGetter>> GetAllInDoorPatients(bool In);
     }
