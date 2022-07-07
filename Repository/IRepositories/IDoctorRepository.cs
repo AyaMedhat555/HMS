@@ -15,7 +15,7 @@ namespace Repository.IRepositories
         IQueryable<Doctor> GetDoctorsByState(bool state);
 
         IQueryable<Doctor> GetDoctorsByDepartment_Id(int Department_ID);
-
+        IQueryable<Doctor> GetClinicalDoctorsByDepartment_Id(int Department_ID);
         IQueryable<Doctor> GetAllDoctors();
 
     }

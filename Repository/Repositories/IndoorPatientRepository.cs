@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;
@@ -46,6 +47,11 @@ namespace Repository.Repositories
             
             return _unitOfWork.Context.IndoorPatients.Where(I => (I.DepartmentId == DepartmentId) && (I.Disharged==false)).Include(I=>I.Patient).Include(I=>I.Room).Include(I=>I.Bed);
             
+        }
+
+        public IQueryable<IndoorPatientRecord> GetInDoorRecords()
+        {
+            return _unitOfWork.Context.IndoorPatients;
         }
 
         public IQueryable<IndoorPatientRecord> GetInDoorRecordsByPatientId(int PatientId)

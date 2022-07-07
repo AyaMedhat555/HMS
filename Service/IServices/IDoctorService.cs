@@ -29,16 +29,16 @@ namespace Service.IServices
         Task<IEnumerable<DoctorPrescriptionResponce>> GetAllDoctorToPatientPrescriptions(int Patient_id, int doctor_id);
         Task<IEnumerable<DoctorPrescriptionResponce>> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate);
         Task<DoctorPrescriptionResponce> GetDoctorPrescriptionsByDate(int doctor_id, DateTime PrescriptionDate);
-
         Task<IEnumerable<Doctor>> GetDoctorsByDepartment_Id(int Department_ID);
-
-
         Task ExaminedApoointment(ExaminedAppointment ExaminedAppointment);
 
         Task<IEnumerable<AppointmentsForToday>> GetAppointmentsForTodayByDoctorId(DateTime Today, int DoctorId);
-
         Task<AppointmentDetails> GetAppointmentsDetailsByDoctorId(int DoctorId,DateTime Today);
-        Task<Prescription> GetPrescriptionById(int PrescriptionId);
+        Task<DoctorPrescriptionResponce> GetPrescriptionById(int PrescriptionId);
+        Task<IEnumerable<AppointmentPerMonth>> AppointmentsPerMonthByDeptId(int DeptId, int Month);
+        Task<IEnumerable<Doctor>> GetClinicalDoctorsByDepartment_Id(int Department_ID);
+
+
 
 
     }

@@ -83,8 +83,6 @@ namespace Service.Services
         {
  
             Prescription P = await PrescriptionRepository.GetLastPrescriptionByIndoorPatientId(IndoorPatientRecordId);
-          
-
             DoctorPrescriptionResponce _DoctorPrescriptionResponce = new DoctorPrescriptionResponce()
             {
                 DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
@@ -98,6 +96,7 @@ namespace Service.Services
                     re_appointement_date = P.re_appointement_date,
                     PrescriptionItems = P.PrescriptionItems,
                     IndoorPatientRecordId = P.IndoorPatientRecordId
+                    
                 }
 
             };
@@ -138,6 +137,9 @@ namespace Service.Services
             return patientRecordResponces;
         }
 
-       
+        public async Task<IEnumerable<IndoorPatientRecord>> GetInDoorRecords()
+        {
+            return  IndoorPatientRepository.GetInDoorRecords();
+        }
     }
 }

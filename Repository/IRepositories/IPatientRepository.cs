@@ -12,6 +12,8 @@ namespace Repository.IRepositories
         Task<Patient> GetPatientById(int id);
         Task<Patient> FindByName(String username);
         IQueryable<Patient> GetAllPatients();
-        
+        IQueryable<Patient> GetAllOutPatient();
+        Task<Patient> GetPatientByNationalId(string NationalId );
+
     }
 }

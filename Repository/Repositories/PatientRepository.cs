@@ -39,9 +39,14 @@ namespace Repository.Repositories
             return _unitOfWork.Context.Patients.Include(P => P.Department);
         }
 
-        //public IQueryable<IndoorPatient> GetAllInDoorPatients(int Department_Id)
-        //{
-        //   return _unitOfWork.Context.
-        //}
+        public IQueryable<Patient> GetAllOutPatient()
+        {
+            return _unitOfWork.Context.Patients.Where(P => P.IndoorPatientRecord == null);
+        }
+
+        public async Task<Patient> GetPatientByNationalId(string NationalId)
+        {
+            return await _unitOfWork.Context.Patients.SingleOrDefaultAsync(P=>P.NationalId== NationalId);
+        }
     }
 }

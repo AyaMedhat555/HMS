@@ -6,11 +6,7 @@ namespace Domain.Models.Users
     {
         public string DocDegree { get; set; }
         public string DocSpecialization { get; set; }
-        public bool clinicalDoctor { get; set; }
-
-       
-
-
+        public bool   clinicalDoctor { get; set; }
     }
 }
 

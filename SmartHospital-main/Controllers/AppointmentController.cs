@@ -85,12 +85,12 @@ namespace SmartHospital.Controllers
             return Ok(await PatientService.GetAppointmentsByPatientId(PatientId));
         }
 
-        [HttpDelete("CancelAppointment/{PatientId}/{AppointmentDate}")]
+        [HttpDelete("CancelAppointment/{AppointmentId}")]
 
-        public async Task<IActionResult> CancelAppointment(int PatientId,DateTime AppointmentDate)
+        public async Task<IActionResult> CancelAppointment(int AppointmentId)
         {
-            await PatientService.CancelAppointment(PatientId, AppointmentDate);
-            return Ok($"Appointment with Date {AppointmentDate} has been canceled");
+            await PatientService.CancelAppointment(AppointmentId);
+            return Ok($"Appointment with Id {AppointmentId} has been canceled");
         }
 
         [HttpGet("GetAppointmentsDetailsByDoctorId/{DoctorId}/{Today}")]
@@ -99,5 +99,14 @@ namespace SmartHospital.Controllers
         {
             return Ok(await DoctorService.GetAppointmentsDetailsByDoctorId(DoctorId, Today));
         }
-    } 
+
+
+        [HttpGet("AppointmentsPerMonthByDeptId/{DeptId}/{Month}")]
+
+        public async Task<IActionResult> AppointmentsPerMonthByDeptId(int DeptId, int Month)
+        {
+            return Ok(await DoctorService.AppointmentsPerMonthByDeptId(DeptId, Month));
+        }
+
+    }
 }

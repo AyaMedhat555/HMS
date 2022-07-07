@@ -48,10 +48,14 @@ namespace Repository.Repositories
         {
             return await _unitOfWork.Context.Doctors.Include(D => D.Department).SingleOrDefaultAsync(x => x.Id == id);
         }
-
         public IQueryable<Doctor> GetAllDoctors()
         {
             return _unitOfWork.Context.Doctors.Include(D => D.Department);
+        }
+
+        public IQueryable<Doctor> GetClinicalDoctorsByDepartment_Id(int Department_ID)
+        {
+            return _unitOfWork.Context.Doctors.Where(D=>D.clinicalDoctor==true);
         }
     }
 }

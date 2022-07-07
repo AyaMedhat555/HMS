@@ -17,6 +17,7 @@ namespace Repository.IRepositories
         IQueryable<Appointment> GetTodayAppointments(DateTime Today);
         IQueryable<Appointment> GetAllAppointments();
         IQueryable<Appointment> AppointmentsPerMonthByDeptId(int DeptId,int Month);
+        IQueryable<Appointment> AppointmentsPerMonthByDoctorId(int DoctorId, int Month);
 
     }
 }

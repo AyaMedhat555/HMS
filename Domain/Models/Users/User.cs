@@ -27,6 +27,7 @@ namespace Domain.Models.Users
         public Department Department { get; set; }
         public bool IsActive { get; set; } = true;
         public int? DepartmentId { get; set; }
+        //public virtual ICollection<IndoorPatientRecord> IndoorPatientRecords { get; set; } = new HashSet<IndoorPatientRecord>();
 
     }
 }

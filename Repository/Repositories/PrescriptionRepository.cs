@@ -72,7 +72,7 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.Prescriptions.Where(
 
-                P => P.IndoorPatientRecordId == IndoorPatientRecordId).Include(P => P.PrescriptionItems).Include(P=>P.Doctor).OrderByDescending(P=> P.Prescription_Date).Last() ; 
+                P => P.IndoorPatientRecordId == IndoorPatientRecordId).Include(P => P.PrescriptionItems).Include(P=>P.Doctor).OrderBy(P=>P.Prescription_Date).Last() ; 
         }
 
         public IQueryable<Prescription> GetPrescriptionsByIndoorPatientId(int IndoorPatientRecordId,DateTime? DischargedDate)
@@ -84,7 +84,7 @@ namespace Repository.Repositories
 
         public async Task<Prescription> GetPrescriptionById(int PrescriptionId)
         {
-            return await _unitOfWork.Context.Prescriptions.Where(P=>P.PrescriptionId== PrescriptionId).Include(P=>P.PrescriptionItems).SingleAsync();
+            return  _unitOfWork.Context.Prescriptions.Include(P => P.PrescriptionItems).Include(P=>P.Doctor).FirstOrDefault(P=>P.PrescriptionId== PrescriptionId);
         }
     }
 }

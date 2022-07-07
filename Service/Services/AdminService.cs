@@ -61,12 +61,12 @@ namespace Service.Services
 
         public async Task<int> GetNumberOfIndoorPatientsbyDeptId(int? DeptId)
         {
-             return IndoorPatientRepository.GetInDoorPatientsByDept(DeptId).Count();
+             return await IndoorPatientRepository.GetInDoorPatientsByDept(DeptId).CountAsync();
         }
 
         public async Task <IEnumerable<Appointment>> AppointmentsPerMonthByDeptId(int DeptId, int Month)
         {
-            return  AppointmentRepository.AppointmentsPerMonthByDeptId(DeptId,Month);
+            return await AppointmentRepository.AppointmentsPerMonthByDeptId(DeptId,Month).ToListAsync();
         }
         public async Task ReserveRoom(int RoomId)
         {

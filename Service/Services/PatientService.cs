@@ -106,7 +106,7 @@ namespace Service.Services
         public async Task<IEnumerable<AppointmentsForToday>> GetAppointmentsByPatientId(int PatientId)
         {
             return await AppointmentRepository.GetAppointmentsByPatientId(PatientId).Select(A => new AppointmentsForToday()
-            {
+            {   AppointmentId=A.Id,
                 PatientName = A.Patient.FirstName + A.Patient.LastName,
                 PatientId = A.PatientId,
                 Age = A.Patient.Age,
@@ -120,12 +120,19 @@ namespace Service.Services
             }).ToListAsync();
         }
 
-        public  async Task CancelAppointment(int PatientId, DateTime AppointmentDate)
+        public  async Task CancelAppointment(int AppointmentId)
         {
-            var _Appointment = await AppointmentRepository.CancelAppointment(PatientId, AppointmentDate);
-           await AppointmentRepository.Delete(_Appointment.Id);
+           await AppointmentRepository.Delete(AppointmentId);
         }
 
-        
+        public async Task<IEnumerable<Patient>> GetAllOutPatient()
+        {
+           return await PatientRepository.GetAllOutPatient().ToListAsync();
+        }
+
+        public Task<Patient> GetPatientByNationalId(string NationalId)
+        {
+            return PatientRepository.GetPatientByNationalId(NationalId);
+        }
     }
 }

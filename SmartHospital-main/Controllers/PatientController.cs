@@ -134,5 +134,23 @@ namespace SmartHospital.Controllers
         {
             return Ok(await IndoorPatientService.GetInDoorRecordsByPatientId(PatientId));
         }
+
+        [HttpGet("GetAllOutPatient")]
+        public async Task<IActionResult> GetAllOutPatient()
+        {
+            return Ok(await PatientService.GetAllOutPatient());
+        }
+
+        [HttpGet("GetAllInPatients")]
+        public async Task<IActionResult> GetAllInPatients()
+        {
+            return Ok(await IndoorPatientService.GetInDoorRecords());
+        }
+
+        [HttpGet("GetPatientByNationalId/{NationalId}")]
+        public async Task<IActionResult> GetPatientByNationalId(string NationalId)
+        {
+            return Ok(await PatientService.GetPatientByNationalId(NationalId));
+        }
     }
 }

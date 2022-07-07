@@ -24,6 +24,11 @@ namespace Repository.Repositories
             return _unitOfWork.Context.Appointments.Where(A => (A.AppointmentDate.Month == Month) && (A.Doctor.DepartmentId == DeptId)) ;
         }
 
+        public IQueryable<Appointment> AppointmentsPerMonthByDoctorId(int DoctorId, int Month)
+        {
+            return _unitOfWork.Context.Appointments.Where(A => (A.AppointmentDate.Month == Month) && (A.Doctor.Id == DoctorId)).Include(A=>A.Doctor);
+        }
+
         public Task <Appointment> CancelAppointment(int PatientId, DateTime AppointmentDate)
         {
           return  _unitOfWork.Context.Appointments.Where(A => (A.AppointmentDate == AppointmentDate) && (A.PatientId == PatientId)).SingleAsync();
@@ -47,7 +52,7 @@ namespace Repository.Repositories
 
         public IQueryable<Appointment> GetAppointmentsByPatientId(int PatientId)
         {
-            return _unitOfWork.Context.Appointments.Where(A=>(A.PatientId== PatientId)&&(A.Examined==false)).Include(A=>A.Doctor);
+            return _unitOfWork.Context.Appointments.Where(A=>(A.PatientId== PatientId)&&(A.AppointmentDate.Date>=DateTime.Now.Date)).Include(A=>A.Doctor);
         }
 
         public IQueryable<Appointment> GetAppointmentsForTodayByDoctorId(DateTime Today, int DoctorId)

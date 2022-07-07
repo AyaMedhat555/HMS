@@ -8,6 +8,7 @@ namespace Service.Responses
 {
     public class AppointmentsForToday
     {
+        public int AppointmentId { get; set; }
         public string PatientName { get; set; }
         public TimeSpan SlotTime { get; set; }
         public int PatientId { get; set; }

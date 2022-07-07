@@ -38,7 +38,7 @@ namespace Service.Services
         public async Task<Doctor> AddDoctor(DoctorDto dto)
         {
             Doctor doctor = UserMapper.ToDoctor(dto);
-            if(dto.Password != null)
+            if (dto.Password != null)
             {
                 CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
                 doctor.PasswordHash = passwordHash;
@@ -120,7 +120,7 @@ namespace Service.Services
             return await PrescriptionRepository.Add(Prescription);
         }
 
-        public async Task <DoctorPrescriptionResponce> GetAllPrescriptionsByDoctorId(int doctor_id)
+        public async Task<DoctorPrescriptionResponce> GetAllPrescriptionsByDoctorId(int doctor_id)
         {
 
             DoctorPrescriptionResponce _DoctorPrescriptionResponce = new DoctorPrescriptionResponce();
@@ -138,7 +138,7 @@ namespace Service.Services
                   IndoorPatientRecordId = P.IndoorPatientRecordId
               }).ToList();
 
-            _DoctorPrescriptionResponce.Department = await PrescriptionRepository.GetAllPrescriptonsByDocId(doctor_id).Select(P=> P.Doctor.Department.Department_Name).FirstOrDefaultAsync();
+            _DoctorPrescriptionResponce.Department = await PrescriptionRepository.GetAllPrescriptonsByDocId(doctor_id).Select(P => P.Doctor.Department.Department_Name).FirstOrDefaultAsync();
             _DoctorPrescriptionResponce.DoctorFullName = Presciptions.Select(P => P.Doctor.FirstName).FirstOrDefault() + Presciptions.Select(P => P.Doctor.FirstName).FirstOrDefault();
             return _DoctorPrescriptionResponce;
 
@@ -147,51 +147,51 @@ namespace Service.Services
         public async Task<IEnumerable<DoctorPrescriptionResponce>> GetAllPrescriptionsForALL()
         {
             return await PrescriptionRepository.GetAllPrescriptonsForAll().Select(
-                P=> new DoctorPrescriptionResponce()
+                P => new DoctorPrescriptionResponce()
                 {
-                   Department=P.Doctor.Department.Department_Name,
-                   DoctorFullName=P.Doctor.FirstName+P.Doctor.LastName,
-                   Prescription=new Prescription()
-                   {
+                    Department = P.Doctor.Department.Department_Name,
+                    DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                    Prescription = new Prescription()
+                    {
 
-                       PrescriptionId = P.PrescriptionId,
-                       DoctorId = P.DoctorId,
-                       PatientId = P.PatientId,
-                       Diagnosis = P.Diagnosis,
-                       Prescription_Date = P.Prescription_Date,
-                       re_appointement_date = P.re_appointement_date,
-                       PrescriptionItems = P.PrescriptionItems,
-                       IndoorPatientRecordId = P.IndoorPatientRecordId
-                   }
+                        PrescriptionId = P.PrescriptionId,
+                        DoctorId = P.DoctorId,
+                        PatientId = P.PatientId,
+                        Diagnosis = P.Diagnosis,
+                        Prescription_Date = P.Prescription_Date,
+                        re_appointement_date = P.re_appointement_date,
+                        PrescriptionItems = P.PrescriptionItems,
+                        IndoorPatientRecordId = P.IndoorPatientRecordId
+                    }
 
                 }
 
-                ).ToListAsync(); 
+                ).ToListAsync();
         }
-        public async  Task<IEnumerable<DoctorPrescriptionResponce>> GetAllPrescriptonsForPatient(short Patient_id)
+        public async Task<IEnumerable<DoctorPrescriptionResponce>> GetAllPrescriptonsForPatient(short Patient_id)
         {
-            
-          return await PrescriptionRepository.GetAllPrescriptonsForPatient(Patient_id).Select(
-               P => new DoctorPrescriptionResponce()
-               {
-                   Department = P.Doctor.Department.Department_Name,
-                   DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
-                   Prescription = new Prescription()
-                   {
 
-                       PrescriptionId = P.PrescriptionId,
-                       DoctorId = P.DoctorId,
-                       PatientId = P.PatientId,
-                       Diagnosis = P.Diagnosis,
-                       Prescription_Date = P.Prescription_Date,
-                       re_appointement_date = P.re_appointement_date,
-                       PrescriptionItems = P.PrescriptionItems,
-                       IndoorPatientRecordId = P.IndoorPatientRecordId
-                   }
+            return await PrescriptionRepository.GetAllPrescriptonsForPatient(Patient_id).Select(
+                 P => new DoctorPrescriptionResponce()
+                 {
+                     Department = P.Doctor.Department.Department_Name,
+                     DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                     Prescription = new Prescription()
+                     {
 
-               }
+                         PrescriptionId = P.PrescriptionId,
+                         DoctorId = P.DoctorId,
+                         PatientId = P.PatientId,
+                         Diagnosis = P.Diagnosis,
+                         Prescription_Date = P.Prescription_Date,
+                         re_appointement_date = P.re_appointement_date,
+                         PrescriptionItems = P.PrescriptionItems,
+                         IndoorPatientRecordId = P.IndoorPatientRecordId
+                     }
 
-               ).ToListAsync();
+                 }
+
+                 ).ToListAsync();
         }
 
         public async Task<IEnumerable<DoctorPrescriptionResponce>> GetAllDoctorToPatientPrescriptions(int Patient_id, int doctor_id)
@@ -222,7 +222,7 @@ namespace Service.Services
 
         public async Task<IEnumerable<DoctorPrescriptionResponce>> GetPatientPrescriptionByDate(int Patient_id, DateTime PrescriptionDate)
         {
-            return 
+            return
             await PrescriptionRepository.GetPatientPrescriptionByDate(Patient_id, PrescriptionDate).Select(
               P => new DoctorPrescriptionResponce()
               {
@@ -248,7 +248,7 @@ namespace Service.Services
 
         public async Task<DoctorPrescriptionResponce> GetDoctorPrescriptionsByDate(int doctor_id, DateTime PrescriptionDate)
         {
-            
+
             DoctorPrescriptionResponce _DoctorPrescriptionResponce = new DoctorPrescriptionResponce();
             List<Prescription> Presciptions = await PrescriptionRepository.GetDoctorPrescriptionsByDate(doctor_id, PrescriptionDate).ToListAsync();
             _DoctorPrescriptionResponce.Presciption = Presciptions.Select(P =>
@@ -278,7 +278,7 @@ namespace Service.Services
             {
 
                 PatientId = PrescriptionDto.PatientId,
-                Diagnosis=PrescriptionDto.Diagnosis,
+                Diagnosis = PrescriptionDto.Diagnosis,
                 DoctorId = PrescriptionDto.DoctorId,
                 Prescription_Date = PrescriptionDto.Prescription_Date,
                 re_appointement_date = PrescriptionDto.re_appointement_date,
@@ -288,18 +288,18 @@ namespace Service.Services
             return await PrescriptionRepository.Update(Prescription);
         }
 
-       
+
 
         public async Task<IEnumerable<Doctor>> GetDoctorsByDepartment_Id(int Department_ID)
         {
-           return await DoctorRepository.GetDoctorsByDepartment_Id(Department_ID).ToListAsync();
+            return await DoctorRepository.GetDoctorsByDepartment_Id(Department_ID).ToListAsync();
         }
 
-      
+
 
         public async Task ExaminedApoointment(ExaminedAppointment ExaminedAppointment)
         {
-            Appointment examinedAppointment =await AppointmentRepository.GetById(ExaminedAppointment.AppointmentId);
+            Appointment examinedAppointment = await AppointmentRepository.GetById(ExaminedAppointment.AppointmentId);
             examinedAppointment.Examined = ExaminedAppointment.Examined;
             AppointmentRepository.Update(examinedAppointment);
         }
@@ -309,19 +309,19 @@ namespace Service.Services
             return await AppointmentRepository.GetAppointmentsForTodayByDoctorId(Today, DoctorId).Select(A => new AppointmentsForToday()
             {
                 PatientName = A.Patient.FirstName + A.Patient.LastName,
-                PatientId=A.PatientId,
-                Age=A.Patient.Age,
-                Complain=A.Complain,
-                Examined=A.Examined,
-                SlotTime= new TimeSpan (A.AppointmentDate.Hour, A.AppointmentDate.Minute,0),
-                Gender=A.Patient.Gender
+                PatientId = A.PatientId,
+                Age = A.Patient.Age,
+                Complain = A.Complain,
+                Examined = A.Examined,
+                SlotTime = new TimeSpan(A.AppointmentDate.Hour, A.AppointmentDate.Minute, 0),
+                Gender = A.Patient.Gender
 
             }).ToListAsync();
         }
 
-        public async Task<AppointmentDetails> GetAppointmentsDetailsByDoctorId(int DoctorId,DateTime Today)
+        public async Task<AppointmentDetails> GetAppointmentsDetailsByDoctorId(int DoctorId, DateTime Today)
         {
-           Doctor _Doctor=await DoctorRepository.GetDoctorById(DoctorId);
+            Doctor _Doctor = await DoctorRepository.GetDoctorById(DoctorId);
             int? DeptId = _Doctor.DepartmentId;
 
 
@@ -332,9 +332,55 @@ namespace Service.Services
             return _AppointmentDetails;
         }
 
-        public Task<Prescription> GetPrescriptionById(int PrescriptionId)
+        public async Task<DoctorPrescriptionResponce> GetPrescriptionById(int PrescriptionId)
         {
-           return PrescriptionRepository.GetPrescriptionById(PrescriptionId);
+            Prescription P = await PrescriptionRepository.GetPrescriptionById(PrescriptionId);
+            DoctorPrescriptionResponce DoctorPrescriptionResponce = new DoctorPrescriptionResponce()
+            {
+                DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                Prescription = new Prescription()
+                {
+                    PrescriptionId = P.PrescriptionId,
+                    DoctorId = P.DoctorId,
+                    PatientId = P.PatientId,
+                    Diagnosis = P.Diagnosis,
+                    Prescription_Date = P.Prescription_Date,
+                    re_appointement_date = P.re_appointement_date,
+                    PrescriptionItems = P.PrescriptionItems,
+                    IndoorPatientRecordId = P.IndoorPatientRecordId
+                }
+
+            };
+
+            DoctorPrescriptionResponce.Department = PrescriptionRepository.GetAllPrescriptonsByDocId(P.DoctorId).Select(P => P.Doctor.Department.Department_Name).FirstOrDefault();
+
+            return DoctorPrescriptionResponce;
+        }
+
+        public async Task<IEnumerable<AppointmentPerMonth>> AppointmentsPerMonthByDeptId(int DeptId, int Month)
+        {
+            List<AppointmentPerMonth> appointmentPerMonths = new List<AppointmentPerMonth>();
+            List<Doctor> doctors = new List<Doctor>();
+            doctors = await DoctorRepository.GetDoctorsByDepartment_Id(DeptId).ToListAsync();
+
+            for (int i = 0; i < doctors.Count; i++)
+            {
+                AppointmentPerMonth appointmentPerMonth = new AppointmentPerMonth();
+
+                List<Appointment> appointments = new List<Appointment>();
+                appointments = AppointmentRepository.AppointmentsPerMonthByDoctorId(doctors[i].Id, Month).ToList();
+                appointmentPerMonth.NumberOfAppointments = appointments.Count();
+                appointmentPerMonth.DoctorName = appointments.Select(A => A.Doctor.FirstName).FirstOrDefault() + appointments.Select(A => A.Doctor.LastName).FirstOrDefault();
+                appointmentPerMonths.Add(appointmentPerMonth);
+            }
+
+            return appointmentPerMonths;
+
+        }
+
+        public async Task<IEnumerable<Doctor>> GetClinicalDoctorsByDepartment_Id(int Department_ID)
+        {
+            return DoctorRepository.GetClinicalDoctorsByDepartment_Id(Department_ID);
         }
     }
 }
