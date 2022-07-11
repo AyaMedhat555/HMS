@@ -29,9 +29,12 @@ namespace Service.Services
         {
             Console.WriteLine(user);
             var newUser = UserFactory.CreateUser(user);
-            CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            newUser.PasswordHash = passwordHash;
-            newUser.PasswordSalt = passwordSalt;
+            if(user.Password != null)
+            {
+                CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                newUser.PasswordHash = passwordHash;
+                newUser.PasswordSalt = passwordSalt;
+            };
             newUser.PhoneNumber = user.PhoneNumber;
             newUser.UserName = user.UserName;
             newUser.BloodType = user.BloodType == null ? "" : user.BloodType;

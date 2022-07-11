@@ -1,5 +1,4 @@
 ﻿using Domain.Models;
-using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Repository.UnitOfWorks;

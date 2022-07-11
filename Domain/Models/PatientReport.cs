@@ -12,7 +12,7 @@ namespace Domain.Models
         public int Id { get; set; }
         public int PatientId { get; set; }
         public DateTime? DateOfDischarge { get; set; }
-        public string Recommendation { get; set; }
+        public string? Recommendation { get; set; }
         public string CauseOfAdmission { get; set; }
         public DoctorPrescriptionResponce  LastPrescription { get; set; }
         public ICollection<PrescriptionItem> ListOfMedicineNames { get; set; } = new HashSet<PrescriptionItem>();
