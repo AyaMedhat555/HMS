@@ -40,7 +40,7 @@ namespace SmartHospital.Controllers
             return Ok(await VitalSignsService.GetVitalSignesByRangeOfDateOnly(PatientId, StartDate, EndDate));
         }
 
-        [HttpGet("GetVitalSignesBySpecificDate/{PatientId}/{Date}")]
+        [HttpGet("GetVitalSignesBySpecificDate/{PatientId}/{SpecificDate}")]
         public async Task<IActionResult> GetVitalSignesBySpecificDate(int PatientId, DateTime Date)
         {
             return Ok(await VitalSignsService.GetVitalSignesBySpecificDate(PatientId,Date));
