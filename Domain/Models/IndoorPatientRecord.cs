@@ -32,9 +32,7 @@ namespace Domain.Models
 
         public virtual ICollection<Note> Notes { get; set; } = new HashSet<Note>();
 
-        //public virtual Bill Bill { get; set; }
-       // public int BillId { get; set; }
-
+        public virtual Bill Bill { get; set; }
         public virtual ICollection<PatientScan> Scans { get; set; } = new HashSet<PatientScan>();
         public virtual ICollection<PatientTest> Tests { get; set; } = new HashSet<PatientTest>();
 

@@ -21,20 +21,22 @@ namespace Service.Services
         private IIndoorPatientRepository IndoorPatientRepository { get; }
         private IAdminService AdminService { get; }
         private IPrescriptionRepository PrescriptionRepository { get; }
+        private IBillRepository BillRepository { get; }
 
-        public IndoorPatientService(IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IDoctorRepository _DoctorRepository, IAdminService _AdminService, IPrescriptionRepository _PrescriptionRepository)
+
+        public IndoorPatientService(IDoctorService _DoctorService, IIndoorPatientRepository _IndoorPatientRepository, IDoctorRepository _DoctorRepository, IAdminService _AdminService, IPrescriptionRepository _PrescriptionRepository, IBillRepository _BillRepository)
         {
             DoctorService = _DoctorService;
             IndoorPatientRepository = _IndoorPatientRepository;
             DoctorRepository = _DoctorRepository;
             AdminService = _AdminService;
             PrescriptionRepository = _PrescriptionRepository;
+            BillRepository = _BillRepository;
         }
 
         public async Task ReservePatient(ReservePatientDto ReservePatientDto)
         {
             Doctor _OrderdByDoctor = await DoctorRepository.GetById(ReservePatientDto.OrderdByDoctorId);
-
             var NewIndoorPatientRecord = new IndoorPatientRecord
             {
                 CauseOfAdmission = ReservePatientDto.CauseOfAdmission,
@@ -44,12 +46,12 @@ namespace Service.Services
                 RoomId = ReservePatientDto.RoomId,
                 PatientId = ReservePatientDto.PatientId,
                 OrderdByDoctor = _OrderdByDoctor,
-                BedId= ReservePatientDto.BedId
+                BedId= ReservePatientDto.BedId,
+                Bill = new Bill()
             };
             await AdminService.ReserveRoom(ReservePatientDto.RoomId);
             await AdminService.ReserveBed(ReservePatientDto.BedId);
             await IndoorPatientRepository.Add(NewIndoorPatientRecord);
-
         }
 
         public async Task<IEnumerable<InDoorPatientsInfo>> GetInDoorPatientsByDept(int DepartmentId)

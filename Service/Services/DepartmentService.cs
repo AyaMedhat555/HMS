@@ -34,7 +34,8 @@ namespace Service.Services
             {
                 Department_Name = department.DepartmentName,
                 Location = department.DepartmentLocation,
-                IsActive = department.IsActive
+                IsActive = department.IsActive,
+                clinicalDepartment = department.IsClinical                
             });
         }
         public async Task<IEnumerable<DepartmentResponse>> GetAllDepartments()
@@ -44,7 +45,8 @@ namespace Service.Services
                 DepartmentId = d.Id,
                 DepartmentName = d.Department_Name,
                 DepartmentLocation = d.Location == null ? "" : d.Location,
-                IsActive = d.IsActive
+                IsActive = d.IsActive,
+                IsClinical = d.clinicalDepartment,
             }).ToListAsync();
         }
         public async Task<Department> DeleteDepartment(int id)
@@ -93,6 +95,8 @@ namespace Service.Services
                 {
                     DepartmentId = dept.Id,
                     DepartmentName = dept.Department_Name,
+                    IsActive = dept.IsActive,
+                    IsClinical = dept.clinicalDepartment,
                     DoctorDtos = docs,
                     NurseDtos = nurses
                 };
@@ -140,6 +144,7 @@ namespace Service.Services
                 DepartmentId = dept.Id,
                 DepartmentName= dept.Department_Name,
                 IsActive = dept.IsActive,
+                IsClinical = dept.clinicalDepartment,
                 DoctorDtos = dept.Doctors.Select(d => new DoctorDto()
                 {
                     Id = d.Id,
@@ -168,6 +173,7 @@ namespace Service.Services
                 DepartmentId = dept.Id,
                 DepartmentName= dept.Department_Name,
                 IsActive = dept.IsActive,
+                IsClinical = dept.clinicalDepartment,
                 PatientDtos = dept.Patients.Select(p => new PatientDto()
                 {
                     Id = p.Id,
@@ -188,6 +194,7 @@ namespace Service.Services
                 DepartmentId = dept.Id,
                 DepartmentName= dept.Department_Name,
                 IsActive = dept.IsActive,
+                IsClinical = dept.clinicalDepartment,
                 DoctorDtos = dept.Doctors.Select(d => new DoctorDto()
                 {
                     Id = d.Id,
@@ -216,6 +223,7 @@ namespace Service.Services
                 DepartmentId = dept.Id,
                 DepartmentName= dept.Department_Name,
                 IsActive = dept.IsActive,
+                IsClinical = dept.clinicalDepartment,
                 PatientDtos = dept.Patients.Select(p => new PatientDto()
                 {
                     Id = p.Id,

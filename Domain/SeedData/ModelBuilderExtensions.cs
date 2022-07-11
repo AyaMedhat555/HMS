@@ -1,5 +1,6 @@
 ﻿using Domain.Models;
 using Domain.Models.Labs;
+using Domain.Models.Pharmacy;
 using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -224,9 +225,7 @@ namespace Domain.SeedData
                 new Test { Id = 9, Name = "STOOL TEST", TestCharge = 100 },
                 new Test { Id = 10, Name = "urine report", TestCharge = 100 },
                 new Test { Id = 11, Name = "Pcr", TestCharge = 100 },
-                new Test { Id = 12, Name = "Diabetes test", TestCharge = 100 },
-                new Test { Id = 13, Name = "esr", TestCharge = 100 },
-                new Test { Id = 14, Name = "esr", TestCharge = 100 });
+                new Test { Id = 12, Name = "Diabetes test", TestCharge = 100 });
 
             modelBuilder.Entity<TestParameterNumerical>().HasData(
                 new TestParameterNumerical { Id = 1, TestParameterName = "Heamoglobin(edta blood)", TestId = 1, Min_Range = 11.5f, Max_Range = 15.5f, Unit = "g/dl", FieldType = "text", InputPattern = "^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$" },
@@ -342,6 +341,12 @@ namespace Domain.SeedData
 
 
 
+            #endregion
+
+            #region Pharmacy seed
+            //modelBuilder.Entity<Medicine>().HasData(
+            //    new Medicine { MedicineId = 1, }
+            //    )
             #endregion
 
         }

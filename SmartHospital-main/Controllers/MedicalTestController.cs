@@ -42,7 +42,7 @@ namespace SmartHospital.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update(Test test)
+        public async Task<IActionResult> Update(TestDto test)
         {
             Console.WriteLine(test.ToString());
             return Ok(await _medicalTestService.UpdateTest(test));

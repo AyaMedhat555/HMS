@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Repository.IRepositories;
+using Repository.IRepositories.Pharmacy;
 using Repository.Repositories;
+using Repository.Repositories.Pharmacy;
 using Repository.UnitOfWorks;
 using Service.IServices;
 using Service.Services;
@@ -95,6 +97,15 @@ builder.Services.AddScoped<IMedicalTestService, MedicalTestService>();
 builder.Services.AddScoped<IMedicalScanService, MedicalScanService>();
 
 
+builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
+builder.Services.AddScoped<IStockRepository, StockRepository>();
+builder.Services.AddScoped<IStockMedicineRepository, StockMedicineRepository>();
+
+builder.Services.AddScoped<IPharmacyService, PharmacyService>();
+
+builder.Services.AddScoped<IBillRepository, BillRepository>();
+
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -118,6 +129,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseCors(MyAllowSpecificOrigins);
 

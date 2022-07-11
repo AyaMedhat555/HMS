@@ -23,7 +23,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.DocDegree = userDto.DocDegree;
@@ -48,7 +54,7 @@ namespace Service.Helpers
             newUserDto.Address = user.Address;
             newUserDto.NationalId = user.NationalId;
             newUserDto.Gender = user.Gender;
-            newUserDto.Image = user.Image;
+            newUserDto.ImageName = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
             if (user.Department != null)
@@ -75,7 +81,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.DocDegree = userDto.DocDegree;
@@ -99,7 +111,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.CreatedDtm = userDto.CreatedDtm;
@@ -120,7 +138,7 @@ namespace Service.Helpers
             newUserDto.Address = user.Address;
             newUserDto.NationalId = user.NationalId;
             newUserDto.Gender = user.Gender;
-            newUserDto.Image = user.Image;
+            newUserDto.ImageName = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
             if (user.Department != null)
@@ -144,7 +162,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.CreatedDtm = userDto.CreatedDtm;
@@ -164,7 +188,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.NurseSpecialization = userDto.NurseSpecialization;
@@ -187,7 +217,7 @@ namespace Service.Helpers
             newUserDto.Address = user.Address;
             newUserDto.NationalId = user.NationalId;
             newUserDto.Gender = user.Gender;
-            newUserDto.Image = user.Image;
+            newUserDto.ImageName = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
             if(user.Department != null)
@@ -213,7 +243,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.NurseDegree = userDto.NurseDegree;
@@ -238,7 +274,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.CreatedDtm = userDto.CreatedDtm;
@@ -259,7 +301,7 @@ namespace Service.Helpers
             newUserDto.Address = user.Address;
             newUserDto.NationalId = user.NationalId;
             newUserDto.Gender = user.Gender;
-            newUserDto.Image = user.Image;
+            newUserDto.ImageName = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
             if (user.Department != null)
@@ -284,7 +326,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.CreatedDtm = userDto.CreatedDtm;
@@ -306,7 +354,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.CreatedDtm = userDto.CreatedDtm;
@@ -327,7 +381,7 @@ namespace Service.Helpers
             newUserDto.Address = user.Address;
             newUserDto.NationalId = user.NationalId;
             newUserDto.Gender = user.Gender;
-            newUserDto.Image = user.Image;
+            newUserDto.ImageName = user.Image;
             newUserDto.Mail = user.Mail;
             newUserDto.DepartmentId = user.DepartmentId;
             if (user.Department != null)
@@ -351,7 +405,13 @@ namespace Service.Helpers
             newUser.Address = userDto.Address;
             newUser.NationalId = userDto.NationalId;
             newUser.Gender = userDto.Gender;
-            newUser.Image = userDto.Image;
+            if (userDto.Image != null)
+            {
+                Byte[] bytes = Convert.FromBase64String(userDto.Image);
+                string filePath = ("UserImages/" + Path.GetFileName(userDto.UserName) + ".jpg");
+                File.WriteAllBytes("wwwroot/" + filePath, bytes);
+                newUser.Image = filePath;
+            }
             newUser.DepartmentId = userDto.DepartmentId;
             newUser.Mail = userDto.Mail;
             newUser.CreatedDtm = userDto.CreatedDtm;

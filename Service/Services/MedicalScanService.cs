@@ -1,4 +1,5 @@
-﻿using Domain.Models.Labs;
+﻿using Domain.Models;
+using Domain.Models.Labs;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Service.DTO.Labs;
@@ -17,12 +18,18 @@ namespace Service.Services
         private IGenericRepository<Scan> ScanRepository { get; }
         private IPatientScanRepository PatientScanRepository { get; }
         private IScanRequestRepository ScanRequestRepository { get; }
+        private IIndoorPatientRepository IndoorPatientRepository { get; }
+        private IBillRepository BillRepository { get; }
 
-        public MedicalScanService(IGenericRepository<Scan> scanRepository, IPatientScanRepository patientScanRepository, IScanRequestRepository scanRequestRepository)
+        public MedicalScanService(IGenericRepository<Scan> scanRepository, IPatientScanRepository patientScanRepository
+            , IScanRequestRepository scanRequestRepository, IIndoorPatientRepository indoorPatientRepository
+            , IBillRepository billRepository)
         {
             ScanRepository=scanRepository;
             PatientScanRepository=patientScanRepository;
             ScanRequestRepository=scanRequestRepository;
+            IndoorPatientRepository=indoorPatientRepository;
+            BillRepository=billRepository;
         }
 
 
@@ -122,7 +129,7 @@ namespace Service.Services
                 ScanName = S.Scan.ScanName,
                 ScanId = S.Scan.Id,
                 CreatedDtm = S.CreatedDtm,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
@@ -138,7 +145,7 @@ namespace Service.Services
                 ScanName = S.Scan.ScanName,
                 ScanId = S.Scan.Id,
                 CreatedDtm = S.CreatedDtm,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
@@ -154,7 +161,7 @@ namespace Service.Services
                 ScanName = S.Scan.ScanName,
                 ScanId = S.Scan.Id,
                 CreatedDtm = S.CreatedDtm,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName:null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
@@ -170,7 +177,7 @@ namespace Service.Services
                 ScanName = S.Scan.ScanName,
                 ScanId = S.Scan.Id,
                 CreatedDtm = S.CreatedDtm,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
@@ -186,7 +193,7 @@ namespace Service.Services
                 ScanName = S.Scan.ScanName,
                 ScanId = S.Scan.Id,
                 CreatedDtm = S.CreatedDtm,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
@@ -217,13 +224,18 @@ namespace Service.Services
         //######################################################################################################
         //PATIENT Scan
 
-        public async Task<PatientScan> AddPatientScan(PatientScanDto Scan)
+        public async Task<PatientScanDto> AddPatientScan(PatientScanDto Scan)
         {
             int ReqId = Scan.ScanRequestId;
             ScanRequest scanRequest = await ScanRequestRepository.GetById(ReqId);
             PatientScan newScan = new PatientScan()
             {
-                Image = Scan.Image,
+                ScanImages = Scan.ScanImages.Select(s => new ScanImage()
+                {
+                    Content = Convert.FromBase64String(s.Content),
+                    Path = ("ScanImages/" + Path.GetFileName(DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + Guid.NewGuid().ToString("N") + ".jpg")),
+                    PatientScanId = Scan.PatientScanId
+                }).ToList(),
                 WrittenReport = Scan.WrittenReport,
                 ScanDate = DateTime.Now,
                 DoctorId = scanRequest.DoctorId,
@@ -231,8 +243,21 @@ namespace Service.Services
                 ScanId = scanRequest.ScanId,
                 IndoorPatientRecordId= Scan. IndoorPatientRecordId 
             };
+            foreach(var img in newScan.ScanImages)
+            {
+                File.WriteAllBytes("wwwroot/" + img.Path, img.Content);
+            }
+            ScanRequest scanRequestWithScan = await ScanRequestRepository.GetScanRequestById(ReqId);
+            IndoorPatientRecord currRecord = await IndoorPatientRepository.GetLastRecordBeforeDischarging(scanRequestWithScan.PatientId);
+            if (currRecord != null)
+            {
+                Bill bill = currRecord.Bill;
+                bill.ScansCharges += scanRequestWithScan.Scan.ScanCharge;
+                await BillRepository.Update(bill);
+            };
             await DeleteScanRequest(ReqId);
-            return await PatientScanRepository.Add(newScan);
+            await PatientScanRepository.Add(newScan);
+            return Scan;
         }
 
         public async Task<PatientScan> DeletePatientScan(int Scan_id)
@@ -243,7 +268,17 @@ namespace Service.Services
         public async Task<PatientScan> UpdatePatientScan(PatientScanDto Scan)
         {
             PatientScan currentScan = await PatientScanRepository.GetById(Scan.PatientScanId);
-            currentScan.Image = Scan.Image;
+            currentScan.ScanImages = Scan.ScanImages.Select(s => new ScanImage()
+            {
+                Content = Convert.FromBase64String(s.Content),
+                //Name = DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + Guid.NewGuid().ToString("N"),
+                //Path = ("wwwroot/ScanImages/" + Path.GetFileName(DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + Guid.NewGuid().ToString("N"))),
+                PatientScanId = Scan.PatientScanId
+            }).ToList();
+            foreach (var img in currentScan.ScanImages)
+            {
+                File.WriteAllBytes(img.Path, img.Content);
+            }
             currentScan.WrittenReport = Scan.WrittenReport;
             return await PatientScanRepository.Update(currentScan);
         }
@@ -253,11 +288,11 @@ namespace Service.Services
             PatientScan patientScan = await PatientScanRepository.GetPatientScanById(Scan_id);
             PatientScanResponse pateintScanResponse = new PatientScanResponse()
             {
-                Image = patientScan.Image,
+                ScanImages = patientScan.ScanImages.Select(s => Convert.ToBase64String(s.Content)).ToList(),
                 WrittenReport = patientScan.WrittenReport,
                 DoctorId = patientScan.DoctorId,
                 PatientId = patientScan.PatientId,
-                DoctorName = patientScan.Doctor.FirstName+" "+patientScan.Doctor.LastName,
+                DoctorName = patientScan.Doctor != null? patientScan.Doctor.FirstName+" "+patientScan.Doctor.LastName:null,
                 PatientName = patientScan.Patient.FirstName+" "+patientScan.Patient.LastName,
                 ScanName = patientScan.Scan.ScanName,
                 PatientScanId = patientScan.PatientScanId,
@@ -271,11 +306,11 @@ namespace Service.Services
         {
             return await PatientScanRepository.GetAllPatientScansForPatient(Patient_id).Select(S => new PatientScanResponse()
             {
-                Image = S.Image,
+                ScanImages = S.ScanImages.Select(s => Convert.ToBase64String(s.Content)).ToList(),
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
@@ -288,11 +323,11 @@ namespace Service.Services
         {
             return await PatientScanRepository.GetAllPatientScansByDocId(Doctor_id).Select(S => new PatientScanResponse()
             {
-                Image = S.Image,
+                ScanImages = S.ScanImages.Select(s => Convert.ToBase64String(s.Content)).ToList(),
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
@@ -305,11 +340,11 @@ namespace Service.Services
         {
             return await PatientScanRepository.GetPatientScanByDate(Patient_id, date).Select(S => new PatientScanResponse()
             {
-                Image = S.Image,
+                ScanImages = S.ScanImages.Select(s => Convert.ToBase64String(s.Content)).ToList(),
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
@@ -322,11 +357,11 @@ namespace Service.Services
         {
             return await PatientScanRepository.GetDoctorScansByDate(Doctor_id, date).Select(S => new PatientScanResponse()
             {
-                Image = S.Image,
+                ScanImages = S.ScanImages.Select(s => Convert.ToBase64String(s.Content)).ToList(),
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,
@@ -339,11 +374,11 @@ namespace Service.Services
         {
             return await PatientScanRepository.GetAllPatientsScans().Select(S => new PatientScanResponse()
             {
-                Image = S.Image,
+                ScanImages = S.ScanImages.Select(s => Convert.ToBase64String(s.Content)).ToList(),
                 WrittenReport = S.WrittenReport,
                 DoctorId = S.DoctorId,
                 PatientId = S.PatientId,
-                DoctorName = S.Doctor.FirstName+" "+S.Doctor.LastName,
+                DoctorName = S.Doctor != null ? S.Doctor.FirstName+" "+S.Doctor.LastName : null,
                 PatientName = S.Patient.FirstName+" "+S.Patient.LastName,
                 ScanName = S.Scan.ScanName,
                 PatientScanId = S.PatientScanId,

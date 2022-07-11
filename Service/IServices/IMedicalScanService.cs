@@ -35,7 +35,7 @@ namespace Service.IServices
 
 
 
-        Task<PatientScan> AddPatientScan(PatientScanDto Scan);
+        Task<PatientScanDto> AddPatientScan(PatientScanDto Scan);
         Task<PatientScan> DeletePatientScan(int Scan_id);
         Task<PatientScan> UpdatePatientScan(PatientScanDto Scan);
         Task<PatientScanResponse> GetPatientScanById(int Scan_id);

@@ -13,7 +13,7 @@ namespace Service.IServices
     {
         Task<Test> AddTest(TestDto test);
         Task<Test> DeleteTest(int Test_id);
-        Task<Test> UpdateTest(Test test_dto);
+        Task<Test> UpdateTest(TestDto test_dto);
         Task<IEnumerable<Test>> GetAllTests();
         Task<Test> GetTestById(int Test_id);
         Task<Test> GetTestByName(String Testname);
@@ -32,7 +32,7 @@ namespace Service.IServices
 
 
 
-        Task<PatientTest> AddPatientTest(PatientTestDto Test);
+        Task<PatientTestDto> AddPatientTest(PatientTestDto Test);
         Task<PatientTest> DeletePatientTest(int Test_id);
         Task<PatientTest> UpdatePatientTest(PatientTestDto Test);
         Task<PatientTestResponse> GetPatientTestById(int Test_id);
