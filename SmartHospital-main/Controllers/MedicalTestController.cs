@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Labs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO.Labs;
@@ -34,6 +35,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalTestService.AddTest(test));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpDelete("delete/{test_id}")]
         public async Task<IActionResult> Delete([FromRoute] int test_id)
         {
@@ -41,19 +43,22 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalTestService.DeleteTest(test_id));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpPut("update")]
-        public async Task<IActionResult> Update(Test test)
-        {
-            Console.WriteLine(test.ToString());
-            return Ok(await _medicalTestService.UpdateTest(test));
-        }
+        //public async Task<IActionResult> Update(TestDto test)
+        //{
+        //    Console.WriteLine(test.ToString());
+        //    return Ok(await _medicalTestService.UpdateTest(test));
+        //}
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _medicalTestService.GetAllTests());
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
@@ -71,6 +76,7 @@ namespace SmartHospital.Controllers
         //######################################################################################################
         //LAB REQUEST
 
+        [Authorize(Roles = "Doctor")]
         [HttpPost("addLabRequest")]
         public async Task<IActionResult> LabRequest(LabRequestDto labRequest)
         {
@@ -92,6 +98,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalTestService.UpdateLabRequest(labRequest));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("getAllLabRequest")]
         public async Task<IActionResult> GetAllLabRequest()
         {
@@ -159,36 +166,42 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalTestService.UpdatePatientTest(patientTestDto));
         }
 
+
         [HttpGet("getAllPatientTest")]
         public async Task<IActionResult> GetAllPatientTest()
         {
             return Ok(await _medicalTestService.GetallPatientTests());
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("getPatientTestById/{id}")]
         public async Task<IActionResult> GetPatientTestById([FromRoute] int id)
         {
             return Ok(await _medicalTestService.GetPatientTestById(id));
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("getPatientTestsByPatientId/{id}")]
         public async Task<IActionResult> GetPatientTestsByPatientId([FromRoute] int id)
         {
             return Ok(await _medicalTestService.GetPatientTestsByPatientId(id));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("getPatientTestsByDoctorId/{id}")]
         public async Task<IActionResult> GetPatientTestsByDoctorId([FromRoute] int id)
         {
             return Ok(await _medicalTestService.GetPatientTestsByDoctorId(id));
         }
 
+        [Authorize(Roles = "Patient,Doctor")]
         [HttpGet("GetPatientPatientTestsByDate/{patient_id}/{PatientTestDate}")]
         public async Task<IActionResult> GetPatientByDate(int patient_id, DateTime PatientTestDate)
         {
             return Ok(await _medicalTestService.GetPatientTestsByDate(patient_id, PatientTestDate));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("GetDoctorPatientTestsByDate/{doctor_id}/{PatientTestDate}")]
         public async Task<IActionResult> GetDoctorTestsByDate(int doctor_id, DateTime PatientTestDate)
         {

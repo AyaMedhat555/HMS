@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO.Users;
@@ -19,6 +20,7 @@ namespace SmartHospital.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddDoctor([FromBody] DoctorDto dto)
         {
@@ -32,7 +34,7 @@ namespace SmartHospital.Controllers
             await DoctorService.AddDoctor(dto);
             return Ok("User: "+dto.UserName+" was added successfully!");
         }
-        
+        [Authorize(Roles = "Admin,Doctor")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
@@ -44,6 +46,7 @@ namespace SmartHospital.Controllers
             return Ok("User not found!");
         }
 
+        [Authorize(Roles = "Admin,Doctor,Receptionist")]
         [HttpGet("getAllDoctors")]
         public async Task<IActionResult> GetAll()
         {
@@ -62,6 +65,7 @@ namespace SmartHospital.Controllers
             return Ok(await DoctorService.GetDoctorsBySpecialization(specialization));
         }
 
+        [Authorize(Roles = "Admin,Doctor")]
         [HttpPut("update")]
         public async Task<IActionResult> Update(DoctorDto userDto)
         {
@@ -86,6 +90,7 @@ namespace SmartHospital.Controllers
 
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpPost("AddPrescription")]
         public async Task<IActionResult> AddPrescription([FromBody] PrescriptionDto dto)
         {
@@ -105,12 +110,14 @@ namespace SmartHospital.Controllers
             return Ok(await DoctorService.GetAllPrescriptionsForALL());
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("GetDoctorPrescriptionsForPatient/{ParientId}")]
         public async Task<IActionResult> GetDoctorPrescriptionsForPatient([FromRoute] short ParientId)
         {
             return Ok(await DoctorService.GetAllPrescriptonsForPatient(ParientId));
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet(" GetDoctorPrescriptionsForPatient/{patient_id}/{doctor_id}")]
         public async Task<IActionResult> GetDoctorPrescriptionsForPatient(int patient_id, int doctor_id)
         {
@@ -143,6 +150,7 @@ namespace SmartHospital.Controllers
             return Ok(await DoctorService.GetDoctorsByDepartment_Id(Department_ID));
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("GetPrescription/{Prescription_ID}")]
         public async Task<IActionResult> GetPrescriptionId( int Prescription_ID)
         {

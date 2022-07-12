@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
@@ -23,6 +24,7 @@ namespace SmartHospital.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddSchedule([FromBody] scheduleDto[] schedules)
         {
@@ -36,14 +38,14 @@ namespace SmartHospital.Controllers
             return Ok(schedules);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("UpdateSchedule")]
         public async Task<IActionResult> Update(scheduleDto ScheduleDto)
         {
             return Ok(await ScheduleService.UpdateSchedule(ScheduleDto));
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("DeleteSchedule/{ScheduleId}")]
         public async Task<IActionResult> Delete( [FromRoute]int ScheduleId)
         {
@@ -52,13 +54,13 @@ namespace SmartHospital.Controllers
         }
 
 
-        [HttpGet(" GetSchedulesByDoctor_Id/{Doctor_ID}")]
+        [HttpGet("GetSchedulesByDoctor_Id/{Doctor_ID}")]
         public async Task<IActionResult> GetSchedulesByDoctor_Id([FromRoute] int Doctor_ID)
         {
             return Ok(await ScheduleService.GetSchedulesByDoctor_Id(Doctor_ID));
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetSchedulesByDepartment_Id/{Department_ID}")]
         public async Task<IActionResult> GetSchedulesByDepartment_Id([FromRoute] int Department_ID)
         {

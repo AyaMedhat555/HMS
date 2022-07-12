@@ -9,7 +9,6 @@ namespace SmartHospital.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AdminController : ControllerBase
     {
         private IAdminService AdminService { get; }
@@ -22,7 +21,6 @@ namespace SmartHospital.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-
         [HttpPost("AddRoom")]
         public async Task<IActionResult> AddRoom([FromBody] RoomDto RoomDto)
         {
@@ -36,7 +34,7 @@ namespace SmartHospital.Controllers
             return Ok($"Room With Id {RoomId} has been Reserved");
         }
 
-
+        [Authorize(Roles = "Admin,Nurse")]
         [HttpGet("GetFreeRooms")]
         public async Task<IActionResult> GetFreeRooms()
         {
@@ -44,7 +42,7 @@ namespace SmartHospital.Controllers
            
         }
 
-
+        [Authorize(Roles = "Admin,Nurse")]
         [HttpGet("GetFreeBedsByRoomId")]
         public async Task<IActionResult> GetFreeBedsByRoomId(int RoomId)
         {
@@ -52,7 +50,7 @@ namespace SmartHospital.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllRooms")]
         public async Task<IActionResult> GetAllRooms()
         {
@@ -60,6 +58,7 @@ namespace SmartHospital.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetNumbers/{Today}")]
         public async Task<IActionResult> GetNumbers(DateTime Today)
         {
@@ -84,6 +83,7 @@ namespace SmartHospital.Controllers
 
         #region ADMIN CRUD
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("admin")]
         public async Task<IActionResult> AddAdmin([FromBody] AdminDto dto)
         {
@@ -98,18 +98,21 @@ namespace SmartHospital.Controllers
             return Ok("User: "+dto.UserName+" was added successfully!");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("deleteAdmin")]
         public async Task<IActionResult> DeleteAdmin(int id)
         {
             return Ok(await AdminService.DeleteAdmin(id));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("updateAdmin")]
         public async Task<IActionResult> UpdateAdmin(AdminDto userDto)
         {
             return Ok(await AdminService.UpdateAdmin(userDto));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("admin/{id}")]
         public async Task<IActionResult> GetAdminById([FromRoute] int id)
         {
@@ -121,6 +124,7 @@ namespace SmartHospital.Controllers
             return Ok("User not found!");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAllAdmins")]
         public async Task<IActionResult> GetAllAdmins()
         {
@@ -129,6 +133,7 @@ namespace SmartHospital.Controllers
         #endregion
 
         #region RECEPTIONIST CRUD
+        [Authorize(Roles = "Admin")]
         [HttpPost("receptionist")]
         public async Task<IActionResult> AddReceptionist([FromBody] ReceptionistDto dto)
         {
@@ -149,12 +154,14 @@ namespace SmartHospital.Controllers
             return Ok(await AdminService.DeleteReceptionist(id));
         }
 
+        [Authorize(Roles = "Admin,Receptionist")]
         [HttpPut("updateReceptionist")]
         public async Task<IActionResult> UpdateReceptionist(ReceptionistDto userDto)
         {
             return Ok(await AdminService.UpdateReceptionist(userDto));
         }
 
+        [Authorize(Roles = "Admin,Receptionist")]
         [HttpGet("receptionist/{id}")]
         public async Task<IActionResult> GetReceptionistById([FromRoute] int id)
         {
@@ -166,6 +173,7 @@ namespace SmartHospital.Controllers
             return Ok("User not found!");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAllReceptionists")]
         public async Task<IActionResult> GetAllReceptionists()
         {

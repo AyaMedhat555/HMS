@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.IServices;
@@ -17,6 +18,7 @@ namespace SmartHospital.Controllers
 
         }
 
+        [Authorize(Roles = "Doctor,Patient,Receptionist")]
         [HttpGet("GetBusySlots/{DoctorId}/{StartDate}/{EndDate}")]
         public async Task<IActionResult> GetTimeSlots(int DoctorId, DateTime StartDate, DateTime EndDate)
         {
@@ -24,6 +26,7 @@ namespace SmartHospital.Controllers
             return Ok( TimeSlotService.GetBusySlots(DoctorId, StartDate, EndDate));
         }
 
+        [Authorize(Roles = "Doctor,Patient,Receptionist")]
         [HttpGet("GetSlotsByDepartment/{DepartmentId}")]
         public async Task<IActionResult> GetTimeSlots(int DepartmentId)
         {

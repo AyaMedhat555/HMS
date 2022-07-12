@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
 using Service.DTO.Users;
@@ -25,6 +27,7 @@ namespace SmartHospital.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddPatient([FromBody] PatientDto dto)
         {
@@ -39,12 +42,14 @@ namespace SmartHospital.Controllers
             return Ok("User: "+dto.UserName+" was added successfully!");
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpPost("AddPatientReport")]
         public async Task<IActionResult> AddPatientReport([FromBody] ReportEntry ReportEntry)
         {
             return Ok( await PatientReportService.AddPatientReport(ReportEntry));
         }
 
+        [Authorize(Roles = "Patient,Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
@@ -57,13 +62,14 @@ namespace SmartHospital.Controllers
 
         }
 
+        [Authorize(Roles = "Doctor,Nurse,Receptionist")]
         [HttpGet("getAllPatients")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await PatientService.GetAllPatients());
         }
 
-
+        [Authorize(Roles = "Patient")]
         [HttpPut("update")]
         public async Task<IActionResult> Update(PatientDto userDto)
         {
@@ -80,7 +86,8 @@ namespace SmartHospital.Controllers
         /// <summary>
         /// /////////////////////////////////////BusineesPart///////////////////////////////////////
         /// </summary>
-        
+
+        [Authorize(Roles = "Nurse,Receptionist")]
         [HttpPost("ReservePatient")]
         public async Task<IActionResult> ReserveRoom([FromBody] ReservePatientDto ReservePatientDto)
         {
@@ -89,13 +96,14 @@ namespace SmartHospital.Controllers
             return Ok($"Patient With Id {Patient_Id} has been Reserved");
         }
 
+        [Authorize(Roles = "Doctor,Nurse")]
         [HttpGet("GetInDoorPatients/{DepartmentId}")]
         public async Task<IActionResult> GetInDoorPatients([FromRoute]  int DepartmentId)
         {
             return Ok(await IndoorPatientService.GetInDoorPatientsByDept(DepartmentId));
         }
 
-
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("GetPatientReport/{PatientId}/{DateOfDischarge}")]
         public async Task<IActionResult> GetPatientReport( int PatientId, DateTime DateOfDischarge )
         {
@@ -110,6 +118,7 @@ namespace SmartHospital.Controllers
         }
 
 
+        [Authorize(Roles = "Nurse")]
         [HttpGet("GetLastPrescriptionByInDoorId/{InDoorRecord_Id}")]
         public async Task<IActionResult> GetLastPrescriptionByInDoorId(int InDoorRecord_Id)
         {
@@ -123,6 +132,7 @@ namespace SmartHospital.Controllers
             return Ok(IndoorPatientService.GetDischargeDatesByPatientId(PatientId));
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("GetIndoorPatientRecords/{PatientId}")]
         public async Task<IActionResult> GetIndoorPatientRecords(int PatientId)
         {
@@ -152,5 +162,17 @@ namespace SmartHospital.Controllers
         {
             return Ok(await PatientService.GetPatientByNationalId(NationalId));
         }
-    }
+
+        //[HttpGet("getPatientBill/{id}")]
+        //public async Task<IActionResult> GetPatientBill([FromRoute] int id)
+        //{
+        //    BillDto bill = await PatientService.GetPatientBill(id);
+        //    if (bill != null)
+        //    {
+        //        return Ok(bill);
+        //    }
+        //    return Ok("Bill not found!");
+        //}
+
+        }    
 }

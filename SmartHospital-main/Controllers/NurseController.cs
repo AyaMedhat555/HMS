@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO.Users;
 using Service.Helpers;
@@ -19,6 +20,7 @@ namespace SmartHospital.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddNurse([FromBody] NurseDto dto)
         {
@@ -33,6 +35,7 @@ namespace SmartHospital.Controllers
             return Ok("User: "+dto.UserName+" was added successfully!");
         }
 
+        [Authorize(Roles = "Admin,Nurse")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
@@ -45,6 +48,7 @@ namespace SmartHospital.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAllNurses")]
         public async Task<IActionResult> GetAll()
         {
@@ -63,6 +67,7 @@ namespace SmartHospital.Controllers
             return Ok(await NurseService.GetNursesBySpecialization(specialization));
         }
 
+        [Authorize(Roles = "Admin,Nurse")]
         [HttpPut("update")]
         public async Task<IActionResult> Update(NurseDto userDto)
         {

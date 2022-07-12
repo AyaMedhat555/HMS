@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.IServices;
@@ -16,6 +17,7 @@ namespace SmartHospital.Controllers
             _departmentService = departmentService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("add")]
         public async Task<IActionResult> Register(DepartmentResponse request)
         {
@@ -23,7 +25,8 @@ namespace SmartHospital.Controllers
             await _departmentService.AddDepartment(request);
             return Ok("Department: " + request.DepartmentName + " was added successfully!");
         }
-       
+
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -43,6 +46,7 @@ namespace SmartHospital.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("Update")]
         public async Task<IActionResult> UpdateDepartment(Department dept)
         {
@@ -57,6 +61,7 @@ namespace SmartHospital.Controllers
             return Ok(await _departmentService.GetDepartmentPatientsById(id));
         }
 
+        [Authorize(Roles = "Admin,Nurse")]
         [HttpGet("getEmpsByDepartmentId/{id}")]
         public async Task<IActionResult> GetEmpsById([FromRoute] int id)
         {
@@ -75,6 +80,7 @@ namespace SmartHospital.Controllers
             return Ok(await _departmentService.GetDepartmentEmpsByName(name));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllClinicalDept")]
         public async Task<IActionResult> GetAllClinicalDept()
         {

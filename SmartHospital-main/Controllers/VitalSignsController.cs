@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
@@ -18,7 +19,7 @@ namespace SmartHospital.Controllers
            
         }
 
-
+        [Authorize(Roles = "Nurse")]
         [HttpPost("AddVitalSignes")]
         public async Task<IActionResult> AddVitalSignes([FromBody] VitalSigneDto VitalSignsDto)
         {
@@ -27,6 +28,7 @@ namespace SmartHospital.Controllers
         }
 
 
+        [Authorize(Roles = "Doctor,Nurse")]
         [HttpGet("GetVitalSignesByRangeOfDateTime/{PatientId}/{StartDate}/{EndDate}")]
         public async Task<IActionResult> GetVitalSignesByRangeOfDateTime(int PatientId, DateTime StartDate, DateTime EndDate)
         {
@@ -40,11 +42,11 @@ namespace SmartHospital.Controllers
             return Ok(await VitalSignsService.GetVitalSignesByRangeOfDateOnly(PatientId, StartDate, EndDate));
         }
 
-        //[HttpGet("GetVitalSignesBySpecificDate/{PatientId}/{SpecificDate}")]
-        //public async Task<IActionResult> GetVitalSignesBySpecificDate(int PatientId, DateTime Date)
-        //{
-        //    return Ok(await VitalSignsService.GetVitalSignesBySpecificDate(PatientId,Date));
-        //}
+        [HttpGet("GetVitalSignesBySpecificDate/{PatientId}/{Date}")]
+        public async Task<IActionResult> GetVitalSignesBySpecificDate(int PatientId, DateTime Date)
+        {
+            return Ok(await VitalSignsService.GetVitalSignesBySpecificDate(PatientId,Date));
+        }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
@@ -35,6 +36,7 @@ namespace SmartHospital.Controllers
             return Ok(allslots);
         }
 
+        [Authorize(Roles = "Doctor,Patient,Receptionist")]
         [HttpPost]
         public async Task<IActionResult> MakeAppointment([FromBody] APPSLOTDto APPSLOTDto)
         {
@@ -53,7 +55,7 @@ namespace SmartHospital.Controllers
             return Ok(Freeslots);
         }
 
-
+        [Authorize(Roles = "Doctor,Receptionist")]
         [HttpGet("GetAppointmentsForTodayByDoctorId/{DoctorId}/{Today}")]
 
         public async Task<IActionResult> GetAppointmentsForTodayByDoctorId(int DoctorId,DateTime Today)
@@ -62,7 +64,7 @@ namespace SmartHospital.Controllers
 
         }
 
-
+        [Authorize(Roles = "Doctor")]
         [HttpPut("ExaminedAppointment/{AppointmentId}/{Examined}")]
         public async Task<IActionResult> ExaminedAppointment(int AppointmentId, bool Examined)
         {
@@ -78,6 +80,7 @@ namespace SmartHospital.Controllers
         }
 
 
+        [Authorize(Roles = "Patient,Receptionist")]
         [HttpGet("GetAppointmentsByPatientId/{PatientId}")]
 
         public async Task<IActionResult> GetAppointmentsForTodayByPatientId(int PatientId)
@@ -85,6 +88,7 @@ namespace SmartHospital.Controllers
             return Ok(await PatientService.GetAppointmentsByPatientId(PatientId));
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpDelete("CancelAppointment/{AppointmentId}")]
 
         public async Task<IActionResult> CancelAppointment(int AppointmentId)
@@ -93,8 +97,8 @@ namespace SmartHospital.Controllers
             return Ok($"Appointment with Id {AppointmentId} has been canceled");
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("GetAppointmentsDetailsByDoctorId/{DoctorId}/{Today}")]
-
         public async Task<IActionResult> GetAppointmentsDetailsByDoctorId(int DoctorId,DateTime Today)
         {
             return Ok(await DoctorService.GetAppointmentsDetailsByDoctorId(DoctorId, Today));

@@ -1,4 +1,5 @@
 ﻿using Domain.Models.Labs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO.Labs;
@@ -21,6 +22,7 @@ namespace SmartHospital.Controllers
         //######################################################################################################
         //TEST
 
+        [Authorize(Roles = "Doctor")]
         [HttpPost("add")]
         public async Task<IActionResult> Add(Scan scan)
         {
@@ -41,6 +43,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalScanService.DeleteScan(scan_id));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpPut("update")]
         public async Task<IActionResult> Update(Scan scan)
         {
@@ -48,6 +51,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalScanService.UpdateScan(scan));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -71,6 +75,7 @@ namespace SmartHospital.Controllers
         //######################################################################################################
         //LAB REQUEST
 
+        [Authorize(Roles = "Doctor")]
         [HttpPost("addScanRequest")]
         public async Task<IActionResult> ScanRequest(ScanRequestDto scanRequest)
         {
@@ -92,6 +97,7 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalScanService.UpdateScanRequest(scanRequest));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("getAllScanRequest")]
         public async Task<IActionResult> GetAllScanRequest()
         {
@@ -138,6 +144,7 @@ namespace SmartHospital.Controllers
         //######################################################################################################
         //PATIENT TEST
 
+        [Authorize(Roles = "Doctor")]
         [HttpPost("addPatientScan")]
         public async Task<IActionResult> PatientScan(PatientScanDto patientScanDto)
         {
@@ -165,30 +172,35 @@ namespace SmartHospital.Controllers
             return Ok(await _medicalScanService.GetallPatientScans());
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("getPatientScanById/{id}")]
         public async Task<IActionResult> GetPatientScanById([FromRoute] int id)
         {
             return Ok(await _medicalScanService.GetPatientScanById(id));
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("getPatientScansByPatientId/{id}")]
         public async Task<IActionResult> GetPatientScansByPatientId([FromRoute] int id)
         {
             return Ok(await _medicalScanService.GetPatientScansByPatientId(id));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("getPatientScansByDoctorId/{id}")]
         public async Task<IActionResult> GetPatientScansByDoctorId([FromRoute] int id)
         {
             return Ok(await _medicalScanService.GetPatientScansByDoctorId(id));
         }
 
+        [Authorize(Roles = "Doctor,Patient")]
         [HttpGet("GetPatientPatientScansByDate/{patient_id}/{PatientScanDate}")]
         public async Task<IActionResult> GetPatientByDate(int patient_id, DateTime PatientScanDate)
         {
             return Ok(await _medicalScanService.GetPatientScansByDate(patient_id, PatientScanDate));
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpGet("GetDoctorPatientScansByDate/{doctor_id}/{PatientScanDate}")]
         public async Task<IActionResult> GetDoctorScansByDate(int doctor_id, DateTime PatientScanDate)
         {
