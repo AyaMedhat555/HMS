@@ -14,8 +14,9 @@ namespace Service.DTO.Users
         //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string NationalId { get; set; }
         //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public byte[]? Image { get; set; }
+        public string? Image { get; set; }
         //[JsonIgnore(Conditikon = JsonIgnoreCondition.WhenWritingNull)]
+        public string? ImageName { get; set; }
         public string? BloodType { get; set; }
         //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string PhoneNumber { get; set; }

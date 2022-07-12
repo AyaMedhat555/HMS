@@ -11,8 +11,8 @@ namespace Domain.Models.Users
         public string LastName { get; set; }
         public int Age { get; set; }
         public string NationalId { get; set; }
-        public byte[]? Image { get; set; }
-        public string BloodType { get; set; }
+        public string? Image { get; set; }
+        public string? BloodType { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string Gender { get; set; }

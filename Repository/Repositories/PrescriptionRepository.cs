@@ -82,6 +82,13 @@ namespace Repository.Repositories
                   P =>( P.IndoorPatientRecordId == IndoorPatientRecordId)&&(P.Prescription_Date< DischargedDate)).Include(P => P.PrescriptionItems).Include(P=>P.Doctor);
         }
 
+        public async Task<Prescription> GetPrescriptionByInDoorPatient(int IndoorPatientRecordId)
+        {
+            return await _unitOfWork.Context.Prescriptions.Where(
+
+                P => P.IndoorPatientRecordId == IndoorPatientRecordId).Include(P => P.PrescriptionItems).Include(P => P.Doctor).OrderByDescending(P => P.Prescription_Date).LastAsync();
+        }
+
         public async Task<Prescription> GetPrescriptionById(int PrescriptionId)
         {
             return  _unitOfWork.Context.Prescriptions.Include(P => P.PrescriptionItems).Include(P=>P.Doctor).FirstOrDefault(P=>P.PrescriptionId== PrescriptionId);

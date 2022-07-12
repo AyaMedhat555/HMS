@@ -20,5 +20,6 @@ namespace Service.Responses
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public List<PatientDto>? PatientDtos { get; set; }
         public bool IsActive { get; set; } = true;
+        public bool IsClinical { get; set; } = true;
     }
 }

@@ -4,6 +4,7 @@ using Domain.Models;
 using Domain.Models.Labs;
 using Domain.Models.Users;
 using Domain.SeedData;
+using Domain.Models.Pharmacy;
 
 namespace Domain.Context
 {
@@ -43,25 +44,6 @@ namespace Domain.Context
                 .HasValue<TestDetailsCategorical>("Categorical")
                 .HasValue<TestDetailsNumerical>("Numerical");
             ModelBuilderExtensions.Seed(builder);
-
-
-            //seed data to test login against
-            //builder.Entity<Patient>().HasData(new Patient {FirstName="mohab"
-            //    , LastName="alrouby"
-            //    , Age=23
-            //    , Address="fayoum"
-            //    , BloodType="O-"
-            //    , Gender="male"
-            //    , CreatedDtm = DateTime.Now
-            //    , Image= new Byte[64]
-            //    , NationalId = "21332557321314"
-            //    , PasswordHash = new Byte[64]
-            //    , PasswordSalt = new Byte[64]
-            //    , PhoneNumber = "213322112"
-            //    , UserName = "hoba"
-            //    , Mail = "mm3247@fayoum.edu.eg"
-            //    , Id = 1
-            //});
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Department> Department { get; set; }
@@ -82,23 +64,25 @@ namespace Domain.Context
         public DbSet<PatientTest> PatientTests { get; set; }
         public DbSet<ScanRequest> ScanRequests { get; set; }
         public DbSet<PatientScan> PatientScans { get; set; }
+        public DbSet<ScanImage> ScanImages { get; set; }
 
 
 
 
-        //public DbSet<Bill> Bills { get; set; }
+        public DbSet<Bill> Bills { get; set; }
 
         public DbSet<Prescription> Prescriptions { get; set; }
         public DbSet<PrescriptionItem> PrescriptionItems { get; set; }
 
-        //public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
+        public DbSet<StockMedicine> StockMedicines { get; set; }
+
         public DbSet<Appointment> Appointments { get; set; }
-        //public DbSet<Room> Rooms { get; set; }
         //public DbSet<BloodElement> Bloods { get; set; }
         //public DbSet<Donner> Donners { get; set; }
         //public DbSet<BloodBank> BloodBanks { get; set; }
 
-        //public DbSet<PatientReport> PatientsReports { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<IndoorPatientRecord> IndoorPatients { get; set; }
          public DbSet<ClinicPatientRecord> ClinicPatients { get; set; }

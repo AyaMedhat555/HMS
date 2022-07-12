@@ -10,7 +10,7 @@ namespace Service.DTO.Labs
     {
         public int PatientScanId { get; set; }
         public int ScanRequestId { get; set; }
-        public byte[]? Image { get; set; }
+        public virtual ICollection<ScanImageDto> ScanImages { get; set; } = new HashSet<ScanImageDto>();
         public string WrittenReport { get; set; }
         public DateTime ScanDate { get; set; }
 

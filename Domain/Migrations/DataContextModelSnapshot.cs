@@ -242,6 +242,40 @@ namespace Domain.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Models.Bill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double?>("AppointmentsCharges")
+                        .HasColumnType("float");
+
+                    b.Property<int>("IndoorPatientRecordID")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("PrescriptionCharges")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("RoomCharges")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ScansCharges")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("TestCharges")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IndoorPatientRecordID")
+                        .IsUnique();
+
+                    b.ToTable("Bills");
+                });
+
             modelBuilder.Entity("Domain.Models.ClinicPatientRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -503,9 +537,6 @@ namespace Domain.Migrations
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<int?>("IndoorPatientRecordId")
                         .HasColumnType("int");
 
@@ -641,6 +672,32 @@ namespace Domain.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Models.Labs.ScanImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<byte[]>("Content")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PatientScanId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientScanId");
+
+                    b.ToTable("ScanImages");
+                });
+
             modelBuilder.Entity("Domain.Models.Labs.ScanRequest", b =>
                 {
                     b.Property<int>("Id")
@@ -768,18 +825,6 @@ namespace Domain.Migrations
                             Id = 12,
                             Name = "Diabetes test",
                             TestCharge = 100f
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "esr",
-                            TestCharge = 100f
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "esr",
-                            TestCharge = 100f
                         });
                 });
 
@@ -884,6 +929,93 @@ namespace Domain.Migrations
                     b.HasIndex("NurseId");
 
                     b.ToTable("Notes");
+                });
+
+            modelBuilder.Entity("Domain.Models.Pharmacy.Medicine", b =>
+                {
+                    b.Property<int>("MedicineId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicineId"), 1L, 1);
+
+                    b.Property<string>("CommercialName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EffectiveSubstance")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Group")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MedicineId");
+
+                    b.ToTable("Medicines");
+                });
+
+            modelBuilder.Entity("Domain.Models.Pharmacy.Stock", b =>
+                {
+                    b.Property<int>("StockId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockId"), 1L, 1);
+
+                    b.Property<string>("StockLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StockId");
+
+                    b.ToTable("Stocks");
+                });
+
+            modelBuilder.Entity("Domain.Models.Pharmacy.StockMedicine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("AddedDtm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Barcode")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ConcentrationInMg")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpireDtm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MedicineId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("StockMedicines");
                 });
 
             modelBuilder.Entity("Domain.Models.Prescription", b =>
@@ -1168,7 +1300,6 @@ namespace Domain.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BloodType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDtm")
@@ -1185,8 +1316,8 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -1829,7 +1960,7 @@ namespace Domain.Migrations
                             Address = "fayoum",
                             Age = 40,
                             BloodType = "B+",
-                            CreatedDtm = new DateTime(2022, 6, 28, 20, 10, 1, 789, DateTimeKind.Local).AddTicks(4189),
+                            CreatedDtm = new DateTime(2022, 7, 3, 2, 16, 2, 296, DateTimeKind.Local).AddTicks(9285),
                             DepartmentId = 1,
                             FirstName = "Sayed",
                             Gender = "Male",
@@ -1837,8 +1968,8 @@ namespace Domain.Migrations
                             LastName = "Taha",
                             Mail = "sayed.taha@gmail.com",
                             NationalId = "27030351876321",
-                            PasswordHash = new byte[] { 132, 101, 127, 55, 44, 35, 105, 50, 35, 209, 73, 77, 107, 201, 178, 59, 139, 219, 81, 240, 166, 44, 113, 202, 146, 152, 49, 121, 243, 189, 95, 33, 190, 164, 32, 107, 180, 32, 2, 122, 161, 45, 130, 211, 207, 241, 208, 183, 125, 211, 240, 86, 117, 176, 14, 192, 22, 23, 105, 205, 126, 199, 252, 134 },
-                            PasswordSalt = new byte[] { 0, 179, 72, 75, 92, 240, 249, 128, 57, 235, 13, 152, 225, 53, 132, 142, 70, 218, 52, 224, 203, 215, 249, 4, 130, 99, 166, 122, 134, 211, 231, 198, 144, 84, 88, 69, 190, 69, 123, 77, 236, 217, 178, 63, 194, 181, 97, 181, 181, 254, 106, 60, 59, 230, 142, 66, 19, 86, 209, 255, 123, 230, 177, 137, 137, 143, 36, 123, 130, 114, 18, 127, 221, 85, 186, 134, 4, 159, 27, 90, 42, 107, 142, 208, 16, 242, 91, 115, 182, 173, 95, 26, 210, 84, 16, 225, 44, 18, 40, 214, 25, 215, 228, 217, 214, 45, 179, 88, 128, 171, 200, 37, 206, 227, 237, 36, 163, 95, 95, 179, 58, 120, 180, 217, 52, 228, 200, 135 },
+                            PasswordHash = new byte[] { 39, 134, 20, 134, 216, 102, 19, 140, 161, 113, 211, 20, 26, 138, 106, 151, 116, 221, 117, 74, 27, 101, 82, 131, 51, 249, 123, 190, 17, 141, 150, 158, 104, 67, 60, 156, 156, 60, 182, 234, 153, 14, 138, 97, 250, 234, 177, 181, 72, 220, 167, 49, 252, 187, 248, 251, 58, 250, 148, 166, 61, 169, 23, 209 },
+                            PasswordSalt = new byte[] { 244, 21, 248, 93, 3, 163, 71, 174, 216, 189, 83, 208, 120, 163, 198, 230, 94, 15, 9, 133, 178, 108, 40, 243, 221, 22, 201, 135, 165, 112, 231, 249, 213, 129, 90, 121, 198, 197, 248, 212, 223, 170, 138, 112, 202, 101, 152, 131, 127, 122, 208, 37, 134, 36, 253, 175, 30, 113, 171, 231, 72, 185, 230, 100, 183, 31, 3, 120, 170, 219, 47, 46, 227, 191, 83, 211, 13, 51, 113, 209, 168, 49, 10, 205, 41, 42, 118, 22, 47, 225, 50, 127, 224, 207, 8, 155, 166, 51, 12, 173, 34, 56, 185, 234, 84, 214, 166, 222, 124, 132, 8, 86, 127, 124, 107, 37, 182, 253, 65, 138, 229, 142, 170, 105, 144, 14, 151, 102 },
                             PhoneNumber = "01113436425",
                             Role = "Doctor",
                             UserName = "sayed_taha",
@@ -1852,7 +1983,7 @@ namespace Domain.Migrations
                             Address = "fayoum",
                             Age = 37,
                             BloodType = "A+",
-                            CreatedDtm = new DateTime(2022, 6, 28, 20, 10, 1, 789, DateTimeKind.Local).AddTicks(4204),
+                            CreatedDtm = new DateTime(2022, 7, 3, 2, 16, 2, 296, DateTimeKind.Local).AddTicks(9320),
                             DepartmentId = 1,
                             FirstName = "Mohamed",
                             Gender = "Male",
@@ -1860,8 +1991,8 @@ namespace Domain.Migrations
                             LastName = "Hamdy",
                             Mail = "mohamed.hamdy@gmail.com",
                             NationalId = "27030351876321",
-                            PasswordHash = new byte[] { 169, 121, 248, 33, 222, 29, 39, 65, 10, 203, 106, 139, 74, 195, 210, 116, 241, 120, 191, 239, 14, 206, 211, 183, 101, 241, 19, 226, 136, 124, 8, 220, 16, 30, 162, 90, 43, 10, 48, 4, 39, 105, 85, 56, 165, 58, 162, 198, 161, 177, 71, 120, 190, 173, 117, 142, 63, 201, 206, 178, 153, 150, 197, 29 },
-                            PasswordSalt = new byte[] { 252, 140, 186, 128, 213, 202, 188, 22, 239, 183, 236, 210, 23, 168, 59, 165, 144, 242, 133, 47, 87, 153, 142, 134, 236, 228, 23, 160, 28, 224, 208, 132, 122, 215, 202, 225, 167, 248, 89, 100, 9, 103, 125, 149, 163, 65, 119, 41, 41, 228, 51, 131, 123, 85, 62, 172, 243, 177, 63, 221, 37, 35, 172, 68, 53, 146, 69, 106, 178, 195, 239, 244, 48, 143, 241, 69, 191, 249, 236, 112, 31, 104, 78, 139, 203, 217, 88, 212, 104, 204, 2, 109, 207, 22, 96, 156, 78, 58, 5, 154, 134, 223, 234, 92, 77, 50, 206, 168, 243, 156, 232, 33, 70, 125, 167, 162, 237, 56, 255, 221, 31, 67, 108, 94, 34, 44, 149, 99 },
+                            PasswordHash = new byte[] { 44, 153, 101, 242, 164, 47, 199, 61, 12, 101, 246, 142, 11, 97, 214, 144, 211, 126, 19, 204, 156, 215, 239, 253, 145, 110, 236, 10, 212, 194, 248, 244, 131, 155, 2, 61, 122, 222, 105, 183, 30, 72, 163, 5, 82, 105, 174, 185, 236, 33, 28, 69, 225, 219, 54, 71, 240, 120, 200, 102, 218, 91, 224, 102 },
+                            PasswordSalt = new byte[] { 95, 209, 64, 185, 193, 244, 110, 105, 215, 254, 103, 3, 24, 26, 161, 63, 125, 66, 225, 132, 116, 212, 109, 116, 138, 176, 116, 200, 15, 42, 210, 131, 116, 111, 31, 20, 20, 43, 177, 51, 29, 186, 136, 217, 95, 221, 77, 196, 115, 249, 193, 204, 35, 195, 67, 84, 36, 215, 84, 99, 59, 65, 4, 238, 193, 132, 246, 147, 226, 128, 98, 188, 187, 180, 135, 207, 24, 91, 6, 10, 86, 235, 173, 8, 162, 254, 88, 229, 208, 115, 60, 9, 185, 234, 89, 231, 67, 56, 122, 88, 92, 63, 164, 84, 31, 2, 142, 72, 107, 64, 78, 134, 239, 20, 138, 235, 69, 242, 31, 24, 230, 154, 175, 59, 93, 70, 98, 5 },
                             PhoneNumber = "01113436425",
                             Role = "Doctor",
                             UserName = "mohamed_hamdy",
@@ -1875,7 +2006,7 @@ namespace Domain.Migrations
                             Address = "fayoum",
                             Age = 50,
                             BloodType = "AB+",
-                            CreatedDtm = new DateTime(2022, 6, 28, 20, 10, 1, 789, DateTimeKind.Local).AddTicks(4207),
+                            CreatedDtm = new DateTime(2022, 7, 3, 2, 16, 2, 296, DateTimeKind.Local).AddTicks(9333),
                             DepartmentId = 2,
                             FirstName = "Amr",
                             Gender = "Male",
@@ -1883,8 +2014,8 @@ namespace Domain.Migrations
                             LastName = "Refaat",
                             Mail = "amr.refaat@gmail.com",
                             NationalId = "27030351876321",
-                            PasswordHash = new byte[] { 110, 139, 15, 8, 241, 205, 118, 7, 146, 195, 176, 38, 34, 10, 16, 116, 228, 222, 39, 228, 108, 119, 76, 99, 248, 41, 115, 184, 164, 202, 173, 208, 155, 233, 40, 67, 164, 253, 194, 83, 144, 91, 248, 105, 88, 142, 148, 209, 2, 174, 64, 109, 113, 97, 110, 230, 96, 164, 157, 202, 95, 100, 19, 175 },
-                            PasswordSalt = new byte[] { 112, 195, 166, 171, 186, 173, 85, 133, 42, 235, 233, 199, 80, 100, 140, 250, 110, 95, 51, 83, 248, 50, 146, 62, 241, 220, 179, 30, 145, 219, 140, 38, 167, 140, 56, 250, 151, 221, 122, 208, 245, 37, 207, 230, 198, 0, 65, 66, 70, 184, 33, 96, 117, 59, 148, 72, 130, 52, 215, 178, 235, 151, 213, 53, 156, 81, 157, 143, 74, 155, 36, 5, 251, 170, 114, 214, 6, 90, 168, 253, 203, 16, 126, 246, 38, 61, 44, 65, 19, 27, 13, 125, 22, 112, 22, 147, 27, 61, 39, 36, 8, 118, 17, 221, 69, 134, 247, 250, 143, 38, 161, 79, 243, 143, 47, 228, 60, 2, 16, 219, 59, 248, 100, 202, 243, 178, 171, 66 },
+                            PasswordHash = new byte[] { 167, 229, 168, 206, 19, 100, 140, 76, 60, 138, 7, 26, 20, 78, 212, 81, 36, 224, 86, 52, 120, 232, 158, 224, 151, 111, 108, 96, 137, 96, 191, 187, 134, 209, 178, 111, 97, 73, 222, 26, 240, 37, 9, 26, 30, 89, 201, 215, 61, 235, 132, 250, 228, 43, 159, 242, 173, 145, 26, 134, 55, 254, 92, 186 },
+                            PasswordSalt = new byte[] { 178, 53, 203, 94, 209, 85, 63, 159, 178, 56, 161, 200, 90, 192, 77, 56, 112, 16, 23, 122, 2, 248, 77, 70, 115, 126, 210, 49, 238, 252, 29, 17, 183, 177, 246, 196, 192, 140, 67, 8, 18, 137, 59, 3, 43, 5, 82, 54, 21, 104, 214, 191, 10, 127, 114, 224, 145, 49, 85, 45, 191, 131, 74, 74, 50, 247, 74, 84, 62, 64, 148, 9, 52, 189, 173, 188, 193, 123, 114, 101, 51, 51, 218, 104, 79, 174, 99, 82, 115, 191, 18, 9, 182, 196, 151, 145, 95, 115, 244, 36, 151, 206, 52, 102, 208, 86, 202, 246, 120, 11, 44, 175, 225, 1, 43, 119, 51, 103, 208, 83, 98, 241, 18, 9, 89, 245, 30, 65 },
                             PhoneNumber = "01113436425",
                             Role = "Doctor",
                             UserName = "amr_refaat",
@@ -1931,7 +2062,7 @@ namespace Domain.Migrations
                             Address = "fayoum",
                             Age = 40,
                             BloodType = "B+",
-                            CreatedDtm = new DateTime(2022, 6, 28, 20, 10, 1, 789, DateTimeKind.Local).AddTicks(4406),
+                            CreatedDtm = new DateTime(2022, 7, 3, 2, 16, 2, 296, DateTimeKind.Local).AddTicks(9934),
                             DepartmentId = 1,
                             FirstName = "Sayed",
                             Gender = "Male",
@@ -1939,8 +2070,8 @@ namespace Domain.Migrations
                             LastName = "Taha",
                             Mail = "sayed.taha@gmail.com",
                             NationalId = "27030351876321",
-                            PasswordHash = new byte[] { 27, 107, 154, 126, 213, 206, 26, 246, 168, 17, 212, 35, 133, 57, 203, 63, 3, 104, 217, 14, 66, 95, 67, 29, 175, 207, 220, 118, 33, 94, 77, 155, 114, 118, 211, 100, 94, 214, 190, 225, 127, 195, 37, 41, 195, 73, 52, 45, 100, 26, 232, 131, 207, 255, 181, 109, 113, 254, 141, 246, 217, 5, 149, 106 },
-                            PasswordSalt = new byte[] { 220, 240, 153, 127, 86, 164, 59, 207, 203, 88, 83, 33, 220, 101, 149, 179, 137, 137, 209, 152, 139, 194, 127, 10, 78, 109, 14, 81, 225, 149, 91, 15, 207, 31, 120, 13, 242, 100, 253, 222, 211, 227, 115, 145, 208, 212, 85, 211, 145, 194, 9, 193, 54, 251, 150, 144, 202, 171, 110, 188, 200, 179, 156, 59, 25, 161, 32, 166, 150, 206, 162, 162, 215, 101, 246, 1, 34, 54, 241, 154, 224, 133, 102, 106, 51, 120, 129, 217, 214, 197, 247, 30, 83, 81, 73, 185, 107, 151, 209, 172, 137, 50, 16, 42, 98, 28, 159, 124, 241, 135, 159, 60, 174, 19, 51, 252, 201, 16, 203, 228, 50, 192, 143, 129, 251, 159, 67, 45 },
+                            PasswordHash = new byte[] { 14, 77, 122, 205, 244, 47, 232, 40, 138, 106, 252, 135, 209, 238, 92, 231, 197, 217, 126, 184, 121, 53, 207, 64, 111, 180, 251, 6, 37, 5, 91, 155, 0, 201, 31, 145, 217, 144, 233, 212, 177, 168, 161, 132, 229, 243, 23, 180, 138, 207, 3, 63, 53, 252, 11, 11, 200, 216, 16, 62, 58, 73, 180, 129 },
+                            PasswordSalt = new byte[] { 222, 171, 222, 98, 218, 252, 55, 152, 205, 84, 83, 248, 152, 127, 31, 99, 213, 60, 149, 151, 90, 74, 188, 102, 155, 90, 72, 34, 13, 130, 254, 71, 238, 65, 86, 183, 140, 197, 221, 128, 52, 232, 0, 145, 147, 226, 244, 169, 61, 90, 51, 37, 15, 184, 1, 67, 20, 123, 136, 105, 105, 125, 67, 2, 127, 96, 44, 44, 70, 89, 25, 158, 92, 58, 53, 13, 231, 103, 233, 92, 46, 252, 120, 245, 252, 127, 78, 173, 152, 99, 126, 116, 240, 141, 231, 21, 103, 107, 209, 190, 93, 3, 159, 165, 176, 186, 181, 148, 49, 29, 7, 104, 83, 52, 205, 171, 191, 130, 210, 144, 213, 24, 45, 99, 72, 191, 137, 255 },
                             PhoneNumber = "01113436425",
                             Role = "Patient",
                             UserName = "patient1"
@@ -1951,7 +2082,7 @@ namespace Domain.Migrations
                             Address = "fayoum",
                             Age = 37,
                             BloodType = "O+",
-                            CreatedDtm = new DateTime(2022, 6, 28, 20, 10, 1, 789, DateTimeKind.Local).AddTicks(4410),
+                            CreatedDtm = new DateTime(2022, 7, 3, 2, 16, 2, 296, DateTimeKind.Local).AddTicks(9945),
                             DepartmentId = 1,
                             FirstName = "Mohamed",
                             Gender = "Male",
@@ -1959,8 +2090,8 @@ namespace Domain.Migrations
                             LastName = "Hamdy",
                             Mail = "mohamed.hamdy@gmail.com",
                             NationalId = "27030351876321",
-                            PasswordHash = new byte[] { 150, 121, 221, 196, 132, 61, 167, 66, 252, 206, 222, 252, 3, 62, 94, 253, 119, 248, 169, 191, 56, 180, 7, 249, 133, 190, 118, 242, 186, 62, 235, 14, 178, 145, 106, 193, 1, 50, 94, 91, 39, 195, 113, 69, 121, 233, 64, 134, 5, 41, 231, 79, 81, 179, 197, 213, 101, 198, 201, 129, 218, 200, 100, 141 },
-                            PasswordSalt = new byte[] { 189, 83, 206, 157, 100, 58, 69, 67, 99, 64, 98, 67, 186, 42, 139, 24, 123, 187, 69, 245, 142, 128, 186, 225, 219, 172, 186, 244, 97, 2, 65, 220, 85, 99, 46, 222, 111, 167, 55, 201, 95, 224, 207, 14, 204, 233, 248, 113, 238, 98, 103, 65, 22, 46, 103, 162, 145, 12, 82, 255, 105, 121, 153, 28, 120, 233, 193, 159, 252, 63, 33, 34, 112, 42, 95, 241, 5, 51, 163, 238, 135, 143, 134, 153, 28, 65, 231, 43, 160, 152, 57, 66, 31, 211, 228, 34, 67, 203, 9, 238, 21, 212, 130, 6, 206, 40, 174, 142, 103, 227, 198, 252, 61, 5, 157, 9, 127, 145, 186, 105, 37, 47, 54, 219, 152, 152, 196, 149 },
+                            PasswordHash = new byte[] { 111, 191, 247, 16, 128, 108, 71, 200, 213, 215, 134, 242, 206, 147, 217, 13, 239, 78, 145, 3, 151, 110, 62, 168, 12, 73, 119, 167, 180, 167, 126, 82, 242, 123, 176, 185, 40, 59, 9, 138, 118, 174, 201, 118, 244, 189, 201, 199, 20, 106, 47, 68, 4, 24, 178, 158, 131, 34, 157, 158, 44, 102, 8, 121 },
+                            PasswordSalt = new byte[] { 71, 158, 147, 167, 39, 42, 94, 115, 215, 98, 209, 111, 97, 30, 149, 24, 74, 253, 255, 33, 34, 19, 225, 195, 155, 209, 153, 31, 226, 205, 161, 143, 50, 119, 172, 241, 15, 112, 200, 60, 125, 84, 145, 129, 50, 87, 252, 136, 194, 242, 142, 47, 25, 250, 65, 69, 21, 103, 134, 171, 71, 210, 14, 108, 208, 152, 76, 242, 65, 222, 155, 177, 82, 197, 228, 67, 208, 139, 0, 9, 77, 19, 180, 163, 137, 49, 187, 26, 87, 195, 235, 159, 136, 63, 69, 66, 244, 150, 248, 157, 233, 39, 84, 124, 233, 127, 182, 144, 37, 222, 177, 227, 149, 31, 23, 202, 9, 154, 104, 108, 120, 98, 66, 234, 114, 161, 102, 54 },
                             PhoneNumber = "01113436425",
                             Role = "Patient",
                             UserName = "patient2"
@@ -1971,15 +2102,15 @@ namespace Domain.Migrations
                             Address = "fayoum",
                             Age = 50,
                             BloodType = "O-",
-                            CreatedDtm = new DateTime(2022, 6, 28, 20, 10, 1, 789, DateTimeKind.Local).AddTicks(4413),
+                            CreatedDtm = new DateTime(2022, 7, 3, 2, 16, 2, 296, DateTimeKind.Local).AddTicks(9955),
                             FirstName = "Amr",
                             Gender = "Male",
                             IsActive = true,
                             LastName = "Refaat",
                             Mail = "amr.refaat@gmail.com",
                             NationalId = "27030351876321",
-                            PasswordHash = new byte[] { 126, 186, 99, 28, 4, 35, 31, 17, 127, 250, 251, 2, 122, 203, 175, 93, 85, 170, 138, 61, 236, 213, 90, 80, 174, 12, 89, 136, 224, 150, 251, 74, 191, 17, 125, 70, 226, 249, 247, 140, 11, 189, 252, 249, 104, 194, 162, 245, 242, 233, 90, 149, 21, 38, 240, 75, 202, 35, 147, 81, 109, 148, 108, 29 },
-                            PasswordSalt = new byte[] { 33, 9, 167, 206, 124, 45, 76, 172, 62, 230, 197, 228, 86, 11, 128, 94, 110, 81, 2, 173, 249, 151, 4, 166, 231, 13, 244, 11, 224, 5, 212, 2, 239, 241, 170, 249, 230, 154, 97, 29, 59, 18, 2, 70, 190, 38, 162, 129, 137, 152, 6, 75, 148, 247, 37, 6, 212, 181, 225, 143, 73, 77, 79, 244, 208, 245, 10, 35, 206, 65, 49, 169, 207, 69, 18, 208, 9, 65, 1, 188, 52, 167, 51, 211, 10, 20, 222, 241, 164, 160, 147, 94, 91, 85, 151, 219, 68, 24, 141, 91, 62, 227, 96, 129, 109, 218, 18, 206, 124, 239, 32, 166, 228, 152, 152, 173, 199, 68, 132, 15, 253, 224, 226, 49, 146, 239, 204, 65 },
+                            PasswordHash = new byte[] { 219, 251, 86, 155, 195, 94, 88, 175, 207, 245, 81, 53, 46, 176, 24, 4, 201, 237, 110, 66, 130, 142, 56, 132, 9, 239, 0, 52, 254, 84, 13, 39, 74, 158, 140, 170, 93, 28, 176, 103, 197, 170, 23, 23, 183, 78, 53, 196, 233, 233, 225, 15, 21, 5, 178, 107, 14, 139, 228, 39, 79, 142, 64, 34 },
+                            PasswordSalt = new byte[] { 101, 213, 105, 238, 179, 2, 213, 216, 81, 86, 107, 151, 208, 107, 34, 13, 194, 254, 15, 190, 141, 97, 88, 128, 44, 116, 204, 73, 173, 86, 120, 217, 242, 94, 36, 37, 80, 208, 5, 221, 99, 56, 150, 83, 231, 162, 184, 38, 127, 162, 182, 255, 204, 124, 150, 148, 46, 62, 153, 1, 102, 132, 74, 230, 21, 105, 97, 119, 82, 44, 97, 92, 100, 191, 75, 113, 216, 206, 165, 102, 21, 38, 64, 201, 166, 144, 116, 150, 248, 203, 193, 6, 184, 115, 128, 61, 187, 180, 75, 161, 152, 51, 223, 21, 251, 217, 55, 142, 252, 0, 81, 242, 212, 211, 110, 84, 61, 213, 35, 37, 63, 30, 157, 102, 153, 90, 150, 178 },
                             PhoneNumber = "01113436425",
                             Role = "Patient",
                             UserName = "patient3"
@@ -2023,6 +2154,17 @@ namespace Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Domain.Models.Bill", b =>
+                {
+                    b.HasOne("Domain.Models.IndoorPatientRecord", "IndoorPatientRecord")
+                        .WithOne("Bill")
+                        .HasForeignKey("Domain.Models.Bill", "IndoorPatientRecordID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IndoorPatientRecord");
                 });
 
             modelBuilder.Entity("Domain.Models.ClinicPatientRecord", b =>
@@ -2200,6 +2342,17 @@ namespace Domain.Migrations
                     b.Navigation("Test");
                 });
 
+            modelBuilder.Entity("Domain.Models.Labs.ScanImage", b =>
+                {
+                    b.HasOne("Domain.Models.Labs.PatientScan", "PatientScan")
+                        .WithMany("ScanImages")
+                        .HasForeignKey("PatientScanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PatientScan");
+                });
+
             modelBuilder.Entity("Domain.Models.Labs.ScanRequest", b =>
                 {
                     b.HasOne("Domain.Models.Users.Doctor", "Doctor")
@@ -2259,6 +2412,25 @@ namespace Domain.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Nurse");
+                });
+
+            modelBuilder.Entity("Domain.Models.Pharmacy.StockMedicine", b =>
+                {
+                    b.HasOne("Domain.Models.Pharmacy.Medicine", "Medicine")
+                        .WithMany("StockMedicines")
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Pharmacy.Stock", "Stock")
+                        .WithMany("StockMedicines")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medicine");
+
+                    b.Navigation("Stock");
                 });
 
             modelBuilder.Entity("Domain.Models.Prescription", b =>
@@ -2463,6 +2635,9 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Models.IndoorPatientRecord", b =>
                 {
+                    b.Navigation("Bill")
+                        .IsRequired();
+
                     b.Navigation("Doctors");
 
                     b.Navigation("Notes");
@@ -2478,6 +2653,11 @@ namespace Domain.Migrations
                     b.Navigation("VitalSigns");
                 });
 
+            modelBuilder.Entity("Domain.Models.Labs.PatientScan", b =>
+                {
+                    b.Navigation("ScanImages");
+                });
+
             modelBuilder.Entity("Domain.Models.Labs.PatientTest", b =>
                 {
                     b.Navigation("CategoricalDetails");
@@ -2490,6 +2670,16 @@ namespace Domain.Migrations
                     b.Navigation("CategoricalParamters");
 
                     b.Navigation("NumericalParamters");
+                });
+
+            modelBuilder.Entity("Domain.Models.Pharmacy.Medicine", b =>
+                {
+                    b.Navigation("StockMedicines");
+                });
+
+            modelBuilder.Entity("Domain.Models.Pharmacy.Stock", b =>
+                {
+                    b.Navigation("StockMedicines");
                 });
 
             modelBuilder.Entity("Domain.Models.Prescription", b =>

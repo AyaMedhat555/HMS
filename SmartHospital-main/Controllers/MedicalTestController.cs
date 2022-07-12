@@ -45,11 +45,11 @@ namespace SmartHospital.Controllers
 
         [Authorize(Roles = "Doctor")]
         [HttpPut("update")]
-        //public async Task<IActionResult> Update(TestDto test)
-        //{
-        //    Console.WriteLine(test.ToString());
-        //    return Ok(await _medicalTestService.UpdateTest(test));
-        //}
+        public async Task<IActionResult> Update(TestDto test)
+        {
+            Console.WriteLine(test.ToString());
+            return Ok(await _medicalTestService.UpdateTest(test));
+        }
 
         [Authorize(Roles = "Doctor")]
         [HttpGet("getAll")]

@@ -1,5 +1,4 @@
 ﻿using Domain.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
@@ -163,16 +162,16 @@ namespace SmartHospital.Controllers
             return Ok(await PatientService.GetPatientByNationalId(NationalId));
         }
 
-        //[HttpGet("getPatientBill/{id}")]
-        //public async Task<IActionResult> GetPatientBill([FromRoute] int id)
-        //{
-        //    BillDto bill = await PatientService.GetPatientBill(id);
-        //    if (bill != null)
-        //    {
-        //        return Ok(bill);
-        //    }
-        //    return Ok("Bill not found!");
-        //}
+        [HttpGet("getPatientBill/{id}")]
+        public async Task<IActionResult> GetPatientBill([FromRoute] int id)
+        {
+            BillDto bill = await PatientService.GetPatientBill(id);
+            if (bill != null)
+            {
+                return Ok(bill);
+            }
+            return Ok("Bill not found!");
+        }
 
         }    
 }
