@@ -335,26 +335,28 @@ namespace Service.Services
         public async Task<DoctorPrescriptionResponce> GetPrescriptionById(int PrescriptionId)
         {
             Prescription P = await PrescriptionRepository.GetPrescriptionById(PrescriptionId);
-            DoctorPrescriptionResponce DoctorPrescriptionResponce = new DoctorPrescriptionResponce()
+            if(P != null)
             {
-                DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
-                Prescription = new Prescription()
+                DoctorPrescriptionResponce DoctorPrescriptionResponce = new DoctorPrescriptionResponce()
                 {
-                    PrescriptionId = P.PrescriptionId,
-                    DoctorId = P.DoctorId,
-                    PatientId = P.PatientId,
-                    Diagnosis = P.Diagnosis,
-                    Prescription_Date = P.Prescription_Date,
-                    re_appointement_date = P.re_appointement_date,
-                    PrescriptionItems = P.PrescriptionItems,
-                    IndoorPatientRecordId = P.IndoorPatientRecordId
-                }
+                    DoctorFullName = P.Doctor.FirstName + P.Doctor.LastName,
+                    Prescription = new Prescription()
+                    {
+                        PrescriptionId = P.PrescriptionId,
+                        DoctorId = P.DoctorId,
+                        PatientId = P.PatientId,
+                        Diagnosis = P.Diagnosis,
+                        Prescription_Date = P.Prescription_Date,
+                        re_appointement_date = P.re_appointement_date,
+                        PrescriptionItems = P.PrescriptionItems,
+                        IndoorPatientRecordId = P.IndoorPatientRecordId
+                    }
 
-            };
-
-            DoctorPrescriptionResponce.Department = PrescriptionRepository.GetAllPrescriptonsByDocId(P.DoctorId).Select(P => P.Doctor.Department.Department_Name).FirstOrDefault();
-
-            return DoctorPrescriptionResponce;
+                };
+                DoctorPrescriptionResponce.Department = PrescriptionRepository.GetAllPrescriptonsByDocId(P.DoctorId).Select(P => P.Doctor.Department.Department_Name).FirstOrDefault();
+                return DoctorPrescriptionResponce;
+            }
+            return null;
         }
 
         public async Task<IEnumerable<AppointmentPerMonth>> AppointmentsPerMonthByDeptId(int DeptId, int Month)

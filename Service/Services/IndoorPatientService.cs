@@ -1,8 +1,10 @@
-﻿using Domain.Models;
+﻿using Domain.Migrations;
+using Domain.Models;
 using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Repository.IRepositories;
 using Service.DTO;
+using Service.DTO.Users;
 using Service.Helpers;
 using Service.IServices;
 using Service.Responses;
@@ -142,6 +144,30 @@ namespace Service.Services
         public async Task<IEnumerable<IndoorPatientRecord>> GetInDoorRecords()
         {
             return  IndoorPatientRepository.GetInDoorRecords();
+        }
+
+        public async Task<IEnumerable<PatientDto>> GetPatientsDiscahrgedToday(DateTime? Today)
+        {
+            return await IndoorPatientRepository.GetPatientsDiscahrgedToday(Today)
+                 .Select(I => new PatientDto
+                 {
+                     UserName = I.Patient.UserName,
+                     Address = I.Patient.Address,
+                     Age = I.Patient.Age,
+                     BloodType = I.Patient.BloodType,
+                     CreatedDtm = I.Patient.CreatedDtm,
+                     FirstName = I.Patient.FirstName,
+                     LastName = I.Patient.LastName,
+                     Image = I.Patient.Image,
+                     DepartmentId = I.Patient.DepartmentId,
+                     Gender = I.Patient.Gender,
+                     NationalId = I.Patient.NationalId,
+                     Mail = I.Patient.Mail,
+                     Id = I.Patient.Id,
+                     PhoneNumber = I.Patient.PhoneNumber
+
+
+                 }).ToListAsync();
         }
     }
 }

@@ -48,5 +48,7 @@ namespace Repository.Repositories
         {
             return await _unitOfWork.Context.Patients.SingleOrDefaultAsync(P=>P.NationalId== NationalId);
         }
+
+        
     }
 }

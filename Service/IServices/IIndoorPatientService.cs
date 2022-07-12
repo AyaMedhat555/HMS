@@ -1,5 +1,7 @@
-﻿using Domain.Models;
+﻿using Domain.Migrations;
+using Domain.Models;
 using Service.DTO;
+using Service.DTO.Users;
 using Service.Responses;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,8 @@ namespace Service.IServices
         Task<IEnumerable<int>> GetIndoorPatientRecords(int PatientId);
         Task<IEnumerable<PatientRecordResponce>> GetInDoorRecordsByPatientId(int PatientId);
         Task<IEnumerable<IndoorPatientRecord>> GetInDoorRecords();
+        Task<IEnumerable<PatientDto>> GetPatientsDiscahrgedToday(DateTime? Today);
+
 
 
     }

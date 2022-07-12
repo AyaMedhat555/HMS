@@ -23,7 +23,7 @@ namespace Repository.IRepositories
 
         IQueryable<IndoorPatientRecord> GetInDoorRecordsByPatientId(int PatientId);
         IQueryable<IndoorPatientRecord> GetInDoorRecords();
-
+        IQueryable<IndoorPatientRecord> GetPatientsDiscahrgedToday(DateTime? Today);
 
 
 

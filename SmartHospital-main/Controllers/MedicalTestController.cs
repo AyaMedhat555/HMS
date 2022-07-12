@@ -76,7 +76,7 @@ namespace SmartHospital.Controllers
         //######################################################################################################
         //LAB REQUEST
 
-        [Authorize(Roles = "Doctor")]
+        //[Authorize(Roles = "Doctor")]
         [HttpPost("addLabRequest")]
         public async Task<IActionResult> LabRequest(LabRequestDto labRequest)
         {

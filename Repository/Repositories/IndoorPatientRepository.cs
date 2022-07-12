@@ -70,5 +70,10 @@ namespace Repository.Repositories
         {
             return _unitOfWork.Context.IndoorPatients.SingleOrDefault(I=>(I.PatientId == PatientId)&&(I.DischargeDate== DateOfDischarge));
         }
+
+        public IQueryable<IndoorPatientRecord> GetPatientsDiscahrgedToday(DateTime? Today)
+        {
+            return _unitOfWork.Context.IndoorPatients.Where(I => (I.DischargeDate == Today)).Include(I=>I.Patient);
+        }
     }
 }
